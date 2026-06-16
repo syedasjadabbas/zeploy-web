@@ -524,24 +524,28 @@ const team = [
     role: "CEO & Founder",
     skills: ["Frontend Development", "Product Strategy", "UI/UX Systems", "Brand Direction"],
     initials: "SA",
+    image: "/src/assets/images/asjad.png",
   },
   {
     name: "Rana Asad Ur Rehman",
     role: "Co-Founder & Full Stack Developer",
     skills: ["Backend Systems", "API Development", "Database Architecture"],
     initials: "RA",
+    image: "/src/assets/images/asad.jpeg",
   },
   {
     name: "Ahsan Rashid",
     role: "CTO & AI Automation Engineer",
     skills: ["AI Automation", "Intelligent Workflows", "Automation Infrastructure"],
     initials: "AR",
+    image: "/src/assets/images/ahsan.jpeg",
   },
   {
     name: "Hassan Kazmi",
     role: "Managing Partner · Data & Intelligence Lead",
     skills: ["Data Systems", "Research Intelligence", "Analytical Strategy"],
     initials: "HK",
+    image: "/src/assets/images/hassan.jpeg",
   },
 ];
 
@@ -566,8 +570,8 @@ export function Team() {
             >
               <div className="absolute right-0 top-0 h-40 w-40 -translate-y-1/2 translate-x-1/2 rounded-full bg-electric/15 blur-3xl" />
               <div className="flex items-start gap-5">
-                <div className="grid h-16 w-16 shrink-0 place-items-center rounded-xl border border-electric/40 bg-surface font-display text-lg font-semibold text-electric">
-                  {m.initials}
+                <div className="group/avatar grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-xl border border-electric/40 bg-surface transition-colors duration-300 hover:border-electric/80">
+                  <img src={m.image} alt={m.name} className="h-full w-full object-cover grayscale transition-all duration-300 group-hover/avatar:scale-110 group-hover/avatar:grayscale-0" />
                 </div>
                 <div className="min-w-0">
                   <h3 className="text-xl font-semibold">{m.name}</h3>
@@ -710,8 +714,12 @@ export function CTA() {
           {...fadeUp}
           className="glass-card relative overflow-hidden rounded-3xl p-12 text-center md:p-20"
         >
-          <div className="absolute inset-0 grid-bg opacity-60" />
-          <div className="relative">
+          <div className="absolute inset-0 z-0">
+            <img src="/src/assets/images/banner.png" alt="Zeploy Banner" className="h-full w-full object-cover opacity-20 mix-blend-screen" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-background/90" />
+            <div className="absolute inset-0 grid-bg opacity-30" />
+          </div>
+          <div className="relative z-10">
             <SectionLabel>Start a project</SectionLabel>
             <h2 className="mx-auto mt-6 max-w-3xl text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-6xl">
               Let's deploy your vision.
@@ -748,8 +756,9 @@ export function Footer() {
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-12 md:grid-cols-4">
           <div>
-            <p className="font-display text-xl font-semibold">
-              <span className="text-electric">ZEPLOY</span> TECH
+            <p className="flex items-center gap-2 font-display text-xl font-semibold">
+              <img src="/logo.png" alt="Zeploy Tech Logo" className="h-7 w-auto" />
+              <span><span className="text-electric">ZEPLOY</span> TECH</span>
             </p>
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
               Software engineering & AI studio building scalable systems for modern teams.
