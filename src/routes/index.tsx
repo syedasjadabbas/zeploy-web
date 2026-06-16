@@ -40,6 +40,18 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+function ClientHeroScene() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return <div className="h-full w-full rounded-3xl bg-surface/30" />;
+  return (
+    <Suspense fallback={<div className="h-full w-full rounded-3xl bg-surface/30" />}>
+      <HeroScene />
+    </Suspense>
+  );
+}
+
+
 function Index() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-background text-foreground">
