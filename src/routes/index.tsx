@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+
 import { ArrowUpRight } from "lucide-react";
 import Nav from "@/components/zeploy/Nav";
 import {
@@ -149,10 +150,9 @@ function Hero() {
         {/* Three.js scene */}
         <div className="relative h-[420px] w-full sm:h-[520px] lg:h-[640px]">
           <div className="absolute inset-0">
-            <Suspense fallback={<div className="h-full w-full rounded-3xl bg-surface/30" />}>
-              <HeroScene />
-            </Suspense>
+            <ClientHeroScene />
           </div>
+
 
           {/* Floating telemetry chips */}
           <motion.div
