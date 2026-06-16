@@ -23,8 +23,9 @@ export default function Nav() {
       }`}
     >
       <div className={`mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-12 ${scrolled ? "border-b border-white/5" : ""}`}>
-        <a href="#" className="font-display text-base font-semibold tracking-tight">
-          <span className="text-electric">ZEPLOY</span> <span className="text-foreground">TECH</span>
+        <a href="#" className="flex items-center gap-2 font-display text-base font-semibold tracking-tight">
+          <img src="/logo.png" alt="Zeploy Tech Logo" className="h-6 w-auto" />
+          <span><span className="text-electric">ZEPLOY</span> <span className="text-foreground">TECH</span></span>
         </a>
         <nav className="hidden items-center gap-8 md:flex">
           {links.map((l) => (
