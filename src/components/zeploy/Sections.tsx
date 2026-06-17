@@ -21,6 +21,9 @@ import {
   Zap,
   Linkedin,
   Github,
+  Facebook,
+  Instagram,
+  Mail,
 } from "lucide-react";
 import { DataStreams, NetworkNodes, BlueprintGrid } from "./BackgroundScenes";
 
@@ -319,6 +322,7 @@ export function FeaturedWork() {
                   <img 
                     src={p.image} 
                     alt={p.name} 
+                    loading="lazy"
                     className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                 </div>
@@ -583,7 +587,7 @@ export function Team() {
               <div className="flex flex-col gap-6">
                 <div className="group/avatar relative aspect-[4/5] w-[85%] mx-auto p-3 rounded-2xl border border-electric/20 bg-surface/40 transition-all duration-300 hover:border-electric/50 hover:bg-surface/60">
                   <div className="relative w-full h-full rounded-xl overflow-hidden bg-background">
-                    <img src={m.image} alt={m.name} className="h-full w-full object-cover object-[center_15%] transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]" />
+                    <img src={m.image} alt={m.name} loading="lazy" className="h-full w-full object-cover object-[center_15%] transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]" />
                     
                     {/* Social Icons on Hover */}
                     {m.socials && (
@@ -680,19 +684,25 @@ export function Testimonials() {
 /* ---------- BLOG ---------- */
 const posts = [
   {
-    tag: "AI Systems",
-    title: "Designing retrieval pipelines that survive production traffic",
-    read: "8 min read",
+    category: "Architecture",
+    date: "Aug 12, 2023",
+    title: "Why we abandoned microservices for a modular monolith",
+    description: "A deep dive into our infrastructure rewrite that reduced AWS costs by 40% and improved developer velocity.",
+    slug: "abandoned-microservices",
   },
   {
-    tag: "Architecture",
-    title: "Event-sourced billing: why your ledger should be append-only",
-    read: "12 min read",
+    category: "AI Systems",
+    date: "Sep 28, 2023",
+    title: "Scaling LLM inference in production",
+    description: "Techniques for managing latency, token streaming, and cost when deploying large language models to thousands of users.",
+    slug: "scaling-llm-inference",
   },
   {
-    tag: "Cloud",
-    title: "Zero-downtime Kubernetes rollouts without the operational tax",
-    read: "10 min read",
+    category: "Performance",
+    date: "Nov 04, 2023",
+    title: "Achieving 99.99% uptime with global edge networks",
+    description: "How we architected a multi-region failover system that survived two major cloud provider outages.",
+    slug: "edge-networks-uptime",
   },
 ];
 
@@ -710,7 +720,7 @@ export function Blog() {
         <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/5 md:grid-cols-3">
           {posts.map((p, i) => (
             <motion.a
-              href="#"
+              href={`/notes/${p.slug}`}
               key={p.title}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.05 }}
@@ -881,12 +891,23 @@ export function Footer() {
 
           <div>
             <h4 className="font-mono text-xs uppercase tracking-widest text-foreground mb-8">Socials</h4>
-            <ul className="space-y-4 text-sm">
-              <FooterLink href="https://www.linkedin.com/company/zeploy-tech/" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech LinkedIn">LinkedIn</FooterLink>
-              <FooterLink href="https://github.com/syedasjadabbas/zeploy-web" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech GitHub">GitHub</FooterLink>
-              <FooterLink href="https://www.instagram.com/zeploy.tech/" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech Instagram">Instagram</FooterLink>
-              <FooterLink href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech Facebook">Facebook</FooterLink>
-            </ul>
+            <div className="flex flex-wrap gap-4 text-sm">
+              <a href="https://www.linkedin.com/company/zeploy-tech/" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech LinkedIn" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+                <Linkedin className="w-5 h-5" />
+              </a>
+              <a href="https://github.com/syedasjadabbas" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech GitHub" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+                <Github className="w-5 h-5" />
+              </a>
+              <a href="https://www.instagram.com/zeploy.tech/" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech Instagram" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech Facebook" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a href="mailto:zeploytech@gmail.com" aria-label="Zeploy Tech Email" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+                <Mail className="w-5 h-5" />
+              </a>
+            </div>
           </div>
         </div>
 

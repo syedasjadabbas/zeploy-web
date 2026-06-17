@@ -1,4 +1,4 @@
-import { useRef } from "react";
+﻿import { useEffect, useRef, memo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, Line, Grid } from "@react-three/drei";
 import * as THREE from "three";
@@ -44,7 +44,7 @@ function NodesCloud() {
   );
 }
 
-export function NetworkNodes() {
+const NetworkNodesBase = () => {
   return (
     <div className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen">
       <Canvas camera={{ position: [0, 0, 2] }} gl={{ alpha: true, antialias: false }} dpr={[1, 1.5]}>
@@ -96,7 +96,7 @@ function FallingLines() {
   );
 }
 
-export function DataStreams() {
+const DataStreamsBase = () => {
   return (
     <div className="absolute inset-0 z-0 pointer-events-none opacity-30 mix-blend-screen">
       <Canvas camera={{ position: [0, 0, 5] }} gl={{ alpha: true, antialias: false }} dpr={[1, 1.5]}>
@@ -106,7 +106,7 @@ export function DataStreams() {
   );
 }
 
-export function BlueprintGrid() {
+const BlueprintGridBase = () => {
   return (
     <div className="absolute inset-0 z-0 pointer-events-none opacity-20 mix-blend-screen overflow-hidden">
       <Canvas camera={{ position: [0, 2, 5], fov: 45 }} gl={{ alpha: true, antialias: false }}>
@@ -128,3 +128,9 @@ export function BlueprintGrid() {
     </div>
   );
 }
+
+export const NetworkNodes = memo(NetworkNodesBase);
+export const DataStreams = memo(DataStreamsBase);
+export const BlueprintGrid = memo(BlueprintGridBase);
+
+

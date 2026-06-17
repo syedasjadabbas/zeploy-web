@@ -1,6 +1,6 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Icosahedron, Line, Sphere, Text } from "@react-three/drei";
-import { Suspense, useMemo, useRef, useState } from "react";
+import { Suspense, useMemo, useRef, useState, memo } from "react";
 import * as THREE from "three";
 
 function Core({ hovered }: { hovered: boolean }) {
@@ -178,14 +178,15 @@ function Particles({ hovered }: { hovered: boolean }) {
   );
 }
 
-export default function HeroScene() {
+const HeroScene = () => {
   const [hovered, setHovered] = useState(false);
 
   return (
     <Canvas
       camera={{ position: [0, 0, 7], fov: 45 }}
-      dpr={[1, 1.8]}
-      gl={{ antialias: true, alpha: true }}
+      dpr={[1, 1.5]}
+      performance={{ min: 0.5 }}
+      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
     >
       <Suspense fallback={null}>
         <ambientLight intensity={0.4} />
@@ -208,4 +209,6 @@ export default function HeroScene() {
       </Suspense>
     </Canvas>
   );
-}
+};
+
+export default memo(HeroScene);
