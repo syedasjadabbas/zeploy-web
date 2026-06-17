@@ -19,21 +19,21 @@ function NotePage() {
   const posts = [
     {
       category: "Architecture",
-      date: "Aug 12, 2023",
+      date: "Aug 12, 2025",
       title: "Why we abandoned microservices for a modular monolith",
       description: "A deep dive into our infrastructure rewrite that reduced AWS costs by 40% and improved developer velocity.",
       slug: "abandoned-microservices",
     },
     {
       category: "AI Systems",
-      date: "Sep 28, 2023",
+      date: "Sep 28, 2025",
       title: "Scaling LLM inference in production",
       description: "Techniques for managing latency, token streaming, and cost when deploying large language models to thousands of users.",
       slug: "scaling-llm-inference",
     },
     {
       category: "Performance",
-      date: "Nov 04, 2023",
+      date: "Nov 04, 2026",
       title: "Achieving 99.99% uptime with global edge networks",
       description: "How we architected a multi-region failover system that survived two major cloud provider outages.",
       slug: "edge-networks-uptime",

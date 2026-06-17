@@ -136,16 +136,19 @@ export function Services() {
 
 /* ---------- TECH STACK ---------- */
 const stack = {
-  Frontend: ["React", "Next.js", "TypeScript", "Tailwind", "Three.js"],
-  Backend: ["Node.js", "Express", "Python", "FastAPI"],
-  Databases: ["MongoDB", "PostgreSQL", "Redis"],
-  Cloud: ["AWS", "Docker", "Kubernetes", "Firebase"],
+  Frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Three.js", "Framer Motion"],
+  Backend: ["Node.js", "Express.js", "Python", "FastAPI", "REST APIs", "JWT Auth"],
+  Databases: ["MongoDB", "PostgreSQL", "Redis", "Firebase"],
+  "Cloud & DevOps": ["AWS", "Docker", "Kubernetes", "GitHub Actions", "Nginx", "Vercel"],
+  "AI & Automation": ["OpenAI APIs", "LangChain", "RAG Systems", "AI Agents", "Workflow Automation"],
 };
+
 const stackIcons: Record<string, typeof Code2> = {
   Frontend: Code2,
   Backend: Server,
   Databases: Database,
-  Cloud: Cloud,
+  "Cloud & DevOps": Cloud,
+  "AI & Automation": Brain,
 };
 
 export function TechStack() {
@@ -160,9 +163,9 @@ export function TechStack() {
               The toolchain behind every shipped product.
             </h2>
           </div>
-          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            04 / DOMAINS · 16 / TECHNOLOGIES
-          </p>
+            <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              05 / DOMAINS — 27 / TECHNOLOGIES
+            </p>
         </motion.div>
 
         <div className="mt-16 grid gap-6 md:grid-cols-2">
@@ -594,7 +597,7 @@ export function Team() {
             >
               <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-electric/15 blur-[100px] transition-all duration-500 group-hover:bg-electric/25" />
               <div className="flex flex-col gap-6">
-                <div className="group/avatar relative aspect-[4/5] w-[85%] mx-auto p-3 rounded-2xl border border-electric/20 bg-surface/40 transition-all duration-300 hover:border-electric/50 hover:bg-surface/60">
+                <div className="group/avatar relative aspect-[4/5] w-[70%] mx-auto p-4 rounded-2xl border border-electric/20 bg-surface/40 transition-all duration-300 hover:border-electric/50 hover:bg-surface/60">
                   <div className="relative w-full h-full rounded-xl overflow-hidden bg-background">
                     <img src={m.image} alt={m.name} loading="lazy" className="h-full w-full object-cover object-[center_15%] transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]" />
                     
@@ -694,21 +697,21 @@ export function Testimonials() {
 const posts = [
   {
     category: "Architecture",
-    date: "Aug 12, 2023",
+    date: "Aug 12, 2025",
     title: "Why we abandoned microservices for a modular monolith",
     description: "A deep dive into our infrastructure rewrite that reduced AWS costs by 40% and improved developer velocity.",
     slug: "abandoned-microservices",
   },
   {
     category: "AI Systems",
-    date: "Sep 28, 2023",
+    date: "Sep 28, 2025",
     title: "Scaling LLM inference in production",
     description: "Techniques for managing latency, token streaming, and cost when deploying large language models to thousands of users.",
     slug: "scaling-llm-inference",
   },
   {
     category: "Performance",
-    date: "Nov 04, 2023",
+    date: "Nov 04, 2026",
     title: "Achieving 99.99% uptime with global edge networks",
     description: "How we architected a multi-region failover system that survived two major cloud provider outages.",
     slug: "edge-networks-uptime",
