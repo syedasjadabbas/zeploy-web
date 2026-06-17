@@ -1,47 +1,84 @@
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Icosahedron, Line, Sphere } from "@react-three/drei";
-import { Suspense, useMemo, useRef } from "react";
+import { Float, Icosahedron, Line, Sphere, Text } from "@react-three/drei";
+import { Suspense, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
-function Core() {
+function Core({ hovered }: { hovered: boolean }) {
   const ref = useRef<THREE.Group>(null);
+  const zRef = useRef<THREE.Group>(null);
+  const materialRef = useRef<THREE.MeshStandardMaterial>(null);
+
   useFrame((_, dt) => {
+    const targetSpeed = hovered ? 0.8 : 0.18;
     if (ref.current) {
-      ref.current.rotation.y += dt * 0.18;
-      ref.current.rotation.x += dt * 0.06;
+      ref.current.rotation.y += dt * targetSpeed;
+      ref.current.rotation.x += dt * (targetSpeed / 3);
+    }
+    if (zRef.current) {
+      zRef.current.rotation.y -= dt * (targetSpeed / 2); // Counter rotate Z
+    }
+    if (materialRef.current) {
+      materialRef.current.emissiveIntensity = THREE.MathUtils.lerp(
+        materialRef.current.emissiveIntensity,
+        hovered ? 2.0 : 0.6,
+        0.1
+      );
+      materialRef.current.opacity = THREE.MathUtils.lerp(
+        materialRef.current.opacity,
+        hovered ? 0.15 : 0.4,
+        0.1
+      );
     }
   });
+
   return (
     <group ref={ref}>
-      {/* Inner solid core */}
-      <Icosahedron args={[1, 1]}>
+      {/* Premium Z Logo */}
+      <group ref={zRef}>
+        <Text
+          fontSize={1.4}
+          font="https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2"
+          fontWeight="bold"
+          color="#ffffff"
+          position={[0, 0, 0]}
+        >
+          Z
+          <meshStandardMaterial color="#ffffff" emissive="#3B82F6" emissiveIntensity={hovered ? 3 : 1} toneMapped={false} />
+        </Text>
+      </group>
+
+      {/* Inner core - made semi-transparent so Z is visible */}
+      <Icosahedron args={[1.2, 1]}>
         <meshStandardMaterial
+          ref={materialRef}
           color="#3B82F6"
           emissive="#3B82F6"
           emissiveIntensity={0.6}
-          metalness={0.7}
+          metalness={0.8}
           roughness={0.2}
+          transparent
+          opacity={0.4}
         />
       </Icosahedron>
       {/* Wireframe shell */}
-      <Icosahedron args={[1.6, 2]}>
-        <meshBasicMaterial color="#AFD2FA" wireframe transparent opacity={0.45} />
+      <Icosahedron args={[1.8, 2]}>
+        <meshBasicMaterial color="#AFD2FA" wireframe transparent opacity={0.3} />
       </Icosahedron>
-      <Icosahedron args={[2.3, 3]}>
-        <meshBasicMaterial color="#3B82F6" wireframe transparent opacity={0.18} />
+      <Icosahedron args={[2.5, 3]}>
+        <meshBasicMaterial color="#3B82F6" wireframe transparent opacity={hovered ? 0.4 : 0.15} />
       </Icosahedron>
     </group>
   );
 }
 
-function Nodes() {
+function Nodes({ hovered }: { hovered: boolean }) {
   const points = useMemo(() => {
     const arr: THREE.Vector3[] = [];
     const count = 28;
     for (let i = 0; i < count; i++) {
       const phi = Math.acos(-1 + (2 * i) / count);
       const theta = Math.sqrt(count * Math.PI) * phi;
-      const r = 3.2;
+      const r = 3.4;
       arr.push(
         new THREE.Vector3(
           r * Math.cos(theta) * Math.sin(phi),
@@ -57,17 +94,27 @@ function Nodes() {
     const e: [THREE.Vector3, THREE.Vector3][] = [];
     for (let i = 0; i < points.length; i++) {
       for (let j = i + 1; j < points.length; j++) {
-        if (points[i].distanceTo(points[j]) < 2.4) e.push([points[i], points[j]]);
+        if (points[i].distanceTo(points[j]) < 2.6) e.push([points[i], points[j]]);
       }
     }
     return e;
   }, [points]);
 
   const group = useRef<THREE.Group>(null);
+  const materialRef = useRef<THREE.LineBasicMaterial>(null);
+
   useFrame((_, dt) => {
+    const targetSpeed = hovered ? 0.3 : 0.05;
     if (group.current) {
-      group.current.rotation.y -= dt * 0.05;
-      group.current.rotation.x += dt * 0.02;
+      group.current.rotation.y -= dt * targetSpeed;
+      group.current.rotation.x += dt * (targetSpeed / 2.5);
+    }
+    if (materialRef.current) {
+      materialRef.current.opacity = THREE.MathUtils.lerp(
+        materialRef.current.opacity,
+        hovered ? 0.8 : 0.35,
+        0.1
+      );
     }
   });
 
@@ -75,7 +122,7 @@ function Nodes() {
     <group ref={group}>
       {points.map((p, i) => (
         <Sphere key={i} args={[0.045, 16, 16]} position={p}>
-          <meshBasicMaterial color="#AFD2FA" />
+          <meshBasicMaterial color={hovered ? "#ffffff" : "#AFD2FA"} />
         </Sphere>
       ))}
       {edges.map((seg, i) => (
@@ -83,17 +130,21 @@ function Nodes() {
           key={i}
           points={[seg[0], seg[1]]}
           color="#3B82F6"
-          lineWidth={0.6}
+          lineWidth={hovered ? 1.2 : 0.6}
           transparent
           opacity={0.35}
-        />
+        >
+          <lineBasicMaterial ref={i === 0 ? materialRef : null} />
+        </Line>
       ))}
     </group>
   );
 }
 
-function Particles() {
+function Particles({ hovered }: { hovered: boolean }) {
   const ref = useRef<THREE.Points>(null);
+  const materialRef = useRef<THREE.PointsMaterial>(null);
+
   const geom = useMemo(() => {
     const g = new THREE.BufferGeometry();
     const count = 220;
@@ -109,17 +160,29 @@ function Particles() {
     g.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     return g;
   }, []);
+
   useFrame((_, dt) => {
-    if (ref.current) ref.current.rotation.y += dt * 0.03;
+    const targetSpeed = hovered ? 0.15 : 0.03;
+    if (ref.current) ref.current.rotation.y += dt * targetSpeed;
+    if (materialRef.current) {
+      materialRef.current.size = THREE.MathUtils.lerp(
+        materialRef.current.size,
+        hovered ? 0.05 : 0.025,
+        0.1
+      );
+    }
   });
+
   return (
     <points ref={ref} geometry={geom}>
-      <pointsMaterial color="#AFD2FA" size={0.025} transparent opacity={0.7} />
+      <pointsMaterial ref={materialRef} color="#AFD2FA" size={0.025} transparent opacity={0.7} />
     </points>
   );
 }
 
 export default function HeroScene() {
+  const [hovered, setHovered] = useState(false);
+
   return (
     <Canvas
       camera={{ position: [0, 0, 7], fov: 45 }}
@@ -130,11 +193,21 @@ export default function HeroScene() {
         <ambientLight intensity={0.4} />
         <pointLight position={[5, 5, 5]} intensity={1.2} color="#3B82F6" />
         <pointLight position={[-5, -3, -5]} intensity={0.8} color="#AFD2FA" />
+        
+        {/* Invisible hit box for hover detection */}
+        <mesh 
+          onPointerOver={() => setHovered(true)} 
+          onPointerOut={() => setHovered(false)}
+        >
+          <sphereGeometry args={[3.5, 16, 16]} />
+          <meshBasicMaterial transparent opacity={0} />
+        </mesh>
+
         <Float speed={1.2} rotationIntensity={0.4} floatIntensity={0.6}>
-          <Core />
-          <Nodes />
+          <Core hovered={hovered} />
+          <Nodes hovered={hovered} />
         </Float>
-        <Particles />
+        <Particles hovered={hovered} />
       </Suspense>
     </Canvas>
   );

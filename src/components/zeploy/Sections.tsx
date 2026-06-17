@@ -18,6 +18,8 @@ import {
   Sparkles,
   Workflow,
   Zap,
+  Linkedin,
+  Github,
 } from "lucide-react";
 import { DataStreams, NetworkNodes, BlueprintGrid } from "./BackgroundScenes";
 
@@ -466,19 +468,18 @@ export function Process() {
             ))}
           </div>
         </div>
-      </div>
-    </section>
-  );
-}
-
 /* ---------- TEAM ---------- */
 const team = [
   {
     name: "Syed Asjad Abbas",
-    role: "CEO & Founder",
-    skills: ["Frontend Development", "Product Strategy", "UI/UX Systems", "Brand Direction"],
+    role: "CEO & Chief Architect",
+    skills: ["System Architecture", "Cloud Infrastructure", "Engineering Strategy"],
     initials: "SA",
     image: "/src/assets/images/asjad.png",
+    socials: {
+      linkedin: "https://www.linkedin.com/in/syed-asjad-abbas/",
+      github: "https://github.com/syedasjadabbas"
+    }
   },
   {
     name: "Rana Asad Ur Rehman",
@@ -486,6 +487,10 @@ const team = [
     skills: ["Backend Systems", "API Development", "Database Architecture"],
     initials: "RA",
     image: "/src/assets/images/asad.jpeg",
+    socials: {
+      linkedin: "https://www.linkedin.com/in/rana-asad-ur-rahman-0a2457339/",
+      github: "https://github.com/asad-rana306"
+    }
   },
   {
     name: "Ahsan Rashid",
@@ -522,12 +527,28 @@ export function Team() {
               transition={{ ...fadeUp.transition, delay: i * 0.05 }}
               className="glass-card glass-card-hover relative overflow-hidden rounded-3xl p-10"
             >
-              <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-electric/15 blur-[100px]" />
+              <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-electric/15 blur-[100px] transition-all duration-500 group-hover:bg-electric/25" />
               <div className="flex flex-col gap-6">
                 <div className="group/avatar relative aspect-[4/5] w-full overflow-hidden rounded-xl border border-electric/20 bg-surface transition-all duration-300 hover:border-electric/50">
-                  <img src={m.image} alt={m.name} className="h-full w-full object-cover object-[center_15%] transition-all duration-500 group-hover/avatar:scale-[1.03]" />
+                  <img src={m.image} alt={m.name} className="h-full w-full object-cover object-[center_15%] transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]" />
+                  
+                  {/* Social Icons on Hover */}
+                  {m.socials && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-0 transition-opacity duration-300 group-hover/avatar:opacity-100 flex items-end justify-center pb-6 gap-4">
+                      {m.socials.linkedin && (
+                        <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} LinkedIn`} className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+                          <Linkedin className="w-4 h-4" />
+                        </a>
+                      )}
+                      {m.socials.github && (
+                        <a href={m.socials.github} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} GitHub`} className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+                          <Github className="w-4 h-4" />
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </div>
-                <div className="min-w-0 px-2">
+                <div className="min-w-0 px-2 transition-transform duration-300 group-hover:translate-x-1">
                   <h3 className="text-2xl font-semibold">{m.name}</h3>
                   <p className="mt-2 font-mono text-xs uppercase tracking-widest text-electric-soft">
                     {m.role}
@@ -752,10 +773,10 @@ export function ProjectInquiry() {
   );
 }
 
-function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+function FooterLink({ href, children, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
   return (
     <li>
-      <a href={href} className="text-muted-foreground hover:text-electric transition-colors">
+      <a href={href} className="text-muted-foreground hover:text-electric transition-colors" {...props}>
         {children}
       </a>
     </li>
@@ -779,7 +800,7 @@ export function Footer() {
             </p>
             <div className="mt-10">
               <p className="font-mono text-xs uppercase tracking-widest text-electric-soft mb-4">Contact Us</p>
-              <p className="text-foreground text-lg">hello@zeploytech.com</p>
+              <a href="mailto:zeploytech@gmail.com" className="text-foreground text-lg hover:text-electric transition-colors">zeploytech@gmail.com</a>
             </div>
           </div>
           
@@ -807,10 +828,10 @@ export function Footer() {
           <div>
             <h4 className="font-mono text-xs uppercase tracking-widest text-foreground mb-8">Socials</h4>
             <ul className="space-y-4 text-sm">
-              <FooterLink href="#">LinkedIn</FooterLink>
-              <FooterLink href="#">GitHub</FooterLink>
-              <FooterLink href="#">X (Twitter)</FooterLink>
-              <FooterLink href="#">Dribbble</FooterLink>
+              <FooterLink href="https://www.linkedin.com/company/zeploy-tech/" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech LinkedIn">LinkedIn</FooterLink>
+              <FooterLink href="https://github.com/syedasjadabbas/zeploy-web" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech GitHub">GitHub</FooterLink>
+              <FooterLink href="https://www.instagram.com/zeploy.tech/" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech Instagram">Instagram</FooterLink>
+              <FooterLink href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech Facebook">Facebook</FooterLink>
             </ul>
           </div>
         </div>
