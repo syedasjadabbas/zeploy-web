@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { lazy, Suspense, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { lazy, Suspense, useEffect, useState, useRef } from "react";
+import { motion, useInView, animate } from "framer-motion";
 
 import { ArrowUpRight } from "lucide-react";
 import Nav from "@/components/zeploy/Nav";
@@ -41,6 +41,46 @@ export const Route = createFileRoute("/")({
 });
 
 import { LoadingScreen } from "@/components/zeploy/LoadingScreen";
+
+function AnimatedCounter({ from, to, duration, suffix = "" }: { from: number; to: number; duration: number; suffix?: string; }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true });
+  const [isFinished, setIsFinished] = useState(false);
+
+  useEffect(() => {
+    if (isInView && ref.current) {
+      const controls = animate(from, to, {
+        duration,
+        ease: "easeOut",
+        onUpdate(value) {
+          if (ref.current) {
+            ref.current.textContent = `${Math.round(value)}${suffix}`;
+          }
+        },
+        onComplete() {
+          setIsFinished(true);
+        }
+      });
+      return () => controls.stop();
+    }
+  }, [isInView, from, to, duration, suffix]);
+
+  return (
+    <div className="relative inline-block">
+      <span ref={ref} className="relative z-10 font-display text-3xl font-semibold text-foreground md:text-4xl">
+        {from}{suffix}
+      </span>
+      {isFinished && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1.2 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="absolute left-1/2 top-1/2 -z-0 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-electric/20 blur-xl animate-pulse pointer-events-none"
+        />
+      )}
+    </div>
+  );
+}
 
 function ClientHeroScene() {
   const [mounted, setMounted] = useState(false);
@@ -144,20 +184,24 @@ function Hero() {
             transition={{ duration: 0.7, delay: 0.35 }}
             className="mt-16 grid max-w-lg grid-cols-3 gap-6 border-t border-white/5 pt-8"
           >
-            {[
-              { v: "50+", k: "Projects" },
-              { v: "30+", k: "Clients" },
-              { v: "6", k: "Countries" },
-            ].map((s) => (
-              <div key={s.k}>
-                <p className="font-display text-3xl font-semibold text-foreground md:text-4xl">
-                  {s.v}
-                </p>
-                <p className="mt-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-                  {s.k}
-                </p>
-              </div>
-            ))}
+            <div>
+              <AnimatedCounter from={0} to={50} duration={1.5} suffix="+" />
+              <p className="mt-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+                Projects Shipped
+              </p>
+            </div>
+            <div>
+              <AnimatedCounter from={0} to={30} duration={1.5} suffix="+" />
+              <p className="mt-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+                Clients
+              </p>
+            </div>
+            <div>
+              <AnimatedCounter from={0} to={6} duration={1.5} suffix="" />
+              <p className="mt-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+                Countries Served
+              </p>
+            </div>
           </motion.div>
         </div>
 
@@ -175,8 +219,8 @@ function Hero() {
             transition={{ delay: 0.6, duration: 0.6 }}
             className="absolute left-4 top-8 glass-card rounded-xl px-4 py-3 font-mono text-[11px] uppercase tracking-widest"
           >
-            <p className="text-muted-foreground">node · us-east-1</p>
-            <p className="mt-1 text-electric-soft">p95 84ms · 12.4K rps</p>
+            <p className="text-electric font-semibold">ZEPLOY TECH</p>
+            <p className="mt-1 text-muted-foreground">AI · WEB · CLOUD</p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -184,8 +228,8 @@ function Hero() {
             transition={{ delay: 0.8, duration: 0.6 }}
             className="absolute bottom-10 right-2 glass-card rounded-xl px-4 py-3 font-mono text-[11px] uppercase tracking-widest"
           >
-            <p className="text-muted-foreground">deploy · build #1847</p>
-            <p className="mt-1 text-electric-soft">✓ shipped · 1m 12s</p>
+            <p className="text-muted-foreground">CURRENT STATUS</p>
+            <p className="mt-1 text-emerald-400">✓ ACCEPTING PROJECTS</p>
           </motion.div>
         </div>
       </div>
