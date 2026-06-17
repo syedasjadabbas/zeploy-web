@@ -86,7 +86,7 @@ export function Services() {
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Services</SectionLabel>
-          <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
             Engineering across the full product surface.
           </h2>
           <p className="mt-5 text-lg text-muted-foreground">
@@ -143,13 +143,13 @@ const stackIcons: Record<string, typeof Code2> = {
 
 export function TechStack() {
   return (
-    <section className="relative border-t border-white/5 px-6 py-32 md:px-12 overflow-hidden">
+    <section id="stack" className="relative border-t border-white/5 px-6 py-32 md:px-12 overflow-hidden">
       <NetworkNodes />
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div className="max-w-2xl">
             <SectionLabel>Stack</SectionLabel>
-            <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
+            <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
               The toolchain behind every shipped product.
             </h2>
           </div>
@@ -226,6 +226,30 @@ const work = [
       "AI assistant"
     ],
     image: "/projects/educart.png"
+  },
+  {
+    name: "NeuralPay",
+    kind: "SaaS · Billing Platform",
+    desc: "A high-performance programmable billing engine built to process thousands of subscription events per minute with flawless accuracy, reducing failed renewals by 62%.",
+    tech: ["Next.js", "Node.js", "PostgreSQL", "Redis", "Stripe"],
+    features: ["Idempotent Webhooks", "Real-time Metrics", "Dynamic Proration", "Automated Dunning"],
+    image: "/projects/neuralpay.png"
+  },
+  {
+    name: "Cortex Mesh",
+    kind: "AI · Distributed Infrastructure",
+    desc: "A distributed LLM inference fabric that intelligently routes workloads across a heterogeneous cluster of GPUs, maximizing throughput and reducing cost-per-token.",
+    tech: ["Python", "FastAPI", "Kubernetes", "gRPC", "vLLM"],
+    features: ["Dynamic Batching", "Cost-aware Routing", "Auto-scaling Pools", "Model Caching"],
+    image: "/projects/cortex.png"
+  },
+  {
+    name: "Synthwave",
+    kind: "Analytics · Real-time Engine",
+    desc: "A sub-second analytics engine ingesting high-volume event streams to power live operational dashboards and anomaly detection for enterprise organizations.",
+    tech: ["TypeScript", "Kafka", "ClickHouse", "React", "WebSocket"],
+    features: ["Live Geographic Maps", "Anomaly Detection", "Custom Aggregations", "Role-based Access"],
+    image: "/projects/synthwave.png"
   }
 ];
 
@@ -235,7 +259,7 @@ export function FeaturedWork() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Case Studies</SectionLabel>
-          <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
             Representative product concepts demonstrating Zeploy's engineering capabilities.
           </h2>
         </motion.div>
@@ -322,7 +346,7 @@ export function WhyChoose() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Why Teams Choose Zeploy</SectionLabel>
-          <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
             A studio, not a staffing agency.
           </h2>
         </motion.div>
@@ -351,11 +375,11 @@ export function WhyChoose() {
 export function Reliability() {
   const bars = Array.from({ length: 40 }, () => 0.6 + Math.random() * 0.4);
   return (
-    <section className="relative border-t border-white/5 px-6 py-32 md:px-12">
+    <section id="reliability" className="relative border-t border-white/5 px-6 py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Reliability</SectionLabel>
-          <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
             Operations you can monitor in real time.
           </h2>
         </motion.div>
@@ -437,7 +461,7 @@ export function Process() {
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Process</SectionLabel>
-          <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
             From signed contract to shipped system.
           </h2>
         </motion.div>
@@ -519,7 +543,7 @@ export function Team() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Leadership</SectionLabel>
-          <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
             The engineers behind the studio.
           </h2>
         </motion.div>
@@ -601,7 +625,7 @@ export function Testimonials() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Testimonials</SectionLabel>
-          <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
             Trusted by teams shipping at scale.
           </h2>
         </motion.div>
@@ -653,7 +677,7 @@ export function Blog() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Engineering Notes</SectionLabel>
-          <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
             Field notes from production systems.
           </h2>
         </motion.div>
@@ -692,7 +716,7 @@ export function ProjectInquiry() {
       <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-16 lg:gap-24">
         <motion.div {...fadeUp}>
           <SectionLabel>Project Inquiry</SectionLabel>
-          <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-6xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
             Let's architect your next platform.
           </h2>
           <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
