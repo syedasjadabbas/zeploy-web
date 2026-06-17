@@ -82,7 +82,7 @@ export function Services() {
     <section id="services" className="relative border-t border-white/5 px-6 py-32 md:px-12">
       <DataStreams />
       <div className="mx-auto max-w-7xl relative z-10">
-        <motion.div {...fadeUp} className="max-w-2xl">
+        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Services</SectionLabel>
           <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
             Engineering across the full product surface.
@@ -282,7 +282,7 @@ export function FeaturedWork() {
   return (
     <section id="work" className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-background">
       <div className="mx-auto max-w-7xl">
-        <motion.div {...fadeUp} className="max-w-2xl">
+        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Case Studies</SectionLabel>
           <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
             Representative product concepts demonstrating Zeploy's engineering capabilities.
@@ -387,7 +387,7 @@ export function WhyChoose() {
   return (
     <section className="relative border-t border-white/5 px-6 py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
-        <motion.div {...fadeUp} className="max-w-2xl">
+        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Why Teams Choose Zeploy</SectionLabel>
           <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
             A studio, not a staffing agency.
@@ -420,7 +420,7 @@ export function Reliability() {
   return (
     <section className="relative border-t border-white/5 px-6 py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
-        <motion.div {...fadeUp} className="max-w-2xl">
+        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Reliability</SectionLabel>
           <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
             Operations you can monitor in real time.
@@ -502,7 +502,7 @@ export function Process() {
     <section className="relative border-t border-white/5 px-6 py-32 md:px-12 overflow-hidden">
       <BlueprintGrid />
       <div className="mx-auto max-w-7xl relative z-10">
-        <motion.div {...fadeUp} className="max-w-2xl">
+        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Process</SectionLabel>
           <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
             From signed contract to shipped system.
@@ -576,7 +576,7 @@ export function Team() {
   return (
     <section id="team" className="relative border-t border-white/5 px-6 py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
-        <motion.div {...fadeUp} className="max-w-2xl">
+        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Leadership</SectionLabel>
           <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
             The engineers behind the studio.
@@ -593,8 +593,8 @@ export function Team() {
             >
               <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-electric/15 blur-[100px]" />
               <div className="flex flex-col gap-6">
-                <div className="group/avatar relative h-72 w-full overflow-hidden rounded-xl border border-electric/20 bg-surface transition-all duration-300 hover:border-electric/50">
-                  <img src={m.image} alt={m.name} className="h-full w-full object-cover object-top transition-all duration-500 group-hover/avatar:scale-105" />
+                <div className="group/avatar relative aspect-[4/5] w-full overflow-hidden rounded-xl border border-electric/20 bg-surface transition-all duration-300 hover:border-electric/50">
+                  <img src={m.image} alt={m.name} className="h-full w-full object-cover object-[center_15%] transition-all duration-500 group-hover/avatar:scale-[1.03]" />
                 </div>
                 <div className="min-w-0 px-2">
                   <h3 className="text-2xl font-semibold">{m.name}</h3>
@@ -642,7 +642,7 @@ export function Testimonials() {
   return (
     <section className="relative border-t border-white/5 px-6 py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
-        <motion.div {...fadeUp} className="max-w-2xl">
+        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Testimonials</SectionLabel>
           <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
             Trusted by teams shipping at scale.
@@ -694,7 +694,7 @@ export function Blog() {
   return (
     <section id="insights" className="relative border-t border-white/5 px-6 py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
-        <motion.div {...fadeUp} className="max-w-2xl">
+        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Engineering Notes</SectionLabel>
           <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
             Field notes from production systems.
