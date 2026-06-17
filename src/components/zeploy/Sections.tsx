@@ -19,6 +19,7 @@ import {
   Workflow,
   Zap,
 } from "lucide-react";
+import { DataStreams, NetworkNodes, BlueprintGrid } from "./BackgroundScenes";
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -79,7 +80,8 @@ const services = [
 export function Services() {
   return (
     <section id="services" className="relative border-t border-white/5 px-6 py-32 md:px-12">
-      <div className="mx-auto max-w-7xl">
+      <DataStreams />
+      <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="max-w-2xl">
           <SectionLabel>Services</SectionLabel>
           <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
@@ -97,16 +99,16 @@ export function Services() {
               key={s.title}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.04 }}
-              className="group relative bg-background p-8 transition-colors hover:bg-surface/60"
+              className="group relative bg-background p-10 transition-colors hover:bg-surface/60 md:p-12"
             >
               <div className="flex items-center justify-between">
                 <div className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-surface text-electric transition-all group-hover:border-electric/60 group-hover:glow-electric">
                   <s.icon className="h-5 w-5" />
                 </div>
-                <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
+                <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
               </div>
-              <h3 className="mt-6 text-xl font-semibold">{s.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
+              <h3 className="mt-8 text-2xl font-semibold">{s.title}</h3>
+              <p className="mt-3 text-base leading-relaxed text-muted-foreground">{s.desc}</p>
               <ul className="mt-6 space-y-1.5 font-mono text-xs text-electric-soft/80">
                 {s.caps.map((c) => (
                   <li key={c} className="flex items-center gap-2">
@@ -139,8 +141,9 @@ const stackIcons: Record<string, typeof Code2> = {
 
 export function TechStack() {
   return (
-    <section className="relative border-t border-white/5 px-6 py-32 md:px-12">
-      <div className="mx-auto max-w-7xl">
+    <section className="relative border-t border-white/5 px-6 py-32 md:px-12 overflow-hidden">
+      <NetworkNodes />
+      <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div className="max-w-2xl">
             <SectionLabel>Stack</SectionLabel>
@@ -161,7 +164,7 @@ export function TechStack() {
                 key={category}
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: idx * 0.05 }}
-                className="glass-card glass-card-hover rounded-2xl p-8"
+                className="glass-card glass-card-hover rounded-3xl p-10 md:p-12"
               >
                 <div className="flex items-center justify-between border-b border-white/5 pb-5">
                   <div className="flex items-center gap-3">
@@ -196,129 +199,170 @@ const work = [
   {
     name: "NeuralPay",
     kind: "SaaS · Billing Platform",
-    desc: "High-performance billing engine processing thousands of subscription events per minute.",
-    challenge: "Replace a brittle legacy billing layer with a programmable, audit-ready system.",
+    problem: "A brittle legacy billing layer that caused failed renewals and lacked auditable transaction history.",
+    solution: "A high-performance programmable billing engine built to process thousands of subscription events per minute with flawless accuracy.",
     architecture: "Event-sourced ledger · Postgres + Redis streams · Stripe orchestration",
-    outcome: "62% reduction in failed renewals · 4x faster invoicing pipeline",
-    tech: ["Next.js", "Node", "Postgres", "Redis", "Stripe"],
+    features: ["Idempotent Webhooks", "Real-time Metrics", "Dynamic Proration", "Automated Dunning"],
+    outcome: "62% reduction in failed renewals and 4x faster invoicing pipeline.",
+    tech: ["Next.js", "Node.js", "PostgreSQL", "Redis", "Stripe"],
     metrics: [
       { k: "p95 latency", v: "84ms" },
       { k: "Uptime", v: "99.99%" },
       { k: "Events/min", v: "12.4K" },
     ],
+    image: "/projects/neuralpay.png"
   },
   {
     name: "Cortex Mesh",
     kind: "AI · Distributed Infrastructure",
-    desc: "Distributed LLM inference fabric routing workloads across heterogeneous GPU pools.",
-    challenge: "Serve mixed model sizes with predictable latency and cost.",
-    architecture: "K8s scheduler · gRPC mesh · vLLM workers · Prometheus telemetry",
-    outcome: "3.1x throughput per GPU · 47% lower cost-per-token",
+    problem: "Unpredictable inference latency and astronomical costs when serving large language models at scale.",
+    solution: "A distributed LLM inference fabric that intelligently routes workloads across a heterogeneous cluster of GPUs.",
+    architecture: "Kubernetes Scheduler · gRPC Service Mesh · vLLM Workers · Prometheus Telemetry",
+    features: ["Dynamic Batching", "Cost-aware Routing", "Auto-scaling Pools", "Model Caching"],
+    outcome: "3.1x throughput per GPU and 47% reduction in cost-per-token.",
     tech: ["Python", "FastAPI", "Kubernetes", "gRPC", "vLLM"],
     metrics: [
       { k: "Throughput", v: "3.1x" },
       { k: "Cost / token", v: "−47%" },
       { k: "Active nodes", v: "128" },
     ],
+    image: "/projects/cortex.png"
   },
   {
     name: "Synthwave",
     kind: "Analytics · Real-time Engine",
-    desc: "Sub-second analytics over high-volume event streams powering live operator dashboards.",
-    challenge: "Move from nightly batch to sub-second answers on billions of rows.",
-    architecture: "Columnar store · Kafka ingest · Materialized rollups · WebSocket fanout",
-    outcome: "Query times from 18s → 240ms · adopted org-wide in 6 weeks",
+    problem: "Nightly batch processing meant operators were making decisions on stale, 24-hour-old data.",
+    solution: "A sub-second analytics engine ingesting high-volume event streams to power live operational dashboards.",
+    architecture: "Columnar OLAP Store · Kafka Ingestion · Materialized Rollups · WebSocket Fanout",
+    features: ["Live Geographic Maps", "Anomaly Detection", "Custom Aggregations", "Role-based Access"],
+    outcome: "Query times reduced from 18s to 240ms, adopted organization-wide in 6 weeks.",
     tech: ["TypeScript", "Kafka", "ClickHouse", "React", "WebSocket"],
     metrics: [
       { k: "Query p50", v: "240ms" },
       { k: "Events/day", v: "1.2B" },
       { k: "Dashboards", v: "340+" },
     ],
+    image: "/projects/synthwave.png"
+  },
+  {
+    name: "EduCart",
+    kind: "Full-Stack E-Commerce",
+    problem: "Frequent database locks and severe lag during high-traffic flash sales events.",
+    solution: "A massive, high-throughput retail platform powering comprehensive product catalogs and secure edge-cached sessions.",
+    architecture: "Edge Caching CDN · Stateful Cart Streams · Distributed Microservices",
+    features: ["Frictionless Checkout", "Inventory Sync", "Dynamic Pricing", "Admin Dashboard"],
+    outcome: "Zero downtime during peak sales events with sub-500ms checkout times.",
+    tech: ["React", "Node.js", "MongoDB", "Redis"],
+    metrics: [
+      { k: "Concurrency", v: "45K" },
+      { k: "Uptime", v: "99.99%" },
+      { k: "Checkout", v: "<500ms" },
+    ],
+    image: "/projects/educart.png"
+  },
+  {
+    name: "MockAI",
+    kind: "AI Evaluation Platform",
+    problem: "Manual screening of thousands of candidates was too slow and highly subjective.",
+    solution: "Intelligent recruitment tool utilizing real-time speech analysis, facial tracking, and NLP to provide candidate performance scoring.",
+    architecture: "WebRTC Streams · Async Python Workers · Model Inference Endpoints",
+    features: ["Live Video Analysis", "Facial Emotion Tracking", "NLP Scoring", "Bias Mitigation"],
+    outcome: "Reduced manual interview screening time by 74% while improving candidate quality.",
+    tech: ["React", "FastAPI", "Python", "MongoDB", "WebRTC"],
+    metrics: [
+      { k: "Latency", v: "110ms" },
+      { k: "Accuracy", v: "92%" },
+      { k: "Time Saved", v: "74%" },
+    ],
+    image: "/projects/mockai.png"
   },
 ];
 
 export function FeaturedWork() {
   return (
-    <section id="work" className="relative border-t border-white/5 px-6 py-32 md:px-12">
+    <section id="work" className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-background">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="max-w-2xl">
-          <SectionLabel>Featured Work</SectionLabel>
+          <SectionLabel>Case Studies</SectionLabel>
           <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
-            Systems running in production today.
+            Representative product concepts demonstrating Zeploy's engineering capabilities.
           </h2>
         </motion.div>
 
-        <div className="mt-16 space-y-6">
+        <div className="mt-24 space-y-24">
           {work.map((p, i) => (
             <motion.article
               key={p.name}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.05 }}
-              className="glass-card glass-card-hover overflow-hidden rounded-3xl"
+              className="group glass-card overflow-hidden rounded-[2.5rem]"
             >
-              <div className="grid gap-10 p-8 md:grid-cols-[1.2fr_1fr] md:p-12">
-                <div>
-                  <p className="font-mono text-xs uppercase tracking-widest text-electric">
-                    {String(i + 1).padStart(2, "0")} · {p.kind}
-                  </p>
-                  <h3 className="mt-3 text-3xl font-semibold md:text-4xl">{p.name}</h3>
-                  <p className="mt-3 max-w-xl text-muted-foreground">{p.desc}</p>
+              <div className="grid lg:grid-cols-2">
+                <div className="p-10 md:p-16 flex flex-col justify-center">
+                  <div className="flex items-center gap-3">
+                    <span className="h-2 w-2 rounded-full bg-electric animate-pulse" />
+                    <p className="font-mono text-xs uppercase tracking-widest text-electric">
+                      {p.kind}
+                    </p>
+                  </div>
+                  <h3 className="mt-6 text-4xl font-semibold md:text-5xl">{p.name}</h3>
 
-                  <dl className="mt-8 space-y-4 text-sm">
-                    <div className="flex gap-6">
-                      <dt className="w-28 shrink-0 font-mono text-xs uppercase tracking-widest text-electric-soft">
-                        Challenge
-                      </dt>
-                      <dd className="text-foreground/90">{p.challenge}</dd>
+                  <dl className="mt-12 space-y-8 text-sm">
+                    <div className="grid sm:grid-cols-[140px_1fr] gap-2">
+                      <dt className="font-mono text-[11px] uppercase tracking-widest text-electric-soft">Problem</dt>
+                      <dd className="text-foreground/90 leading-relaxed">{p.problem}</dd>
                     </div>
-                    <div className="flex gap-6">
-                      <dt className="w-28 shrink-0 font-mono text-xs uppercase tracking-widest text-electric-soft">
-                        Architecture
-                      </dt>
-                      <dd className="text-foreground/90">{p.architecture}</dd>
+                    <div className="grid sm:grid-cols-[140px_1fr] gap-2">
+                      <dt className="font-mono text-[11px] uppercase tracking-widest text-electric-soft">Solution</dt>
+                      <dd className="text-foreground/90 leading-relaxed">{p.solution}</dd>
                     </div>
-                    <div className="flex gap-6">
-                      <dt className="w-28 shrink-0 font-mono text-xs uppercase tracking-widest text-electric-soft">
-                        Outcome
-                      </dt>
-                      <dd className="text-foreground/90">{p.outcome}</dd>
+                    <div className="grid sm:grid-cols-[140px_1fr] gap-2">
+                      <dt className="font-mono text-[11px] uppercase tracking-widest text-electric-soft">Architecture</dt>
+                      <dd className="text-foreground/90 leading-relaxed">{p.architecture}</dd>
+                    </div>
+                    <div className="grid sm:grid-cols-[140px_1fr] gap-2">
+                      <dt className="font-mono text-[11px] uppercase tracking-widest text-electric-soft">Features</dt>
+                      <dd className="text-foreground/90 leading-relaxed">{p.features.join(" · ")}</dd>
+                    </div>
+                    <div className="grid sm:grid-cols-[140px_1fr] gap-2">
+                      <dt className="font-mono text-[11px] uppercase tracking-widest text-electric-soft">Business Outcome</dt>
+                      <dd className="text-foreground/90 leading-relaxed text-emerald-400 font-medium">{p.outcome}</dd>
                     </div>
                   </dl>
 
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {p.tech.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-md border border-white/10 px-2.5 py-1 font-mono text-xs text-muted-foreground"
-                      >
-                        {t}
-                      </span>
-                    ))}
+                  <div className="mt-12 pt-8 border-t border-white/5">
+                    <p className="font-mono text-[11px] uppercase tracking-widest text-electric-soft mb-4">Technology Stack</p>
+                    <div className="flex flex-wrap gap-2">
+                      {p.tech.map((t) => (
+                        <span
+                          key={t}
+                          className="rounded-md border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-xs text-foreground transition-colors hover:border-electric/50"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
-                {/* Dashboard preview */}
-                <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-surface/60 p-6">
-                  <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                    <div className="flex items-center gap-2">
-                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                      <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-                        {p.name}.live
-                      </span>
+                <div className="relative border-l border-white/5 bg-surface/30 overflow-hidden min-h-[400px]">
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent z-10 pointer-events-none" />
+                  <img 
+                    src={p.image} 
+                    alt={p.name} 
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                  {/* Floating Metrics Badge */}
+                  <div className="absolute bottom-10 right-10 left-10 lg:left-auto z-20 glass-card rounded-2xl p-6 backdrop-blur-xl border border-white/10 shadow-2xl">
+                    <div className="flex justify-between lg:grid lg:grid-cols-3 gap-6 text-center">
+                      {p.metrics.map((m) => (
+                        <div key={m.k}>
+                          <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground whitespace-nowrap">{m.k}</p>
+                          <p className="mt-2 text-xl font-semibold text-foreground">{m.v}</p>
+                        </div>
+                      ))}
                     </div>
-                    <Activity className="h-3.5 w-3.5 text-electric" />
                   </div>
-                  <div className="mt-6 grid grid-cols-3 gap-4">
-                    {p.metrics.map((m) => (
-                      <div key={m.k}>
-                        <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                          {m.k}
-                        </p>
-                        <p className="mt-1 text-xl font-semibold text-foreground">{m.v}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <Sparkline />
                 </div>
               </div>
             </motion.article>
@@ -326,28 +370,6 @@ export function FeaturedWork() {
         </div>
       </div>
     </section>
-  );
-}
-
-function Sparkline() {
-  const points = [12, 18, 14, 22, 19, 28, 24, 34, 30, 42, 38, 48, 44, 56];
-  const max = Math.max(...points);
-  const path = points
-    .map((v, i) => `${(i / (points.length - 1)) * 100},${100 - (v / max) * 90}`)
-    .join(" ");
-  return (
-    <div className="mt-6">
-      <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="h-24 w-full">
-        <defs>
-          <linearGradient id="sg" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.45" />
-            <stop offset="100%" stopColor="#3B82F6" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <polyline points={path} fill="none" stroke="#3B82F6" strokeWidth="1.2" />
-        <polygon points={`0,100 ${path} 100,100`} fill="url(#sg)" />
-      </svg>
-    </div>
   );
 }
 
@@ -378,12 +400,12 @@ export function WhyChoose() {
               key={r.title}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.04 }}
-              className="glass-card glass-card-hover group relative overflow-hidden rounded-2xl p-8"
+              className="glass-card glass-card-hover group relative overflow-hidden rounded-3xl p-10 md:p-12"
             >
               <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-electric/10 blur-3xl opacity-0 transition-opacity group-hover:opacity-100" />
-              <r.icon className="h-6 w-6 text-electric" />
-              <h3 className="mt-6 text-lg font-semibold">{r.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{r.desc}</p>
+              <r.icon className="h-8 w-8 text-electric" />
+              <h3 className="mt-8 text-2xl font-semibold">{r.title}</h3>
+              <p className="mt-3 text-base leading-relaxed text-muted-foreground">{r.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -477,8 +499,9 @@ const process = [
 
 export function Process() {
   return (
-    <section className="relative border-t border-white/5 px-6 py-32 md:px-12">
-      <div className="mx-auto max-w-7xl">
+    <section className="relative border-t border-white/5 px-6 py-32 md:px-12 overflow-hidden">
+      <BlueprintGrid />
+      <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="max-w-2xl">
           <SectionLabel>Process</SectionLabel>
           <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-5xl">
@@ -566,21 +589,21 @@ export function Team() {
               key={m.name}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.05 }}
-              className="glass-card glass-card-hover relative overflow-hidden rounded-2xl p-8"
+              className="glass-card glass-card-hover relative overflow-hidden rounded-3xl p-10"
             >
-              <div className="absolute right-0 top-0 h-40 w-40 -translate-y-1/2 translate-x-1/2 rounded-full bg-electric/15 blur-3xl" />
-              <div className="flex items-start gap-5">
-                <div className="group/avatar grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-xl border border-electric/40 bg-surface transition-colors duration-300 hover:border-electric/80">
-                  <img src={m.image} alt={m.name} className="h-full w-full object-cover grayscale transition-all duration-300 group-hover/avatar:scale-110 group-hover/avatar:grayscale-0" />
+              <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-electric/15 blur-[100px]" />
+              <div className="flex flex-col gap-6">
+                <div className="group/avatar relative h-72 w-full overflow-hidden rounded-xl border border-electric/20 bg-surface transition-all duration-300 hover:border-electric/50">
+                  <img src={m.image} alt={m.name} className="h-full w-full object-cover transition-all duration-500 group-hover/avatar:scale-105" />
                 </div>
-                <div className="min-w-0">
-                  <h3 className="text-xl font-semibold">{m.name}</h3>
-                  <p className="mt-1 font-mono text-xs uppercase tracking-widest text-electric-soft">
+                <div className="min-w-0 px-2">
+                  <h3 className="text-2xl font-semibold">{m.name}</h3>
+                  <p className="mt-2 font-mono text-xs uppercase tracking-widest text-electric-soft">
                     {m.role}
                   </p>
                 </div>
               </div>
-              <div className="mt-8 grid gap-2 sm:grid-cols-2">
+              <div className="mt-8 grid gap-2 sm:grid-cols-2 px-2">
                 {m.skills.map((s) => (
                   <div
                     key={s}
@@ -632,9 +655,9 @@ export function Testimonials() {
               key={i}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.05 }}
-              className="glass-card rounded-2xl p-8"
+              className="glass-card rounded-3xl p-10 md:p-12"
             >
-              <blockquote className="text-base leading-relaxed text-foreground/90">
+              <blockquote className="text-lg leading-relaxed text-foreground/90">
                 "{t.q}"
               </blockquote>
               <figcaption className="mt-6 border-t border-white/5 pt-5 font-mono text-xs uppercase tracking-widest text-electric-soft">
@@ -685,15 +708,15 @@ export function Blog() {
               key={p.title}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.05 }}
-              className="group bg-background p-8 transition-colors hover:bg-surface/60"
+              className="group bg-background p-10 transition-colors hover:bg-surface/60 md:p-12"
             >
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[11px] uppercase tracking-widest text-electric">
                   {p.tag}
                 </span>
-                <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
+                <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
               </div>
-              <h3 className="mt-12 text-xl font-semibold leading-snug text-foreground group-hover:text-electric-soft">
+              <h3 className="mt-12 text-2xl font-semibold leading-snug text-foreground group-hover:text-electric-soft">
                 {p.title}
               </h3>
               <p className="mt-6 font-mono text-xs text-muted-foreground">{p.read}</p>
@@ -706,116 +729,169 @@ export function Blog() {
 }
 
 /* ---------- CTA + FOOTER ---------- */
-export function CTA() {
+export function ProjectInquiry() {
   return (
-    <section className="relative border-t border-white/5 px-6 py-32 md:px-12">
-      <div className="mx-auto max-w-5xl">
-        <motion.div
-          {...fadeUp}
-          className="glass-card relative overflow-hidden rounded-3xl p-12 text-center md:p-20"
-        >
-          <div className="absolute inset-0 z-0">
-            <img src="/src/assets/images/banner.png" alt="Zeploy Banner" className="h-full w-full object-cover opacity-20 mix-blend-screen" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-background/90" />
-            <div className="absolute inset-0 grid-bg opacity-30" />
-          </div>
-          <div className="relative z-10">
-            <SectionLabel>Start a project</SectionLabel>
-            <h2 className="mx-auto mt-6 max-w-3xl text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-6xl">
-              Let's deploy your vision.
-            </h2>
-            <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
-              Tell us what you're building. We'll come back with an architecture, a timeline, and a
-              senior engineer on the call.
-            </p>
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-              <a
-                href="mailto:hello@zeploytech.com"
-                className="group inline-flex items-center gap-2 rounded-full bg-electric px-6 py-3 text-sm font-medium text-primary-foreground transition-all hover:glow-electric"
-              >
-                Start a conversation
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </a>
-              <a
-                href="#work"
-                className="rounded-full border border-white/10 px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-electric/50 hover:text-electric"
-              >
-                View our work
-              </a>
+    <section id="contact" className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-surface-2/30">
+      <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-16 lg:gap-24">
+        <motion.div {...fadeUp}>
+          <SectionLabel>Project Inquiry</SectionLabel>
+          <h2 className="mt-6 text-4xl font-semibold leading-[1.05] text-gradient-soft md:text-6xl">
+            Let's architect your next platform.
+          </h2>
+          <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+            Fill out the details of your project. Whether you have a complete technical specification or just a feature list, we'll review it and get back to you with an architecture proposal and timeline within 24 hours.
+          </p>
+          
+          <div className="mt-12 space-y-6">
+            <div className="flex items-start gap-4">
+              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-electric/40 bg-surface text-electric">
+                <Brain className="h-5 w-5" />
+              </div>
+              <div>
+                <h4 className="text-lg font-medium text-foreground">Technical Discovery</h4>
+                <p className="mt-1 text-sm text-muted-foreground">We dive deep into your architecture requirements.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-electric/40 bg-surface text-electric">
+                <Zap className="h-5 w-5" />
+              </div>
+              <div>
+                <h4 className="text-lg font-medium text-foreground">Rapid Prototyping</h4>
+                <p className="mt-1 text-sm text-muted-foreground">Clear milestones, wireframes, and scalable design.</p>
+              </div>
             </div>
           </div>
+        </motion.div>
+
+        <motion.div {...fadeUp} className="glass-card rounded-[2.5rem] p-8 md:p-12">
+          <form className="grid gap-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Full Name</label>
+                <input type="text" placeholder="Jane Doe" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Email</label>
+                <input type="email" placeholder="jane@company.com" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Company</label>
+              <input type="text" placeholder="Your Organization" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Budget Range</label>
+                <select className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors appearance-none">
+                  <option value="">Select a range</option>
+                  <option value="10k-25k">$10k - $25k</option>
+                  <option value="25k-50k">$25k - $50k</option>
+                  <option value="50k-100k">$50k - $100k</option>
+                  <option value="100k+">$100k+</option>
+                </select>
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Project Type</label>
+                <select className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors appearance-none">
+                  <option value="">Select a type</option>
+                  <option value="web">Web Application</option>
+                  <option value="mobile">Mobile Application</option>
+                  <option value="ai">AI System / Automation</option>
+                  <option value="saas">SaaS Development</option>
+                  <option value="cloud">Cloud Infrastructure</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Project Description</label>
+              <textarea rows={4} placeholder="Tell us about the core features, tech stack preferences, and timelines..." className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors resize-none" />
+            </div>
+
+            <button type="button" onClick={(e) => e.preventDefault()} className="mt-4 w-full rounded-xl bg-electric px-6 py-4 text-sm font-semibold text-primary-foreground transition-all hover:glow-electric hover:scale-[1.02]">
+              Submit Request
+            </button>
+          </form>
         </motion.div>
       </div>
     </section>
   );
 }
 
-export function Footer() {
+function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <footer className="border-t border-white/5 px-6 py-20 md:px-12">
-      <div className="mx-auto max-w-7xl">
-        <div className="grid gap-12 md:grid-cols-4">
-          <div>
-            <p className="flex items-center gap-2 font-display text-xl font-semibold">
-              <img src="/logo.png" alt="Zeploy Tech Logo" className="h-7 w-auto" />
-              <span><span className="text-electric">ZEPLOY</span> TECH</span>
-            </p>
-            <p className="mt-4 max-w-xs text-sm text-muted-foreground">
-              Software engineering & AI studio building scalable systems for modern teams.
-            </p>
-            <div className="mt-6 flex gap-3 font-mono text-xs">
-              {["GitHub", "LinkedIn", "X", "Dribbble"].map((s) => (
-                <a
-                  key={s}
-                  href="#"
-                  className="rounded-md border border-white/10 px-2.5 py-1 text-muted-foreground transition-colors hover:border-electric/50 hover:text-electric"
-                >
-                  {s}
-                </a>
-              ))}
-            </div>
-          </div>
-          <FooterCol
-            title="Services"
-            items={["Web Applications", "Mobile Apps", "SaaS Development", "AI Systems", "Cloud Solutions", "MVP Development"]}
-          />
-          <FooterCol
-            title="Studio"
-            items={["Work", "Process", "Team", "Engineering Notes", "Careers"]}
-          />
-          <div>
-            <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-              Contact
-            </p>
-            <ul className="mt-5 space-y-3 text-sm">
-              <li className="text-foreground">hello@zeploytech.com</li>
-              <li className="text-muted-foreground">Lahore, Pakistan</li>
-              <li className="text-muted-foreground">Working with teams in 6 countries</li>
-            </ul>
-          </div>
-        </div>
-        <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-white/5 pt-8 font-mono text-xs text-muted-foreground md:flex-row md:items-center">
-          <p>© {new Date().getFullYear()} Zeploy Tech. All rights reserved.</p>
-          <p>We Deploy Your Vision.</p>
-        </div>
-      </div>
-    </footer>
+    <li>
+      <a href={href} className="text-muted-foreground hover:text-electric transition-colors">
+        {children}
+      </a>
+    </li>
   );
 }
 
-function FooterCol({ title, items }: { title: string; items: string[] }) {
+export function Footer() {
   return (
-    <div>
-      <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">{title}</p>
-      <ul className="mt-5 space-y-3 text-sm">
-        {items.map((i) => (
-          <li key={i}>
-            <a href="#" className="text-foreground/90 transition-colors hover:text-electric">
-              {i}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <footer className="border-t border-white/5 bg-background pt-32 pb-12 px-6 md:px-12">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-5 border-b border-white/5 pb-20">
+          <div className="lg:col-span-2">
+            <div className="flex flex-col items-start">
+              <img src="/logo.png" alt="Zeploy Tech" className="h-12 w-auto mb-6" />
+              <h3 className="font-display text-2xl font-semibold tracking-widest text-foreground">
+                <span className="text-electric">ZEPLOY</span> TECH
+              </h3>
+            </div>
+            <p className="mt-6 max-w-sm text-base leading-relaxed text-muted-foreground">
+              A premium software engineering and AI studio dedicated to building robust, scalable, and visually stunning digital products.
+            </p>
+            <div className="mt-10">
+              <p className="font-mono text-xs uppercase tracking-widest text-electric-soft mb-4">Contact Us</p>
+              <p className="text-foreground text-lg">hello@zeploytech.com</p>
+            </div>
+          </div>
+          
+          <div>
+            <h4 className="font-mono text-xs uppercase tracking-widest text-foreground mb-8">Services</h4>
+            <ul className="space-y-4 text-sm">
+              <FooterLink href="#services">Web Applications</FooterLink>
+              <FooterLink href="#services">Mobile Apps</FooterLink>
+              <FooterLink href="#services">SaaS Development</FooterLink>
+              <FooterLink href="#services">AI Systems</FooterLink>
+              <FooterLink href="#services">Cloud Solutions</FooterLink>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-mono text-xs uppercase tracking-widest text-foreground mb-8">Studio</h4>
+            <ul className="space-y-4 text-sm">
+              <FooterLink href="#work">Featured Work</FooterLink>
+              <FooterLink href="#team">Our Team</FooterLink>
+              <FooterLink href="#process">The Process</FooterLink>
+              <FooterLink href="#insights">Engineering Notes</FooterLink>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-mono text-xs uppercase tracking-widest text-foreground mb-8">Socials</h4>
+            <ul className="space-y-4 text-sm">
+              <FooterLink href="#">LinkedIn</FooterLink>
+              <FooterLink href="#">GitHub</FooterLink>
+              <FooterLink href="#">X (Twitter)</FooterLink>
+              <FooterLink href="#">Dribbble</FooterLink>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-6 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+          <p>© {new Date().getFullYear()} Zeploy Tech. All rights reserved.</p>
+          <div className="flex items-center gap-3 text-electric-soft">
+            <span className="h-1.5 w-1.5 rounded-full bg-electric animate-pulse" />
+            We Deploy Your Vision.
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 }

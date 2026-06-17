@@ -14,7 +14,7 @@ import {
   Team,
   Testimonials,
   Blog,
-  CTA,
+  ProjectInquiry,
   Footer,
 } from "@/components/zeploy/Sections";
 
@@ -40,6 +40,8 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+import { LoadingScreen } from "@/components/zeploy/LoadingScreen";
+
 function ClientHeroScene() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -55,6 +57,7 @@ function ClientHeroScene() {
 function Index() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-background text-foreground">
+      <LoadingScreen />
       <Nav />
       <Hero />
       <Services />
@@ -66,7 +69,7 @@ function Index() {
       <Team />
       <Testimonials />
       <Blog />
-      <CTA />
+      <ProjectInquiry />
       <Footer />
     </main>
   );
@@ -78,7 +81,7 @@ function Hero() {
       <div className="absolute inset-0 grid-bg" />
       <div className="absolute left-1/2 top-1/3 -z-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-electric/20 blur-[160px]" />
 
-      <div className="mx-auto grid max-w-7xl gap-12 px-6 pb-24 pt-12 md:px-12 lg:grid-cols-[1.05fr_1fr] lg:gap-8 lg:pt-20">
+      <div className="mx-auto grid max-w-7xl gap-16 px-6 pb-32 pt-20 md:px-12 lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:pt-32">
         <div className="relative z-10 flex flex-col justify-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -97,7 +100,7 @@ function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.05 }}
-            className="mt-8 font-display text-5xl font-semibold leading-[1.02] tracking-tight md:text-6xl lg:text-7xl"
+            className="mt-10 font-display text-6xl font-semibold leading-[1.02] tracking-tight md:text-7xl lg:text-8xl"
           >
             <span className="text-gradient-soft">We build software</span>
             <br />
@@ -109,7 +112,7 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground"
+            className="mt-8 max-w-xl text-xl leading-relaxed text-muted-foreground md:text-2xl"
           >
             Zeploy Tech is a software engineering studio delivering custom web apps, mobile apps,
             AI systems, cloud infrastructure, and scalable digital products.
@@ -119,18 +122,18 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.25 }}
-            className="mt-10 flex flex-wrap items-center gap-3"
+            className="mt-12 flex flex-wrap items-center gap-4"
           >
             <a
               href="#work"
-              className="group inline-flex items-center gap-2 rounded-full bg-electric px-6 py-3 text-sm font-medium text-primary-foreground transition-all hover:glow-electric"
+              className="group inline-flex items-center gap-2 rounded-full bg-electric px-8 py-4 text-base font-medium text-primary-foreground shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)] transition-all hover:scale-105 hover:shadow-[0_0_60px_-10px_rgba(59,130,246,0.7)]"
             >
               View our work
-              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
             <a
               href="mailto:hello@zeploytech.com"
-              className="rounded-full border border-white/10 px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-electric/50 hover:text-electric"
+              className="rounded-full border border-white/20 bg-surface/50 px-8 py-4 text-base font-medium text-foreground backdrop-blur-md transition-colors hover:border-electric/50 hover:bg-surface hover:text-electric"
             >
               Start a project
             </a>
