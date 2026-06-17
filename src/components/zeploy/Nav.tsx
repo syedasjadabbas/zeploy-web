@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
@@ -9,13 +11,34 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-40% 0px -40% 0px", threshold: 0 }
+    );
+
+    const sections = ["services", "work", "reliability", "team", "stack", "contact"];
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const links = [
-    { href: "#services", label: "Services" },
-    { href: "#work", label: "Work" },
-    { href: "#reliability", label: "Reliability" },
-    { href: "#team", label: "Team" },
-    { href: "#stack", label: "Tech Stack" },
-    { href: "#contact", label: "Contact" },
+    { href: "#services", label: "Services", id: "services" },
+    { href: "#work", label: "Work", id: "work" },
+    { href: "#reliability", label: "Reliability", id: "reliability" },
+    { href: "#team", label: "Team", id: "team" },
+    { href: "#stack", label: "Tech Stack", id: "stack" },
+    { href: "#contact", label: "Contact", id: "contact" },
   ];
 
   return (
@@ -34,9 +57,14 @@ export default function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="font-mono text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
+              className={`relative font-mono text-xs uppercase tracking-widest transition-colors ${
+                activeSection === l.id ? "text-electric" : "text-muted-foreground hover:text-foreground"
+              }`}
             >
               {l.label}
+              {activeSection === l.id && (
+                <span className="absolute -bottom-2 left-0 h-px w-full bg-electric shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
+              )}
             </a>
           ))}
         </nav>

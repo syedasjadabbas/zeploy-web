@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense, useEffect, useState, useRef } from "react";
 import { motion, useInView, animate } from "framer-motion";
 
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ArrowUp } from "lucide-react";
 import Nav from "@/components/zeploy/Nav";
 import {
   Services,
@@ -41,6 +41,28 @@ export const Route = createFileRoute("/")({
 });
 
 import { LoadingScreen } from "@/components/zeploy/LoadingScreen";
+
+export function AnimatedDecimalCounter({ from, to, duration, prefix = "", suffix = "", decimals = 0 }: { from: number; to: number; duration: number; prefix?: string; suffix?: string; decimals?: number; }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (isInView && ref.current) {
+      const controls = animate(from, to, {
+        duration,
+        ease: "easeOut",
+        onUpdate(value) {
+          if (ref.current) {
+            ref.current.textContent = `${prefix}${value.toFixed(decimals)}${suffix}`;
+          }
+        }
+      });
+      return () => controls.stop();
+    }
+  }, [isInView, from, to, duration, prefix, suffix, decimals]);
+
+  return <span ref={ref}>{prefix}{from.toFixed(decimals)}{suffix}</span>;
+}
 
 function AnimatedCounter({ from, to, duration, suffix = "" }: { from: number; to: number; duration: number; suffix?: string; }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -94,12 +116,45 @@ function ClientHeroScene() {
 }
 
 
+function BackToTop() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      setVisible(window.scrollY > 500);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <motion.button
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: visible ? 1 : 0, scale: visible ? 1 : 0.8, pointerEvents: visible ? "auto" : "none" }}
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      className="fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-surface/80 border border-electric/30 text-electric shadow-[0_0_20px_rgba(59,130,246,0.3)] backdrop-blur-md transition-all hover:bg-electric hover:text-white hover:scale-110 hover:shadow-[0_0_30px_rgba(59,130,246,0.6)]"
+      aria-label="Back to top"
+    >
+      <ArrowUp className="h-5 w-5" />
+    </motion.button>
+  );
+}
+
 function Index() {
+  useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-background text-foreground">
       <LoadingScreen />
       <Nav />
-      <Hero />
+      <BackToTop />
+      <div id="hero">
+        <Hero />
+      </div>
       <Services />
       <TechStack />
       <FeaturedWork />
