@@ -15,17 +15,17 @@ function Core({ hovered }: { hovered: boolean }) {
       ref.current.rotation.x += dt * (targetSpeed / 3);
     }
     if (zRef.current) {
-      zRef.current.rotation.y -= dt * (targetSpeed / 2); // Counter rotate Z
+      zRef.current.rotation.y -= dt * (targetSpeed / 2);
     }
     if (materialRef.current) {
       materialRef.current.emissiveIntensity = THREE.MathUtils.lerp(
         materialRef.current.emissiveIntensity,
-        hovered ? 2.0 : 0.6,
+        hovered ? 1.5 : 0.6,
         0.1
       );
       materialRef.current.opacity = THREE.MathUtils.lerp(
         materialRef.current.opacity,
-        hovered ? 0.15 : 0.4,
+        hovered ? 0.15 : 0.5,
         0.1
       );
     }
@@ -33,11 +33,9 @@ function Core({ hovered }: { hovered: boolean }) {
 
   return (
     <group ref={ref}>
-      {/* Premium Z Logo */}
       <group ref={zRef}>
         <Text
           fontSize={1.4}
-          font="https://fonts.gstatic.com/s/inter/v12/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2"
           fontWeight="bold"
           color="#ffffff"
           position={[0, 0, 0]}
@@ -47,25 +45,25 @@ function Core({ hovered }: { hovered: boolean }) {
         </Text>
       </group>
 
-      {/* Inner core - made semi-transparent so Z is visible */}
-      <Icosahedron args={[1.2, 1]}>
+      {/* Inner solid core */}
+      <Icosahedron args={[1, 1]}>
         <meshStandardMaterial
           ref={materialRef}
           color="#3B82F6"
           emissive="#3B82F6"
           emissiveIntensity={0.6}
-          metalness={0.8}
+          metalness={0.7}
           roughness={0.2}
           transparent
-          opacity={0.4}
+          opacity={0.5}
         />
       </Icosahedron>
       {/* Wireframe shell */}
-      <Icosahedron args={[1.8, 2]}>
-        <meshBasicMaterial color="#AFD2FA" wireframe transparent opacity={0.3} />
+      <Icosahedron args={[1.6, 2]}>
+        <meshBasicMaterial color="#AFD2FA" wireframe transparent opacity={0.45} />
       </Icosahedron>
-      <Icosahedron args={[2.5, 3]}>
-        <meshBasicMaterial color="#3B82F6" wireframe transparent opacity={hovered ? 0.4 : 0.15} />
+      <Icosahedron args={[2.3, 3]}>
+        <meshBasicMaterial color="#3B82F6" wireframe transparent opacity={0.18} />
       </Icosahedron>
     </group>
   );
@@ -78,7 +76,7 @@ function Nodes({ hovered }: { hovered: boolean }) {
     for (let i = 0; i < count; i++) {
       const phi = Math.acos(-1 + (2 * i) / count);
       const theta = Math.sqrt(count * Math.PI) * phi;
-      const r = 3.4;
+      const r = 3.2;
       arr.push(
         new THREE.Vector3(
           r * Math.cos(theta) * Math.sin(phi),
@@ -94,7 +92,7 @@ function Nodes({ hovered }: { hovered: boolean }) {
     const e: [THREE.Vector3, THREE.Vector3][] = [];
     for (let i = 0; i < points.length; i++) {
       for (let j = i + 1; j < points.length; j++) {
-        if (points[i].distanceTo(points[j]) < 2.6) e.push([points[i], points[j]]);
+        if (points[i].distanceTo(points[j]) < 2.4) e.push([points[i], points[j]]);
       }
     }
     return e;
@@ -194,7 +192,6 @@ export default function HeroScene() {
         <pointLight position={[5, 5, 5]} intensity={1.2} color="#3B82F6" />
         <pointLight position={[-5, -3, -5]} intensity={0.8} color="#AFD2FA" />
         
-        {/* Invisible hit box for hover detection */}
         <mesh 
           onPointerOver={() => setHovered(true)} 
           onPointerOut={() => setHovered(false)}

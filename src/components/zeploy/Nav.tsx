@@ -12,8 +12,10 @@ export default function Nav() {
   const links = [
     { href: "#services", label: "Services" },
     { href: "#work", label: "Work" },
+    { href: "#reliability", label: "Reliability" },
     { href: "#team", label: "Team" },
-    { href: "#insights", label: "Notes" },
+    { href: "#stack", label: "Tech Stack" },
+    { href: "#contact", label: "Contact" },
   ];
 
   return (
@@ -39,7 +41,7 @@ export default function Nav() {
           ))}
         </nav>
         <a
-          href="mailto:hello@zeploytech.com"
+          href="#contact"
           className="rounded-full border border-white/10 bg-surface/60 px-4 py-2 font-mono text-xs uppercase tracking-widest text-foreground transition-colors hover:border-electric/50 hover:text-electric"
         >
           Start a project
