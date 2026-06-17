@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { motion, animate, useInView } from "framer-motion";
+import { useEffect, useRef } from "react";
 import {
   Activity,
   ArrowUpRight,
@@ -372,6 +373,28 @@ export function WhyChoose() {
 }
 
 /* ---------- RELIABILITY DASHBOARD ---------- */
+export function AnimatedDecimalCounter({ from, to, duration, prefix = "", suffix = "", decimals = 0 }: { from: number; to: number; duration: number; prefix?: string; suffix?: string; decimals?: number; }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (isInView && ref.current) {
+      const controls = animate(from, to, {
+        duration,
+        ease: "easeOut",
+        onUpdate(value) {
+          if (ref.current) {
+            ref.current.textContent = `${prefix}${value.toFixed(decimals)}${suffix}`;
+          }
+        }
+      });
+      return () => controls.stop();
+    }
+  }, [isInView, from, to, duration, prefix, suffix, decimals]);
+
+  return <span ref={ref}>{prefix}{from.toFixed(decimals)}{suffix}</span>;
+}
+
 export function Reliability() {
   const bars = Array.from({ length: 40 }, () => 0.6 + Math.random() * 0.4);
   return (
@@ -403,11 +426,11 @@ export function Reliability() {
 
           <div className="grid gap-px bg-white/5 md:grid-cols-5">
             {[
-              { k: "Deployment Success", v: "99.7%", icon: Rocket },
+              { k: "Deployment Success", v: <AnimatedDecimalCounter from={0} to={99.7} decimals={1} suffix="%" duration={2} />, icon: Rocket },
               { k: "Infra Health", v: "Nominal", icon: Server },
-              { k: "Client Satisfaction", v: "4.9 / 5", icon: Sparkles },
-              { k: "Response Time", v: "< 2h", icon: Zap },
-              { k: "Uptime (90d)", v: "99.99%", icon: ShieldCheck },
+              { k: "Client Satisfaction", v: <AnimatedDecimalCounter from={0} to={4.9} decimals={1} suffix=" / 5" duration={2} />, icon: Sparkles },
+              { k: "Response Time", v: <AnimatedDecimalCounter from={0} to={2} decimals={0} prefix="< " suffix="h" duration={2} />, icon: Zap },
+              { k: "Uptime (90d)", v: <AnimatedDecimalCounter from={0} to={99.99} decimals={2} suffix="%" duration={2} />, icon: ShieldCheck },
             ].map((m) => (
               <div key={m.k} className="bg-background p-6">
                 <m.icon className="h-4 w-4 text-electric" />
@@ -501,8 +524,8 @@ export function Process() {
 const team = [
   {
     name: "Syed Asjad Abbas",
-    role: "CEO & Chief Architect",
-    skills: ["System Architecture", "Cloud Infrastructure", "Engineering Strategy"],
+    role: "CEO & Founder",
+    skills: ["Chief Architect", "System Architecture", "Cloud Infrastructure", "Engineering Strategy"],
     initials: "SA",
     image: "/src/assets/images/asjad.png",
     socials: {
@@ -558,26 +581,28 @@ export function Team() {
             >
               <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-electric/15 blur-[100px] transition-all duration-500 group-hover:bg-electric/25" />
               <div className="flex flex-col gap-6">
-                <div className="group/avatar relative aspect-[4/5] w-full overflow-hidden rounded-xl border border-electric/20 bg-surface transition-all duration-300 hover:border-electric/50">
-                  <img src={m.image} alt={m.name} className="h-full w-full object-cover object-[center_15%] transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]" />
-                  
-                  {/* Social Icons on Hover */}
-                  {m.socials && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-0 transition-opacity duration-300 group-hover/avatar:opacity-100 flex items-end justify-center pb-6 gap-4">
-                      {m.socials.linkedin && (
-                        <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} LinkedIn`} className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
-                          <Linkedin className="w-4 h-4" />
-                        </a>
-                      )}
-                      {m.socials.github && (
-                        <a href={m.socials.github} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} GitHub`} className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
-                          <Github className="w-4 h-4" />
-                        </a>
-                      )}
-                    </div>
-                  )}
+                <div className="group/avatar relative aspect-[4/5] w-[85%] mx-auto p-3 rounded-2xl border border-electric/20 bg-surface/40 transition-all duration-300 hover:border-electric/50 hover:bg-surface/60">
+                  <div className="relative w-full h-full rounded-xl overflow-hidden bg-background">
+                    <img src={m.image} alt={m.name} className="h-full w-full object-cover object-[center_15%] transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]" />
+                    
+                    {/* Social Icons on Hover */}
+                    {m.socials && (
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 transition-opacity duration-300 group-hover/avatar:opacity-100 flex items-end justify-center pb-6 gap-4">
+                        {m.socials.linkedin && (
+                          <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} LinkedIn`} className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+                            <Linkedin className="w-4 h-4" />
+                          </a>
+                        )}
+                        {m.socials.github && (
+                          <a href={m.socials.github} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} GitHub`} className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+                            <Github className="w-4 h-4" />
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="min-w-0 px-2 transition-transform duration-300 group-hover:translate-x-1">
+                <div className="min-w-0 px-2 transition-transform duration-300 group-hover:translate-x-1 text-center mt-2">
                   <h3 className="text-2xl font-semibold">{m.name}</h3>
                   <p className="mt-2 font-mono text-xs uppercase tracking-widest text-electric-soft">
                     {m.role}
