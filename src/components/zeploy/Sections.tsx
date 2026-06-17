@@ -197,85 +197,34 @@ export function TechStack() {
 /* ---------- FEATURED WORK ---------- */
 const work = [
   {
-    name: "NeuralPay",
-    kind: "SaaS · Billing Platform",
-    problem: "A brittle legacy billing layer that caused failed renewals and lacked auditable transaction history.",
-    solution: "A high-performance programmable billing engine built to process thousands of subscription events per minute with flawless accuracy.",
-    architecture: "Event-sourced ledger · Postgres + Redis streams · Stripe orchestration",
-    features: ["Idempotent Webhooks", "Real-time Metrics", "Dynamic Proration", "Automated Dunning"],
-    outcome: "62% reduction in failed renewals and 4x faster invoicing pipeline.",
-    tech: ["Next.js", "Node.js", "PostgreSQL", "Redis", "Stripe"],
-    metrics: [
-      { k: "p95 latency", v: "84ms" },
-      { k: "Uptime", v: "99.99%" },
-      { k: "Events/min", v: "12.4K" },
-    ],
-    image: "/projects/neuralpay.png"
-  },
-  {
-    name: "Cortex Mesh",
-    kind: "AI · Distributed Infrastructure",
-    problem: "Unpredictable inference latency and astronomical costs when serving large language models at scale.",
-    solution: "A distributed LLM inference fabric that intelligently routes workloads across a heterogeneous cluster of GPUs.",
-    architecture: "Kubernetes Scheduler · gRPC Service Mesh · vLLM Workers · Prometheus Telemetry",
-    features: ["Dynamic Batching", "Cost-aware Routing", "Auto-scaling Pools", "Model Caching"],
-    outcome: "3.1x throughput per GPU and 47% reduction in cost-per-token.",
-    tech: ["Python", "FastAPI", "Kubernetes", "gRPC", "vLLM"],
-    metrics: [
-      { k: "Throughput", v: "3.1x" },
-      { k: "Cost / token", v: "−47%" },
-      { k: "Active nodes", v: "128" },
-    ],
-    image: "/projects/cortex.png"
-  },
-  {
-    name: "Synthwave",
-    kind: "Analytics · Real-time Engine",
-    problem: "Nightly batch processing meant operators were making decisions on stale, 24-hour-old data.",
-    solution: "A sub-second analytics engine ingesting high-volume event streams to power live operational dashboards.",
-    architecture: "Columnar OLAP Store · Kafka Ingestion · Materialized Rollups · WebSocket Fanout",
-    features: ["Live Geographic Maps", "Anomaly Detection", "Custom Aggregations", "Role-based Access"],
-    outcome: "Query times reduced from 18s to 240ms, adopted organization-wide in 6 weeks.",
-    tech: ["TypeScript", "Kafka", "ClickHouse", "React", "WebSocket"],
-    metrics: [
-      { k: "Query p50", v: "240ms" },
-      { k: "Events/day", v: "1.2B" },
-      { k: "Dashboards", v: "340+" },
-    ],
-    image: "/projects/synthwave.png"
-  },
-  {
-    name: "EduCart",
-    kind: "Full-Stack E-Commerce",
-    problem: "Frequent database locks and severe lag during high-traffic flash sales events.",
-    solution: "A massive, high-throughput retail platform powering comprehensive product catalogs and secure edge-cached sessions.",
-    architecture: "Edge Caching CDN · Stateful Cart Streams · Distributed Microservices",
-    features: ["Frictionless Checkout", "Inventory Sync", "Dynamic Pricing", "Admin Dashboard"],
-    outcome: "Zero downtime during peak sales events with sub-500ms checkout times.",
-    tech: ["React", "Node.js", "MongoDB", "Redis"],
-    metrics: [
-      { k: "Concurrency", v: "45K" },
-      { k: "Uptime", v: "99.99%" },
-      { k: "Checkout", v: "<500ms" },
-    ],
-    image: "/projects/educart.png"
-  },
-  {
     name: "MockAI",
-    kind: "AI Evaluation Platform",
-    problem: "Manual screening of thousands of candidates was too slow and highly subjective.",
-    solution: "Intelligent recruitment tool utilizing real-time speech analysis, facial tracking, and NLP to provide candidate performance scoring.",
-    architecture: "WebRTC Streams · Async Python Workers · Model Inference Endpoints",
-    features: ["Live Video Analysis", "Facial Emotion Tracking", "NLP Scoring", "Bias Mitigation"],
-    outcome: "Reduced manual interview screening time by 74% while improving candidate quality.",
-    tech: ["React", "FastAPI", "Python", "MongoDB", "WebRTC"],
-    metrics: [
-      { k: "Latency", v: "110ms" },
-      { k: "Accuracy", v: "92%" },
-      { k: "Time Saved", v: "74%" },
+    kind: "AI Interview Evaluation Platform",
+    desc: "AI-powered mock interview platform that evaluates candidates using speech analysis, facial expression analysis, NLP, confidence scoring, and performance analytics.",
+    tech: ["React", "FastAPI", "Python", "MongoDB Atlas", "BERT NLP", "DeepFace"],
+    features: [
+      "AI interview scoring",
+      "Facial emotion analysis",
+      "Speech-to-text processing",
+      "Confidence tracking",
+      "Performance reports"
     ],
     image: "/projects/mockai.png"
   },
+  {
+    name: "EduCart",
+    kind: "Full Stack E-Commerce Platform",
+    desc: "Modern e-commerce platform designed for students with authentication, product management, SEO optimization, AI-powered assistance, cart management, and order tracking.",
+    tech: ["React", "Node.js", "Express", "MongoDB", "Cloudinary", "Tailwind"],
+    features: [
+      "Admin dashboard",
+      "Product management",
+      "Shopping cart",
+      "Order tracking",
+      "SEO automation",
+      "AI assistant"
+    ],
+    image: "/projects/educart.png"
+  }
 ];
 
 export function FeaturedWork() {
@@ -298,7 +247,7 @@ export function FeaturedWork() {
               className="group glass-card overflow-hidden rounded-[2.5rem]"
             >
               <div className="grid lg:grid-cols-2">
-                <div className="p-10 md:p-16 flex flex-col justify-center">
+                <div className={`p-10 md:p-16 flex flex-col justify-center ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
                   <div className="flex items-center gap-3">
                     <span className="h-2 w-2 rounded-full bg-electric animate-pulse" />
                     <p className="font-mono text-xs uppercase tracking-widest text-electric">
@@ -307,28 +256,21 @@ export function FeaturedWork() {
                   </div>
                   <h3 className="mt-6 text-4xl font-semibold md:text-5xl">{p.name}</h3>
 
-                  <dl className="mt-12 space-y-8 text-sm">
-                    <div className="grid sm:grid-cols-[140px_1fr] gap-2">
-                      <dt className="font-mono text-[11px] uppercase tracking-widest text-electric-soft">Problem</dt>
-                      <dd className="text-foreground/90 leading-relaxed">{p.problem}</dd>
-                    </div>
-                    <div className="grid sm:grid-cols-[140px_1fr] gap-2">
-                      <dt className="font-mono text-[11px] uppercase tracking-widest text-electric-soft">Solution</dt>
-                      <dd className="text-foreground/90 leading-relaxed">{p.solution}</dd>
-                    </div>
-                    <div className="grid sm:grid-cols-[140px_1fr] gap-2">
-                      <dt className="font-mono text-[11px] uppercase tracking-widest text-electric-soft">Architecture</dt>
-                      <dd className="text-foreground/90 leading-relaxed">{p.architecture}</dd>
-                    </div>
-                    <div className="grid sm:grid-cols-[140px_1fr] gap-2">
-                      <dt className="font-mono text-[11px] uppercase tracking-widest text-electric-soft">Features</dt>
-                      <dd className="text-foreground/90 leading-relaxed">{p.features.join(" · ")}</dd>
-                    </div>
-                    <div className="grid sm:grid-cols-[140px_1fr] gap-2">
-                      <dt className="font-mono text-[11px] uppercase tracking-widest text-electric-soft">Business Outcome</dt>
-                      <dd className="text-foreground/90 leading-relaxed text-emerald-400 font-medium">{p.outcome}</dd>
-                    </div>
-                  </dl>
+                  <p className="mt-8 text-lg leading-relaxed text-muted-foreground">
+                    {p.desc}
+                  </p>
+
+                  <div className="mt-10">
+                    <p className="font-mono text-[11px] uppercase tracking-widest text-electric-soft mb-4">Key Features</p>
+                    <ul className="grid sm:grid-cols-2 gap-4">
+                      {p.features.map(f => (
+                        <li key={f} className="flex items-center gap-3 text-sm text-foreground/90">
+                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/80" />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
                   <div className="mt-12 pt-8 border-t border-white/5">
                     <p className="font-mono text-[11px] uppercase tracking-widest text-electric-soft mb-4">Technology Stack</p>
@@ -345,24 +287,13 @@ export function FeaturedWork() {
                   </div>
                 </div>
 
-                <div className="relative border-l border-white/5 bg-surface/30 overflow-hidden min-h-[400px]">
+                <div className={`relative border-white/5 bg-surface/30 overflow-hidden min-h-[400px] ${i % 2 === 1 ? 'lg:border-r lg:order-1' : 'border-l'}`}>
                   <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent z-10 pointer-events-none" />
                   <img 
                     src={p.image} 
                     alt={p.name} 
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                   />
-                  {/* Floating Metrics Badge */}
-                  <div className="absolute bottom-10 right-10 left-10 lg:left-auto z-20 glass-card rounded-2xl p-6 backdrop-blur-xl border border-white/10 shadow-2xl">
-                    <div className="flex justify-between lg:grid lg:grid-cols-3 gap-6 text-center">
-                      {p.metrics.map((m) => (
-                        <div key={m.k}>
-                          <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground whitespace-nowrap">{m.k}</p>
-                          <p className="mt-2 text-xl font-semibold text-foreground">{m.v}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
                 </div>
               </div>
             </motion.article>
@@ -769,17 +700,17 @@ export function ProjectInquiry() {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Full Name</label>
-                <input type="text" placeholder="Jane Doe" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+                <input type="text" placeholder="Full Name" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Email</label>
-                <input type="email" placeholder="jane@company.com" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+                <input type="email" placeholder="Email Address" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
               </div>
             </div>
 
             <div className="space-y-2">
               <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Company</label>
-              <input type="text" placeholder="Your Organization" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+              <input type="text" placeholder="Company Name" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
@@ -808,7 +739,7 @@ export function ProjectInquiry() {
 
             <div className="space-y-2">
               <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Project Description</label>
-              <textarea rows={4} placeholder="Tell us about the core features, tech stack preferences, and timelines..." className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors resize-none" />
+              <textarea rows={4} placeholder="Describe your project..." className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors resize-none" />
             </div>
 
             <button type="button" onClick={(e) => e.preventDefault()} className="mt-4 w-full rounded-xl bg-electric px-6 py-4 text-sm font-semibold text-primary-foreground transition-all hover:glow-electric hover:scale-[1.02]">
