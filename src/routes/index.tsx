@@ -67,7 +67,7 @@ function AnimatedCounter({ from, to, duration, suffix = "" }: { from: number; to
 
   return (
     <div className="relative inline-block">
-      <span ref={ref} className="relative z-10 font-display text-3xl font-semibold text-foreground md:text-4xl">
+      <span ref={ref} className="relative z-10 font-display text-2xl font-semibold text-foreground sm:text-3xl md:text-4xl">
         {from}{suffix}
       </span>
       {isFinished && (
@@ -117,29 +117,28 @@ function Index() {
 
 function Hero() {
   return (
-    <section className="relative min-h-screen overflow-hidden pt-28">
+    <section className="relative min-h-screen overflow-hidden pt-20">
       <div className="absolute inset-0 grid-bg" />
       <div className="absolute left-1/2 top-1/3 -z-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-electric/20 blur-[160px]" />
 
-      <div className="mx-auto grid max-w-7xl gap-16 px-6 pb-32 pt-20 md:px-12 lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:pt-32">
+      <div className="mx-auto grid max-w-7xl gap-16 px-6 pb-32 pt-12 md:px-12 lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:pt-20">
         <div className="relative z-10 flex flex-col justify-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="inline-flex items-center gap-3"
+            className="mb-4"
           >
-            <span className="h-2.5 w-2.5 rounded-full bg-electric animate-pulse" />
-            <span className="font-display text-xl font-bold uppercase tracking-[0.25em] text-foreground">
+            <h2 className="font-display text-2xl font-bold uppercase tracking-[0.25em] text-foreground sm:text-3xl">
               <span className="text-electric">ZEPLOY</span> TECH
-            </span>
+            </h2>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.05 }}
-            className="mt-8 font-display text-5xl font-semibold leading-[1.02] tracking-tight md:text-6xl lg:text-7xl"
+            className="mt-4 font-display text-5xl font-semibold leading-[1.02] tracking-tight md:text-6xl lg:text-7xl"
           >
             <span className="text-gradient-soft">We build software</span>
             <br />
@@ -182,23 +181,23 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.35 }}
-            className="mt-16 grid max-w-lg grid-cols-3 gap-6 border-t border-white/5 pt-8"
+            className="mt-16 grid max-w-lg grid-cols-3 gap-3 border-t border-white/5 pt-8 sm:gap-6"
           >
             <div>
               <AnimatedCounter from={0} to={50} duration={1.5} suffix="+" />
-              <p className="mt-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+              <p className="mt-2 font-mono text-[9px] sm:text-[11px] uppercase tracking-widest text-muted-foreground">
                 Projects Shipped
               </p>
             </div>
             <div>
               <AnimatedCounter from={0} to={30} duration={1.5} suffix="+" />
-              <p className="mt-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+              <p className="mt-2 font-mono text-[9px] sm:text-[11px] uppercase tracking-widest text-muted-foreground">
                 Clients
               </p>
             </div>
             <div>
               <AnimatedCounter from={0} to={6} duration={1.5} suffix="" />
-              <p className="mt-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+              <p className="mt-2 font-mono text-[9px] sm:text-[11px] uppercase tracking-widest text-muted-foreground">
                 Countries Served
               </p>
             </div>
