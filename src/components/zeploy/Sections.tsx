@@ -758,6 +758,43 @@ export function Blog() {
 
 /* ---------- CTA + FOOTER ---------- */
 export function ProjectInquiry() {
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    company: "",
+    budget: "",
+    type: "",
+    message: ""
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+    
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          message: `Budget: ${formData.budget}\nProject Type: ${formData.type}\n\nDescription:\n${formData.message}`
+        }),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", company: "", budget: "", type: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch (error) {
+      setStatus("error");
+    }
+  };
+
   return (
     <section id="contact" className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-surface-2/30">
       <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-16 lg:gap-24">
@@ -793,27 +830,27 @@ export function ProjectInquiry() {
         </motion.div>
 
         <motion.div {...fadeUp} className="glass-card rounded-[2.5rem] p-8 md:p-12">
-          <form className="grid gap-6">
+          <form className="grid gap-6" onSubmit={handleSubmit}>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Full Name</label>
-                <input type="text" placeholder="Full Name" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+                <input required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} type="text" placeholder="Full Name" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Email</label>
-                <input type="email" placeholder="Email Address" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+                <input required value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} type="email" placeholder="Email Address" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
               </div>
             </div>
 
             <div className="space-y-2">
               <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Company</label>
-              <input type="text" placeholder="Company Name" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+              <input value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} type="text" placeholder="Company Name" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Budget Range</label>
-                <select className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors appearance-none">
+                <select value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})} className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors appearance-none">
                   <option value="">Select a range</option>
                   <option value="10k-25k">$10k - $25k</option>
                   <option value="25k-50k">$25k - $50k</option>
@@ -823,7 +860,7 @@ export function ProjectInquiry() {
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Project Type</label>
-                <select className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors appearance-none">
+                <select value={formData.type} onChange={(e) => setFormData({...formData, type: e.target.value})} className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors appearance-none">
                   <option value="">Select a type</option>
                   <option value="web">Web Application</option>
                   <option value="mobile">Mobile Application</option>
@@ -836,11 +873,18 @@ export function ProjectInquiry() {
 
             <div className="space-y-2">
               <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Project Description</label>
-              <textarea rows={4} placeholder="Describe your project..." className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors resize-none" />
+              <textarea required value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} rows={4} placeholder="Describe your project..." className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors resize-none" />
             </div>
 
-            <button type="button" onClick={(e) => e.preventDefault()} className="mt-4 w-full rounded-xl bg-electric px-6 py-4 text-sm font-semibold text-primary-foreground transition-all hover:glow-electric hover:scale-[1.02]">
-              Submit Request
+            {status === "success" && (
+              <div className="text-emerald-400 text-sm font-medium">Your inquiry has been sent successfully. We will be in touch shortly!</div>
+            )}
+            {status === "error" && (
+              <div className="text-red-400 text-sm font-medium">Failed to send inquiry. Please try again later.</div>
+            )}
+
+            <button type="submit" disabled={status === "loading"} className="mt-4 w-full rounded-xl bg-electric px-6 py-4 text-sm font-semibold text-primary-foreground transition-all hover:glow-electric hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100">
+              {status === "loading" ? "Sending..." : "Submit Request"}
             </button>
           </form>
         </motion.div>
