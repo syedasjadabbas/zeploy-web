@@ -468,6 +468,11 @@ export function Process() {
             ))}
           </div>
         </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------- TEAM ---------- */
 const team = [
   {
