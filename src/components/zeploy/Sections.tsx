@@ -594,7 +594,7 @@ export function Team() {
               <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-electric/15 blur-[100px]" />
               <div className="flex flex-col gap-6">
                 <div className="group/avatar relative h-72 w-full overflow-hidden rounded-xl border border-electric/20 bg-surface transition-all duration-300 hover:border-electric/50">
-                  <img src={m.image} alt={m.name} className="h-full w-full object-cover transition-all duration-500 group-hover/avatar:scale-105" />
+                  <img src={m.image} alt={m.name} className="h-full w-full object-cover object-top transition-all duration-500 group-hover/avatar:scale-105" />
                 </div>
                 <div className="min-w-0 px-2">
                   <h3 className="text-2xl font-semibold">{m.name}</h3>
