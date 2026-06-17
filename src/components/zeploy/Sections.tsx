@@ -26,6 +26,7 @@ import {
   Mail,
 } from "lucide-react";
 import { DataStreams, NetworkNodes, BlueprintGrid } from "./BackgroundScenes";
+import { InfraVisualization } from "./InfraVisualization";
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -358,20 +359,26 @@ export function WhyChoose() {
           </h2>
         </motion.div>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {reasons.map((r, i) => (
-            <motion.div
-              key={r.title}
-              {...fadeUp}
-              transition={{ ...fadeUp.transition, delay: i * 0.04 }}
-              className="glass-card glass-card-hover group relative overflow-hidden rounded-3xl p-10 md:p-12"
-            >
-              <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-electric/10 blur-3xl opacity-0 transition-opacity group-hover:opacity-100" />
-              <r.icon className="h-8 w-8 text-electric" />
-              <h3 className="mt-8 text-2xl font-semibold">{r.title}</h3>
-              <p className="mt-3 text-base leading-relaxed text-muted-foreground">{r.desc}</p>
-            </motion.div>
-          ))}
+        <div className="mt-16 grid gap-12 lg:grid-cols-2 lg:items-center">
+          <div className="grid gap-6 md:grid-cols-2">
+            {reasons.map((r, i) => (
+              <motion.div
+                key={r.title}
+                {...fadeUp}
+                transition={{ ...fadeUp.transition, delay: i * 0.04 }}
+                className="glass-card glass-card-hover group relative overflow-hidden rounded-3xl p-8"
+              >
+                <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-electric/10 blur-3xl opacity-0 transition-opacity group-hover:opacity-100" />
+                <r.icon className="h-8 w-8 text-electric" />
+                <h3 className="mt-6 text-xl font-semibold">{r.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{r.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="relative w-full h-[600px] rounded-3xl border border-white/10 bg-surface/20 overflow-hidden hidden lg:block">
+            <InfraVisualization />
+          </div>
         </div>
       </div>
     </section>
