@@ -36,9 +36,11 @@ const fadeUp = {
 
 export function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface/60 px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-electric-soft">
-      <span className="h-1.5 w-1.5 rounded-full bg-electric" />
-      {children}
+    <div className="inline-flex flex-col items-center gap-3">
+      <span className="font-mono text-sm uppercase tracking-[0.25em] font-medium text-electric">
+        {children}
+      </span>
+      <span className="h-px w-8 bg-electric/60" />
     </div>
   );
 }
