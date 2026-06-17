@@ -86,21 +86,20 @@ function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 self-start rounded-full border border-white/10 bg-surface/60 px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-electric-soft"
+            transition={{ duration: 0.7 }}
+            className="inline-flex items-center gap-3"
           >
-            <span className="relative h-1.5 w-1.5">
-              <span className="absolute inset-0 rounded-full bg-electric" />
-              <span className="absolute inset-0 animate-ping rounded-full bg-electric/70" />
+            <span className="h-2.5 w-2.5 rounded-full bg-electric animate-pulse" />
+            <span className="font-display text-xl font-bold uppercase tracking-[0.25em] text-foreground">
+              <span className="text-electric">ZEPLOY</span> TECH
             </span>
-            Software Engineering · AI Solutions
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.05 }}
-            className="mt-10 font-display text-6xl font-semibold leading-[1.02] tracking-tight md:text-7xl lg:text-8xl"
+            className="mt-8 font-display text-5xl font-semibold leading-[1.02] tracking-tight md:text-6xl lg:text-7xl"
           >
             <span className="text-gradient-soft">We build software</span>
             <br />
