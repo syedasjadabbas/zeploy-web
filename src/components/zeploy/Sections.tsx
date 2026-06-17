@@ -773,14 +773,19 @@ export function ProjectInquiry() {
     setStatus("loading");
     
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch("https://formspree.io/f/mykavaol", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
           company: formData.company,
-          message: `Budget: ${formData.budget}\nProject Type: ${formData.type}\n\nDescription:\n${formData.message}`
+          budget: formData.budget,
+          type: formData.type,
+          message: formData.message
         }),
       });
 
