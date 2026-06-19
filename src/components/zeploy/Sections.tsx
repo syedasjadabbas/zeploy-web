@@ -29,6 +29,11 @@ import {
 import { DataStreams, NetworkNodes, BlueprintGrid } from "./BackgroundScenes";
 import { InfraVisualization } from "./InfraVisualization";
 
+import imgAsjad from "@/assets/images/asjad.png";
+import imgAsad from "@/assets/images/asad.jpeg";
+import imgAhsan from "@/assets/images/ahsan.jpeg";
+import imgHassan from "@/assets/images/hassan.jpeg";
+
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
@@ -544,7 +549,7 @@ const team = [
     role: "CEO & Founder",
     skills: ["Chief Architect", "System Architecture", "Cloud Infrastructure", "Engineering Strategy"],
     initials: "SA",
-    image: "/src/assets/images/asjad.png",
+    image: imgAsjad,
     socials: {
       linkedin: "https://www.linkedin.com/in/syed-asjad-abbas/",
       github: "https://github.com/syedasjadabbas"
@@ -555,7 +560,7 @@ const team = [
     role: "Co-Founder & Full Stack Developer",
     skills: ["Backend Systems", "API Development", "Database Architecture"],
     initials: "RA",
-    image: "/src/assets/images/asad.jpeg",
+    image: imgAsad,
     socials: {
       linkedin: "https://www.linkedin.com/in/rana-asad-ur-rahman-0a2457339/",
       github: "https://github.com/asad-rana306"
@@ -566,14 +571,14 @@ const team = [
     role: "CTO & AI Automation Engineer",
     skills: ["AI Automation", "Intelligent Workflows", "Automation Infrastructure"],
     initials: "AR",
-    image: "/src/assets/images/ahsan.jpeg",
+    image: imgAhsan,
   },
   {
     name: "Hassan Kazmi",
     role: "Managing Partner · Data & Intelligence Lead",
     skills: ["Data Systems", "Research Intelligence", "Analytical Strategy"],
     initials: "HK",
-    image: "/src/assets/images/hassan.jpeg",
+    image: imgHassan,
   },
 ];
 
