@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -83,7 +84,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Zeploy Tech is a premium software engineering and AI studio specializing in scalable web applications, mobile apps, SaaS development, and enterprise cloud infrastructure.",
       },
-      { name: "keywords", content: "Zeploy Tech, software engineering, AI studio, web applications, mobile apps, SaaS development, cloud infrastructure, AI automation, React, Next.js, full-stack" },
+      {
+        name: "keywords",
+        content:
+          "Zeploy Tech, software engineering, AI studio, web applications, mobile apps, SaaS development, cloud infrastructure, AI automation, React, Next.js, full-stack",
+      },
       { name: "author", content: "Zeploy Tech" },
       { name: "theme-color", content: "#020817" },
       { property: "og:title", content: "Zeploy Tech | Premium Software Engineering & AI Studio" },
@@ -98,7 +103,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image", content: "https://zeploy.tech/logo.png" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Zeploy Tech | Premium Software Engineering & AI Studio" },
-      { name: "twitter:description", content: "Premium software engineering & AI studio building scalable, production-grade systems for modern businesses." },
+      {
+        name: "twitter:description",
+        content:
+          "Premium software engineering & AI studio building scalable, production-grade systems for modern businesses.",
+      },
       { name: "twitter:image", content: "https://zeploy.tech/logo.png" },
       { rel: "canonical", href: "https://zeploy.tech" },
     ],
@@ -131,25 +140,27 @@ function RootShell({ children }: { children: ReactNode }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "ProfessionalService",
-              "name": "Zeploy Tech",
-              "url": "https://zeploy.tech",
-              "logo": "https://zeploy.tech/logo.png",
-              "description": "A premium software engineering and AI studio dedicated to building robust, scalable, and visually stunning digital products.",
-              "address": {
+              name: "Zeploy Tech",
+              url: "https://zeploy.tech",
+              logo: "https://zeploy.tech/logo.png",
+              description:
+                "A premium software engineering and AI studio dedicated to building robust, scalable, and visually stunning digital products.",
+              address: {
                 "@type": "PostalAddress",
-                "addressCountry": "Pakistan"
+                addressCountry: "Pakistan",
               },
-              "sameAs": [
+              sameAs: [
                 "https://www.linkedin.com/company/zeploy-tech/",
                 "https://www.instagram.com/zeploy.tech/",
-                "https://www.facebook.com/zeploytech"
-              ]
-            })
+                "https://www.facebook.com/zeploytech",
+              ],
+            }),
           }}
         />
       </head>
       <body>
         {children}
+        <SpeedInsights />
         <Scripts />
       </body>
     </html>
