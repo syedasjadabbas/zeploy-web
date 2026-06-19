@@ -6,7 +6,6 @@ import { ArrowUpRight, ArrowUp } from "lucide-react";
 import Nav from "@/components/zeploy/Nav";
 import {
   Services,
-  TechStack,
   FeaturedWork,
   WhyChoose,
   Reliability,
@@ -185,12 +184,11 @@ function Index() {
         <Hero />
       </div>
       <Services />
-      <TechStack />
-      <LazySection fallbackHeight="600px">
-        <FeaturedWork />
-      </LazySection>
       <LazySection fallbackHeight="500px">
         <WhyChoose />
+      </LazySection>
+      <LazySection fallbackHeight="600px">
+        <FeaturedWork />
       </LazySection>
       <LazySection fallbackHeight="400px">
         <Reliability />
@@ -199,10 +197,10 @@ function Index() {
         <Process />
       </LazySection>
       <LazySection fallbackHeight="500px">
-        <Team />
+        <Testimonials />
       </LazySection>
       <LazySection fallbackHeight="500px">
-        <Testimonials />
+        <Team />
       </LazySection>
       <LazySection fallbackHeight="300px">
         <Blog />
