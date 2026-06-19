@@ -34,7 +34,7 @@ export default function Nav() {
       { rootMargin: "-80px 0px -60% 0px", threshold: 0 }
     );
 
-    const sections = ["hero", "services", "why-zeploy", "work", "reviews", "team", "contact"];
+    const sections = ["hero", "services", "why-zeploy", "work", "team", "contact"];
     sections.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
@@ -67,7 +67,6 @@ export default function Nav() {
     { href: "#services", label: "Services", id: "services" },
     { href: "#why-zeploy", label: "Why Zeploy", id: "why-zeploy" },
     { href: "#work", label: "Our Work", id: "work" },
-    { href: "#reviews", label: "Reviews", id: "reviews" },
     { href: "#team", label: "Team", id: "team" },
     { href: "#contact", label: "Contact", id: "contact" },
   ];
@@ -115,8 +114,7 @@ export default function Nav() {
 
         <div className="flex items-center gap-3">
           <a
-            href="#contact"
-            onClick={(e) => handleNavClick(e, "contact")}
+            href="mailto:zeploytech@gmail.com?subject=Project%20Inquiry%20-%20Portfolio%20Website"
             className="rounded-full border border-white/10 bg-surface/60 px-4 py-2 font-mono text-xs uppercase tracking-widest text-foreground transition-colors hover:border-electric/50 hover:text-electric"
           >
             Start a project
