@@ -91,6 +91,7 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
@@ -113,6 +114,7 @@
   transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
 }
 @utility glass-card-hover {
+  will-change: transform, box-shadow;
   &:hover {
     border-color: color-mix(in oklab, var(--electric) 60%, transparent);
     box-shadow: 0 30px 80px -20px color-mix(in oklab, var(--electric) 40%, transparent);
@@ -144,6 +146,11 @@
   }
 }
 
+@utility section-lazy {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
 @keyframes ping {
   75%, 100% { transform: scale(2.2); opacity: 0; }
 }
@@ -163,3 +170,13 @@
     pointer-events: none;
   }
 }
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
