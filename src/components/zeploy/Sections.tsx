@@ -554,22 +554,6 @@ export function Team() {
                 <div className="group/avatar relative aspect-square w-[55%] mx-auto p-4 rounded-2xl border border-electric/20 bg-surface/40 transition-all duration-300 hover:border-electric/50 hover:bg-surface/60">
                   <div className="relative w-full h-full rounded-xl overflow-hidden bg-background">
                     <img src={m.image} alt={m.name} loading="lazy" className="h-full w-full object-cover object-[center_top] transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]" />
-                    
-                    {/* Social Icons on Hover */}
-                    {m.socials && (
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover/avatar:opacity-100 flex items-end justify-center pb-6 gap-4">
-                        {m.socials.linkedin && (
-                          <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} LinkedIn`} className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
-                            <Linkedin className="w-4 h-4" />
-                          </a>
-                        )}
-                        {m.socials.github && (
-                          <a href={m.socials.github} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} GitHub`} className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
-                            <Github className="w-4 h-4" />
-                          </a>
-                        )}
-                      </div>
-                    )}
                   </div>
                 </div>
                 <div className="min-w-0 px-2 transition-transform duration-300 group-hover:translate-x-1 text-center mt-2">
@@ -577,6 +561,20 @@ export function Team() {
                   <p className="mt-2 font-mono text-xs uppercase tracking-widest text-electric-soft">
                     {m.role}
                   </p>
+                  {m.socials && (
+                    <div className="mt-4 flex justify-center gap-3">
+                      {m.socials.linkedin && (
+                        <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} LinkedIn`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
+                          <Linkedin className="w-4 h-4" />
+                        </a>
+                      )}
+                      {m.socials.github && (
+                        <a href={m.socials.github} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} GitHub`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
+                          <Github className="w-4 h-4" />
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="mt-8 grid gap-2 sm:grid-cols-2 px-2">
