@@ -24,17 +24,17 @@ const HeroScene = lazy(() => import("@/components/zeploy/HeroScene"));
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Zeploy Tech — We Deploy Your Vision" },
+      { title: "Zeploy Tech | Premium Software Engineering & AI Studio" },
       {
         name: "description",
         content:
-          "Zeploy Tech is a software engineering studio building scalable web apps, mobile apps, AI systems, and cloud infrastructure for startups and businesses.",
+          "Zeploy Tech is a premium software engineering and AI studio specializing in scalable web applications, mobile apps, SaaS development, and enterprise cloud infrastructure.",
       },
-      { property: "og:title", content: "Zeploy Tech — We Deploy Your Vision" },
+      { property: "og:title", content: "Zeploy Tech | Premium Software Engineering & AI Studio" },
       {
         property: "og:description",
         content:
-          "Software engineering & AI studio delivering custom web apps, mobile apps, AI systems, cloud infrastructure, and scalable digital products.",
+          "Premium software engineering & AI studio building scalable, production-grade systems for modern businesses.",
       },
     ],
   }),
@@ -210,7 +210,7 @@ function Index() {
       <LazySection fallbackHeight="400px">
         <FounderMessage />
       </LazySection>
-      <LazySection fallbackHeight="400px">
+      <LazySection id="faq" fallbackHeight="400px">
         <Faq />
       </LazySection>
       <LazySection id="contact" fallbackHeight="400px">

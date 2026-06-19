@@ -989,6 +989,7 @@ export function Footer() {
               <FooterLink href="#team">Our Team</FooterLink>
               <FooterLink href="#process">The Process</FooterLink>
               <FooterLink href="#insights">Engineering Notes</FooterLink>
+              <FooterLink href="#faq">FAQ</FooterLink>
             </ul>
           </div>
 
@@ -1021,8 +1022,8 @@ export function Footer() {
               <span className="h-1.5 w-1.5 rounded-full bg-electric animate-pulse" />
               We Deploy Your Vision.
             </div>
-            <span className="text-muted-foreground">Trusted execution · Senior engineering · Production-grade</span>
-            <span className="text-electric-soft">Lahore · Remote · Globally distributed</span>
+            <span className="text-muted-foreground">50+ PROJECTS • 30+ CLIENTS • RESPONSE WITHIN 24 HOURS</span>
+            <span className="text-electric-soft">Pakistan • Serving Clients Worldwide</span>
           </div>
         </div>
       </div>
@@ -1087,7 +1088,7 @@ export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-surface/20">
+    <section id="faq" className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-surface/20">
       <div className="mx-auto max-w-4xl">
         <motion.div {...fadeUp} className="text-center">
           <SectionLabel>FAQ</SectionLabel>
