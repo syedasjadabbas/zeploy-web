@@ -31,10 +31,10 @@ export default function Nav() {
           }
         });
       },
-      { rootMargin: "-40% 0px -40% 0px", threshold: 0 }
+      { rootMargin: "-80px 0px -60% 0px", threshold: 0 }
     );
 
-    const sections = ["services", "work", "reliability", "team", "stack", "contact"];
+    const sections = ["hero", "services", "why-zeploy", "work", "reviews", "team", "contact"];
     sections.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
@@ -63,13 +63,24 @@ export default function Nav() {
   }, [mobileOpen]);
 
   const links = [
+    { href: "#hero", label: "Home", id: "hero" },
     { href: "#services", label: "Services", id: "services" },
-    { href: "#work", label: "Work", id: "work" },
-    { href: "#reliability", label: "Reliability", id: "reliability" },
+    { href: "#why-zeploy", label: "Why Zeploy", id: "why-zeploy" },
+    { href: "#work", label: "Our Work", id: "work" },
+    { href: "#reviews", label: "Reviews", id: "reviews" },
     { href: "#team", label: "Team", id: "team" },
-    { href: "#stack", label: "Tech Stack", id: "stack" },
     { href: "#contact", label: "Contact", id: "contact" },
   ];
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+    setMobileOpen(false);
+  };
 
   return (
     <header
@@ -89,6 +100,7 @@ export default function Nav() {
             <a
               key={l.href}
               href={l.href}
+              onClick={(e) => handleNavClick(e, l.id)}
               className={`relative font-mono text-xs uppercase tracking-widest transition-colors ${
                 activeSection === l.id ? "text-electric" : "text-muted-foreground hover:text-foreground"
               }`}
@@ -104,6 +116,7 @@ export default function Nav() {
         <div className="flex items-center gap-3">
           <a
             href="#contact"
+            onClick={(e) => handleNavClick(e, "contact")}
             className="rounded-full border border-white/10 bg-surface/60 px-4 py-2 font-mono text-xs uppercase tracking-widest text-foreground transition-colors hover:border-electric/50 hover:text-electric"
           >
             Start a project
@@ -132,7 +145,7 @@ export default function Nav() {
               <a
                 key={l.href}
                 href={l.href}
-                onClick={() => setMobileOpen(false)}
+                onClick={(e) => handleNavClick(e, l.id)}
                 className={`flex items-center gap-3 rounded-xl px-4 py-3.5 font-mono text-sm uppercase tracking-widest transition-colors ${
                   activeSection === l.id
                     ? "bg-electric/10 text-electric"

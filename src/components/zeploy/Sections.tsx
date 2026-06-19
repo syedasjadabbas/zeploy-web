@@ -140,78 +140,6 @@ export function Services() {
   );
 }
 
-/* ---------- TECH STACK ---------- */
-const stack = {
-  Frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Three.js", "Framer Motion"],
-  Backend: ["Node.js", "Express.js", "Python", "FastAPI", "REST APIs", "JWT Auth"],
-  Databases: ["MongoDB", "PostgreSQL", "Redis", "Firebase"],
-  "Cloud & DevOps": ["AWS", "Docker", "Kubernetes", "GitHub Actions", "Nginx", "Vercel"],
-  "AI & Automation": ["OpenAI APIs", "LangChain", "RAG Systems", "AI Agents", "Workflow Automation"],
-};
-
-const stackIcons: Record<string, typeof Code2> = {
-  Frontend: Code2,
-  Backend: Server,
-  Databases: Database,
-  "Cloud & DevOps": Cloud,
-  "AI & Automation": Brain,
-};
-
-export function TechStack() {
-  return (
-    <section id="stack" className="relative border-t border-white/5 px-6 py-32 md:px-12 overflow-hidden">
-      <NetworkNodes />
-      <div className="mx-auto max-w-7xl relative z-10">
-        <motion.div {...fadeUp} className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
-          <div className="max-w-2xl">
-            <SectionLabel>Stack</SectionLabel>
-            <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
-              The toolchain behind every shipped product.
-            </h2>
-          </div>
-            <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-              05 / DOMAINS — 27 / TECHNOLOGIES
-            </p>
-        </motion.div>
-
-        <div className="mt-16 grid gap-6 md:grid-cols-2">
-          {Object.entries(stack).map(([category, items], idx) => {
-            const Icon = stackIcons[category];
-            return (
-              <motion.div
-                key={category}
-                {...fadeUp}
-                transition={{ ...fadeUp.transition, delay: idx * 0.05 }}
-                className="glass-card glass-card-hover rounded-3xl p-10 md:p-12"
-              >
-                <div className="flex items-center justify-between border-b border-white/5 pb-5">
-                  <div className="flex items-center gap-3">
-                    <Icon className="h-4 w-4 text-electric" />
-                    <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                      {String(idx + 1).padStart(2, "0")} · {category}
-                    </span>
-                  </div>
-                  <span className="font-mono text-xs text-electric-soft">{items.length} active</span>
-                </div>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {items.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-md border border-white/10 bg-surface/60 px-3 py-2 font-mono text-sm text-foreground transition-colors hover:border-electric/50 hover:text-electric"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ---------- FEATURED WORK ---------- */
 const work = [
   {
@@ -359,7 +287,7 @@ const reasons = [
 
 export function WhyChoose() {
   return (
-    <section className="relative border-t border-white/5 px-6 py-32 md:px-12">
+    <section id="why-zeploy" className="relative border-t border-white/5 px-6 py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Why Teams Choose Zeploy</SectionLabel>
@@ -729,7 +657,7 @@ function StarRating({ rating }: { rating: number }) {
 
 export function Testimonials() {
   return (
-    <section className="relative border-t border-white/5 px-6 py-32 md:px-12">
+    <section id="reviews" className="relative border-t border-white/5 px-6 py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Testimonials</SectionLabel>
