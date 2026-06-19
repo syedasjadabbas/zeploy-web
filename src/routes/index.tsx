@@ -116,7 +116,7 @@ function ClientHeroScene() {
 
 /** Defers mounting of children until the wrapper enters the viewport.
  *  Uses content-visibility: auto via the section-lazy utility for paint deferral. */
-function LazySection({ children, fallbackHeight = "200px" }: { children: ReactNode; fallbackHeight?: string }) {
+function LazySection({ children, fallbackHeight = "200px", id }: { children: ReactNode; fallbackHeight?: string; id?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -137,7 +137,7 @@ function LazySection({ children, fallbackHeight = "200px" }: { children: ReactNo
   }, []);
 
   return (
-    <div ref={ref} className="section-lazy">
+    <div ref={ref} id={id} className="section-lazy">
       {visible ? children : <div style={{ minHeight: fallbackHeight }} />}
     </div>
   );
@@ -184,10 +184,10 @@ function Index() {
         <Hero />
       </div>
       <Services />
-      <LazySection fallbackHeight="500px">
+      <LazySection id="why-zeploy" fallbackHeight="500px">
         <WhyChoose />
       </LazySection>
-      <LazySection fallbackHeight="600px">
+      <LazySection id="work" fallbackHeight="600px">
         <FeaturedWork />
       </LazySection>
       <LazySection fallbackHeight="400px">
@@ -199,13 +199,13 @@ function Index() {
       <LazySection fallbackHeight="500px">
         <Testimonials />
       </LazySection>
-      <LazySection fallbackHeight="500px">
+      <LazySection id="team" fallbackHeight="500px">
         <Team />
       </LazySection>
       <LazySection fallbackHeight="300px">
         <Blog />
       </LazySection>
-      <LazySection fallbackHeight="400px">
+      <LazySection id="contact" fallbackHeight="400px">
         <ProjectInquiry />
       </LazySection>
       <Footer />

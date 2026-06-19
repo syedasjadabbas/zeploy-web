@@ -199,7 +199,7 @@ const work = [
 
 export function FeaturedWork() {
   return (
-    <section id="work" className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-background">
+    <section className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-background">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Featured Projects</SectionLabel>
@@ -287,7 +287,7 @@ const reasons = [
 
 export function WhyChoose() {
   return (
-    <section id="why-zeploy" className="relative border-t border-white/5 px-6 py-32 md:px-12">
+    <section className="relative border-t border-white/5 px-6 py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Why Teams Choose Zeploy</SectionLabel>
@@ -512,7 +512,7 @@ const team = [
 
 export function Team() {
   return (
-    <section id="team" className="relative border-t border-white/5 px-6 py-32 md:px-12">
+    <section className="relative border-t border-white/5 px-6 py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Leadership</SectionLabel>
@@ -822,7 +822,7 @@ export function ProjectInquiry() {
   };
 
   return (
-    <section id="contact" className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-surface-2/30">
+    <section className="relative border-t border-white/5 px-6 py-32 md:px-12 overflow-hidden bg-background">
       <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-16 lg:gap-24">
         <motion.div {...fadeUp}>
           <SectionLabel>Project Inquiry</SectionLabel>
