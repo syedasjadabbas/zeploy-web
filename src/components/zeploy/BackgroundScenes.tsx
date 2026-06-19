@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, memo } from "react";
+import { useEffect, useRef, memo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, Line, Grid } from "@react-three/drei";
 import * as THREE from "three";
@@ -19,7 +19,7 @@ const generatePoints = (count: number, radius: number) => {
 
 function NodesCloud() {
   const ref = useRef<THREE.Points>(null);
-  const sphere = generatePoints(150, 1.5);
+  const sphere = generatePoints(100, 1.5);
 
   useFrame((state, delta) => {
     if (ref.current) {
@@ -56,7 +56,7 @@ const NetworkNodesBase = () => {
 
 function FallingLines() {
   const ref = useRef<THREE.Group>(null);
-  const lineCount = 30;
+  const lineCount = 20;
   const lines = Array.from({ length: lineCount }).map((_, i) => {
     const x = (Math.random() - 0.5) * 10;
     const z = (Math.random() - 0.5) * 5;

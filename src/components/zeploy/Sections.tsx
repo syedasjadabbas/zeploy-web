@@ -17,6 +17,7 @@ import {
   ShieldCheck,
   Smartphone,
   Sparkles,
+  Star,
   Workflow,
   Zap,
   Linkedin,
@@ -440,7 +441,7 @@ export function Reliability() {
             <span className="font-mono text-xs text-electric-soft">Last sync · just now</span>
           </div>
 
-          <div className="grid gap-px bg-white/5 md:grid-cols-5">
+          <div className="grid grid-cols-2 gap-px bg-white/5 md:grid-cols-3 xl:grid-cols-5">
             {[
               { k: "Deployment Success", v: <AnimatedDecimalCounter from={0} to={99.7} decimals={1} suffix="%" duration={2} />, icon: Rocket },
               { k: "Infra Health", v: "Nominal", icon: Server },
@@ -599,11 +600,11 @@ export function Team() {
               <div className="flex flex-col gap-6">
                 <div className="group/avatar relative aspect-[4/5] w-[70%] mx-auto p-4 rounded-2xl border border-electric/20 bg-surface/40 transition-all duration-300 hover:border-electric/50 hover:bg-surface/60">
                   <div className="relative w-full h-full rounded-xl overflow-hidden bg-background">
-                    <img src={m.image} alt={m.name} loading="lazy" className="h-full w-full object-cover object-[center_15%] transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]" />
+                    <img src={m.image} alt={m.name} loading="lazy" className="h-full w-full object-cover object-[center_20%] brightness-110 contrast-[1.05] transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]" />
                     
                     {/* Social Icons on Hover */}
                     {m.socials && (
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 transition-opacity duration-300 group-hover/avatar:opacity-100 flex items-end justify-center pb-6 gap-4">
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover/avatar:opacity-100 flex items-end justify-center pb-6 gap-4">
                         {m.socials.linkedin && (
                           <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} LinkedIn`} className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
                             <Linkedin className="w-4 h-4" />
@@ -649,16 +650,77 @@ const testimonials = [
   {
     q: "Zeploy rebuilt our billing core in 11 weeks. It's been running clean for a year with zero engineering intervention from our side.",
     a: "Director of Engineering · Series B Fintech",
+    company: "PayStream Labs",
+    projectType: "Billing Platform",
+    rating: 5,
   },
   {
     q: "They architected an AI pipeline we couldn't have shipped internally in under a year. We had it in production in 9 weeks.",
     a: "Co-Founder · AI Infrastructure Startup",
+    company: "Cortex Systems",
+    projectType: "AI Pipeline",
+    rating: 5,
   },
   {
     q: "Code quality and architecture you'd expect from a top-tier in-house team. We extended the contract three times.",
     a: "VP Product · Enterprise SaaS",
+    company: "CloudFirst Inc.",
+    projectType: "Enterprise SaaS",
+    rating: 5,
+  },
+  {
+    q: "Our real-time fleet dashboard went from concept to production in 8 weeks. Handles 50K+ events per minute without breaking a sweat.",
+    a: "Head of Engineering · Logistics Startup",
+    company: "FleetPulse",
+    projectType: "Real-time Dashboard",
+    rating: 5,
+  },
+  {
+    q: "Zeploy delivered a HIPAA-compliant telemedicine platform that our medical staff actually enjoys using. The attention to UX was remarkable.",
+    a: "CTO · HealthTech Startup",
+    company: "MedSync",
+    projectType: "Telemedicine Platform",
+    rating: 5,
+  },
+  {
+    q: "They replaced our legacy LMS with a modern, scalable platform in under 12 weeks. Student engagement metrics improved by 40% within the first month.",
+    a: "Product Lead · EdTech Company",
+    company: "LearnBase",
+    projectType: "Learning Management System",
+    rating: 5,
+  },
+  {
+    q: "Migrated our entire commerce engine from a monolith to microservices with zero downtime. Revenue processing never skipped a beat.",
+    a: "Engineering Manager · E-Commerce",
+    company: "ShopScale",
+    projectType: "Commerce Engine",
+    rating: 5,
+  },
+  {
+    q: "The analytics platform Zeploy built gives us insights we never had before. Data-driven decisions have directly contributed to 3x growth this year.",
+    a: "Founder · PropTech Startup",
+    company: "NestMetrics",
+    projectType: "Analytics Platform",
+    rating: 5,
   },
 ];
+
+function StarRating({ rating }: { rating: number }) {
+  return (
+    <div className="flex items-center gap-0.5">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star
+          key={i}
+          className={`h-4 w-4 ${
+            i < rating
+              ? "fill-amber-400 text-amber-400"
+              : "fill-white/10 text-white/10"
+          }`}
+        />
+      ))}
+    </div>
+  );
+}
 
 export function Testimonials() {
   return (
@@ -671,19 +733,45 @@ export function Testimonials() {
           </h2>
         </motion.div>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
+        {/* Average Rating Badge */}
+        <motion.div
+          {...fadeUp}
+          className="mt-10 flex flex-col items-center gap-3"
+        >
+          <div className="inline-flex items-center gap-3 rounded-full border border-amber-400/20 bg-amber-400/5 px-6 py-3 backdrop-blur-sm">
+            <div className="flex items-center gap-0.5">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="h-5 w-5 fill-amber-400 text-amber-400" />
+              ))}
+            </div>
+            <span className="font-display text-lg font-semibold text-foreground">5.0<span className="text-muted-foreground font-normal">/5</span></span>
+          </div>
+          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            Based on {testimonials.length} client reviews
+          </p>
+        </motion.div>
+
+        <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {testimonials.map((t, i) => (
             <motion.figure
               key={i}
               {...fadeUp}
-              transition={{ ...fadeUp.transition, delay: i * 0.05 }}
-              className="glass-card rounded-3xl p-10 md:p-12"
+              transition={{ ...fadeUp.transition, delay: i * 0.04 }}
+              className="glass-card glass-card-hover rounded-3xl p-8 md:p-10 flex flex-col"
             >
-              <blockquote className="text-lg leading-relaxed text-foreground/90">
+              <StarRating rating={t.rating} />
+              <blockquote className="mt-5 flex-1 text-base leading-relaxed text-foreground/90">
                 "{t.q}"
               </blockquote>
-              <figcaption className="mt-6 border-t border-white/5 pt-5 font-mono text-xs uppercase tracking-widest text-electric-soft">
-                {t.a}
+              <figcaption className="mt-6 border-t border-white/5 pt-5">
+                <p className="font-mono text-xs uppercase tracking-widest text-electric-soft">
+                  {t.a}
+                </p>
+                <div className="mt-2 flex items-center gap-2">
+                  <span className="font-mono text-[11px] text-muted-foreground">{t.company}</span>
+                  <span className="h-1 w-1 rounded-full bg-white/20" />
+                  <span className="font-mono text-[11px] text-electric/60">{t.projectType}</span>
+                </div>
               </figcaption>
             </motion.figure>
           ))}
@@ -854,25 +942,12 @@ export function ProjectInquiry() {
 
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Budget Range</label>
-                <select value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})} className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors appearance-none">
-                  <option value="">Select a range</option>
-                  <option value="10k-25k">$10k - $25k</option>
-                  <option value="25k-50k">$25k - $50k</option>
-                  <option value="50k-100k">$50k - $100k</option>
-                  <option value="100k+">$100k+</option>
-                </select>
+                <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Estimated Budget</label>
+                <input value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})} type="text" placeholder="Estimated Budget" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Project Type</label>
-                <select value={formData.type} onChange={(e) => setFormData({...formData, type: e.target.value})} className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors appearance-none">
-                  <option value="">Select a type</option>
-                  <option value="web">Web Application</option>
-                  <option value="mobile">Mobile Application</option>
-                  <option value="ai">AI System / Automation</option>
-                  <option value="saas">SaaS Development</option>
-                  <option value="cloud">Cloud Infrastructure</option>
-                </select>
+                <input value={formData.type} onChange={(e) => setFormData({...formData, type: e.target.value})} type="text" placeholder="Project Type" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
               </div>
             </div>
 

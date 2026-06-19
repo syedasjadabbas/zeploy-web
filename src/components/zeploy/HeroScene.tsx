@@ -72,7 +72,7 @@ function Core({ hovered }: { hovered: boolean }) {
 function Nodes({ hovered }: { hovered: boolean }) {
   const points = useMemo(() => {
     const arr: THREE.Vector3[] = [];
-    const count = 28;
+    const count = 20;
     for (let i = 0; i < count; i++) {
       const phi = Math.acos(-1 + (2 * i) / count);
       const theta = Math.sqrt(count * Math.PI) * phi;
@@ -119,7 +119,7 @@ function Nodes({ hovered }: { hovered: boolean }) {
   return (
     <group ref={group}>
       {points.map((p, i) => (
-        <Sphere key={i} args={[0.045, 16, 16]} position={p}>
+        <Sphere key={i} args={[0.045, 8, 8]} position={p}>
           <meshBasicMaterial color={hovered ? "#ffffff" : "#AFD2FA"} />
         </Sphere>
       ))}
@@ -145,7 +145,7 @@ function Particles({ hovered }: { hovered: boolean }) {
 
   const geom = useMemo(() => {
     const g = new THREE.BufferGeometry();
-    const count = 220;
+    const count = 140;
     const positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       const r = 4 + Math.random() * 3;

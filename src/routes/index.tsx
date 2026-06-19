@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { lazy, Suspense, useEffect, useState, useRef } from "react";
+import { lazy, Suspense, useEffect, useState, useRef, type ReactNode } from "react";
 import { motion, useInView, animate } from "framer-motion";
 
 import { ArrowUpRight, ArrowUp } from "lucide-react";
@@ -115,6 +115,35 @@ function ClientHeroScene() {
   );
 }
 
+/** Defers mounting of children until the wrapper enters the viewport.
+ *  Uses content-visibility: auto via the section-lazy utility for paint deferral. */
+function LazySection({ children, fallbackHeight = "200px" }: { children: ReactNode; fallbackHeight?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px 0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="section-lazy">
+      {visible ? children : <div style={{ minHeight: fallbackHeight }} />}
+    </div>
+  );
+}
+
 
 function BackToTop() {
   const [visible, setVisible] = useState(false);
@@ -157,14 +186,30 @@ function Index() {
       </div>
       <Services />
       <TechStack />
-      <FeaturedWork />
-      <WhyChoose />
-      <Reliability />
-      <Process />
-      <Team />
-      <Testimonials />
-      <Blog />
-      <ProjectInquiry />
+      <LazySection fallbackHeight="600px">
+        <FeaturedWork />
+      </LazySection>
+      <LazySection fallbackHeight="500px">
+        <WhyChoose />
+      </LazySection>
+      <LazySection fallbackHeight="400px">
+        <Reliability />
+      </LazySection>
+      <LazySection fallbackHeight="400px">
+        <Process />
+      </LazySection>
+      <LazySection fallbackHeight="500px">
+        <Team />
+      </LazySection>
+      <LazySection fallbackHeight="500px">
+        <Testimonials />
+      </LazySection>
+      <LazySection fallbackHeight="300px">
+        <Blog />
+      </LazySection>
+      <LazySection fallbackHeight="400px">
+        <ProjectInquiry />
+      </LazySection>
       <Footer />
     </main>
   );
