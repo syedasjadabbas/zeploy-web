@@ -15,6 +15,8 @@ import {
   Blog,
   ProjectInquiry,
   Footer,
+  FounderMessage,
+  Faq
 } from "@/components/zeploy/Sections";
 
 const HeroScene = lazy(() => import("@/components/zeploy/HeroScene"));
@@ -204,6 +206,12 @@ function Index() {
       </LazySection>
       <LazySection fallbackHeight="300px">
         <Blog />
+      </LazySection>
+      <LazySection fallbackHeight="400px">
+        <FounderMessage />
+      </LazySection>
+      <LazySection fallbackHeight="400px">
+        <Faq />
       </LazySection>
       <LazySection id="contact" fallbackHeight="400px">
         <ProjectInquiry />

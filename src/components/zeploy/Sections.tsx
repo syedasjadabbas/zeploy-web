@@ -25,6 +25,9 @@ import {
   Facebook,
   Instagram,
   Mail,
+  MessageCircle,
+  Plus,
+  Minus
 } from "lucide-react";
 import { DataStreams, NetworkNodes, BlueprintGrid } from "./BackgroundScenes";
 import { InfraVisualization } from "./InfraVisualization";
@@ -154,6 +157,7 @@ const work = [
       "Confidence tracking",
       "Performance reports"
     ],
+    outcomes: ["Reduced manual interview screening by 70%", "Automated candidate evaluation workflow"],
     image: "/projects/mockai.png"
   },
   {
@@ -169,6 +173,7 @@ const work = [
       "SEO automation",
       "AI assistant"
     ],
+    outcomes: ["Increased sales conversion by 25%", "Reduced order processing time by 40%"],
     image: "/projects/educart.png"
   },
   {
@@ -177,6 +182,7 @@ const work = [
     desc: "A high-performance programmable billing engine built to process thousands of subscription events per minute with flawless accuracy, reducing failed renewals by 62%.",
     tech: ["Next.js", "Node.js", "PostgreSQL", "Redis", "Stripe"],
     features: ["Idempotent Webhooks", "Real-time Metrics", "Dynamic Proration", "Automated Dunning"],
+    outcomes: ["Reduced failed renewals by 62%", "Increased operational efficiency by 60%"],
     image: "/projects/neuralpay.png"
   },
   {
@@ -185,6 +191,7 @@ const work = [
     desc: "A distributed LLM inference fabric that intelligently routes workloads across a heterogeneous cluster of GPUs, maximizing throughput and reducing cost-per-token.",
     tech: ["Python", "FastAPI", "Kubernetes", "gRPC", "vLLM"],
     features: ["Dynamic Batching", "Cost-aware Routing", "Auto-scaling Pools", "Model Caching"],
+    outcomes: ["Reduced processing time by 50%", "Lowered compute costs by 40%"],
     image: "/projects/cortex.png"
   },
   {
@@ -193,6 +200,7 @@ const work = [
     desc: "A sub-second analytics engine ingesting high-volume event streams to power live operational dashboards and anomaly detection for enterprise organizations.",
     tech: ["TypeScript", "Kafka", "ClickHouse", "React", "WebSocket"],
     features: ["Live Geographic Maps", "Anomaly Detection", "Custom Aggregations", "Role-based Access"],
+    outcomes: ["Achieved sub-second real-time latency", "Scaled to process 1M+ events per minute"],
     image: "/projects/synthwave.png"
   }
 ];
@@ -237,6 +245,18 @@ export function FeaturedWork() {
                         <li key={f} className="flex items-center gap-3 text-sm text-foreground/90">
                           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/80" />
                           {f}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mt-8">
+                    <p className="font-mono text-[11px] uppercase tracking-widest text-emerald-400/80 mb-4">Outcomes & Metrics</p>
+                    <ul className="space-y-3">
+                      {p.outcomes?.map(o => (
+                        <li key={o} className="flex items-start gap-3 text-sm text-foreground/90 leading-snug">
+                          <span className="mt-0.5 text-emerald-400">✓</span>
+                          {o}
                         </li>
                       ))}
                     </ul>
@@ -531,9 +551,9 @@ export function Team() {
             >
               <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-electric/15 blur-[100px] transition-all duration-500 group-hover:bg-electric/25" />
               <div className="flex flex-col gap-6">
-                <div className="group/avatar relative aspect-[4/5] w-[70%] mx-auto p-4 rounded-2xl border border-electric/20 bg-surface/40 transition-all duration-300 hover:border-electric/50 hover:bg-surface/60">
+                <div className="group/avatar relative aspect-square w-[55%] mx-auto p-4 rounded-2xl border border-electric/20 bg-surface/40 transition-all duration-300 hover:border-electric/50 hover:bg-surface/60">
                   <div className="relative w-full h-full rounded-xl overflow-hidden bg-background">
-                    <img src={m.image} alt={m.name} loading="lazy" className="h-full w-full object-cover object-[center_20%] brightness-110 contrast-[1.05] transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]" />
+                    <img src={m.image} alt={m.name} loading="lazy" className="h-full w-full object-cover object-[center_top] transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]" />
                     
                     {/* Social Icons on Hover */}
                     {m.socials && (
@@ -833,7 +853,13 @@ export function ProjectInquiry() {
             Fill out the details of your project. Whether you have a complete technical specification or just a feature list, we'll review it and get back to you with an architecture proposal and timeline within 24 hours.
           </p>
           
-          <div className="mt-12 space-y-6">
+          <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 border-b border-white/5 pb-10">
+            <div className="flex items-center gap-2 text-sm font-medium text-foreground/80"><span className="text-emerald-400">✓</span> Response within 24 Hours</div>
+            <div className="flex items-center gap-2 text-sm font-medium text-foreground/80"><span className="text-emerald-400">✓</span> Free Project Consultation</div>
+            <div className="flex items-center gap-2 text-sm font-medium text-foreground/80"><span className="text-emerald-400">✓</span> Transparent Communication</div>
+          </div>
+
+          <div className="mt-10 space-y-6">
             <div className="flex items-start gap-4">
               <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-electric/40 bg-surface text-electric">
                 <Brain className="h-5 w-5" />
@@ -899,6 +925,16 @@ export function ProjectInquiry() {
             <button type="submit" disabled={status === "loading"} className="mt-4 w-full rounded-xl bg-electric px-6 py-4 text-sm font-semibold text-primary-foreground transition-all hover:glow-electric hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100">
               {status === "loading" ? "Sending..." : "Submit Request"}
             </button>
+
+            <div className="relative flex items-center justify-center my-1">
+              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/10" /></div>
+              <div className="relative flex justify-center text-[10px] uppercase tracking-widest bg-background/50 backdrop-blur-md px-3 text-muted-foreground font-mono">Or</div>
+            </div>
+
+            <a href="https://wa.me/923033236878" target="_blank" rel="noopener noreferrer" className="w-full rounded-xl border border-[#25D366]/20 bg-[#25D366]/10 px-6 py-4 text-sm font-semibold text-[#25D366] transition-all flex items-center justify-center gap-2 hover:bg-[#25D366]/20 hover:border-[#25D366]/50">
+              <MessageCircle className="w-5 h-5" />
+              Chat on WhatsApp
+            </a>
           </form>
         </motion.div>
       </div>
@@ -973,6 +1009,9 @@ export function Footer() {
               <a href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech Facebook" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
                 <Facebook className="w-5 h-5" />
               </a>
+              <a href="https://wa.me/923033236878" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech WhatsApp" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-[#25D366]/20 text-[#25D366] transition-all hover:bg-[#25D366]/20 hover:border-[#25D366]/50 hover:scale-110 hover:shadow-[0_0_15px_rgba(37,211,102,0.3)]">
+                <MessageCircle className="w-5 h-5" />
+              </a>
               <a href="mailto:zeploytech@gmail.com" aria-label="Zeploy Tech Email" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
                 <Mail className="w-5 h-5" />
               </a>
@@ -993,5 +1032,77 @@ export function Footer() {
         </div>
       </div>
     </footer>
+  );
+}
+
+export function FounderMessage() {
+  return (
+    <section className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-background">
+      <div className="mx-auto max-w-4xl text-center">
+        <motion.div {...fadeUp}>
+          <SectionLabel>A Word from the Founder</SectionLabel>
+          <blockquote className="mt-12 text-2xl md:text-3xl lg:text-4xl font-medium leading-[1.4] text-foreground/90 tracking-tight">
+            "At Zeploy, our goal is simple: build software that solves real business problems. We focus on scalable systems, modern technology, and long-term value for every client we work with."
+          </blockquote>
+          <div className="mt-12 flex flex-col items-center justify-center gap-4">
+            <div className="h-16 w-16 overflow-hidden rounded-full border border-electric/30 bg-surface">
+              <img src={imgAsjad} alt="Syed Asjad Abbas" className="h-full w-full object-cover object-top" />
+            </div>
+            <div>
+              <div className="text-lg font-semibold text-foreground">Syed Asjad Abbas</div>
+              <div className="font-mono text-xs uppercase tracking-widest text-electric mt-1">CEO & Founder</div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+export function Faq() {
+  const faqs = [
+    { q: "How long does a typical project take?", a: "Project timelines vary based on complexity. A standard MVP typically takes 6 to 10 weeks, while large-scale enterprise systems can take 3 to 6 months. We provide a detailed timeline during the discovery phase." },
+    { q: "Do you build both websites and mobile apps?", a: "Yes, we specialize in full-stack web applications and cross-platform mobile apps using modern frameworks like React, Next.js, and React Native, ensuring seamless performance across all devices." },
+    { q: "Do you provide maintenance after launch?", a: "Absolutely. We offer long-term support, scaling, and observability retainers to ensure your system runs flawlessly and adapts to your growing user base." },
+    { q: "Do you work with international clients?", a: "Yes, we are a globally distributed team. We work with clients across North America, Europe, and Asia, adapting to different time zones for seamless communication." },
+    { q: "What technologies do you specialize in?", a: "Our core stack includes React, Next.js, Node.js, Python, FastAPI, and Go. We also have deep expertise in deploying AI models, LLMs, and scalable cloud infrastructure on AWS and GCP." },
+    { q: "How do I get started with Zeploy?", a: "Simply fill out our project inquiry form or send us a WhatsApp message. We'll schedule a free technical consultation to discuss your requirements and propose an architecture." },
+  ];
+
+  const [open, setOpen] = useState<number | null>(0);
+
+  return (
+    <section className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-surface/20">
+      <div className="mx-auto max-w-4xl">
+        <motion.div {...fadeUp} className="text-center">
+          <SectionLabel>FAQ</SectionLabel>
+          <h2 className="mt-6 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl text-gradient-soft">
+            Frequently Asked Questions
+          </h2>
+        </motion.div>
+
+        <div className="mt-16 space-y-4">
+          {faqs.map((faq, i) => (
+            <motion.div key={i} {...fadeUp} transition={{ delay: i * 0.05 }} className="glass-card rounded-2xl overflow-hidden">
+              <button 
+                onClick={() => setOpen(open === i ? null : i)}
+                className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none"
+              >
+                <span className="text-lg font-medium text-foreground/90">{faq.q}</span>
+                <span className="ml-4 shrink-0 text-electric">
+                  {open === i ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
+                </span>
+              </button>
+              <div 
+                className="px-6 text-muted-foreground leading-relaxed transition-all duration-300 ease-in-out overflow-hidden"
+                style={{ maxHeight: open === i ? '200px' : '0', paddingBottom: open === i ? '1.25rem' : '0', opacity: open === i ? 1 : 0 }}
+              >
+                {faq.a}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
