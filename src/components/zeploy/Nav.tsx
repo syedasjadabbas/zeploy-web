@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Linkedin, Instagram, Facebook } from "lucide-react";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -113,6 +113,12 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2 mr-2">
+            <a href="https://www.linkedin.com/company/zeploy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Linkedin className="w-4 h-4" /></a>
+            <a href="https://instagram.com/zeploytech" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Instagram className="w-4 h-4" /></a>
+            <a href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Facebook className="w-4 h-4" /></a>
+          </div>
+
           <a
             href="mailto:zeploytech@gmail.com?subject=Project%20Inquiry%20-%20Portfolio%20Website"
             className="rounded-full border border-white/10 bg-surface/60 px-4 py-2 font-mono text-xs uppercase tracking-widest text-foreground transition-colors hover:border-electric/50 hover:text-electric"
@@ -134,7 +140,7 @@ export default function Nav() {
       {/* Mobile Menu */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          mobileOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
+          mobileOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <nav className="mx-auto max-w-7xl border-t border-white/5 px-6 py-4">
@@ -156,6 +162,11 @@ export default function Nav() {
                 {l.label}
               </a>
             ))}
+          </div>
+          <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-center gap-4">
+            <a href="https://www.linkedin.com/company/zeploy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-muted-foreground hover:text-electric transition-colors p-2 rounded-xl border border-white/5 bg-surface/50"><Linkedin className="w-5 h-5" /></a>
+            <a href="https://instagram.com/zeploytech" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-muted-foreground hover:text-electric transition-colors p-2 rounded-xl border border-white/5 bg-surface/50"><Instagram className="w-5 h-5" /></a>
+            <a href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-muted-foreground hover:text-electric transition-colors p-2 rounded-xl border border-white/5 bg-surface/50"><Facebook className="w-5 h-5" /></a>
           </div>
         </nav>
       </div>
