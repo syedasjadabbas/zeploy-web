@@ -49,29 +49,30 @@ Services include:
 - React Three Fiber
 - Vercel
 
-## Getting Started
+Team
+Founder & CEO
 
-Clone the repository:
+Syed Asjad Abbas
 
-```bash
-git clone https://github.com/syedasjadabbas/zeploy-web.git
+Co-Founder
 
-Install dependencies:
+Rana Asad Ur Rehman
 
-npm install
+Senior Partners
 
-Run development server:
+Ahsan Niazi
+Syed Hassan Ali
 
-npm run dev
+Contact
 
-Build for production:
+Email:
+zeploytech@gmail.com
 
-npm run build
+LinkedIn:
+https://www.linkedin.com/company/zeploy-tech/
 
-Preview production build:
-
-npm run preview
-
+Instagram:
+https://www.instagram.com/zeploy.tech/
 
 Facebook:
 https://www.facebook.com/
