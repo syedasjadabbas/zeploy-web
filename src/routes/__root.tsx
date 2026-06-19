@@ -77,22 +77,30 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Zeploy Tech — We Deploy Your Vision" },
+      { title: "Zeploy Tech | Premium Software Engineering & AI Studio" },
       {
         name: "description",
         content:
-          "Zeploy Tech is a software engineering studio building scalable web apps, mobile apps, AI systems, and cloud infrastructure for startups and businesses.",
+          "Zeploy Tech is a premium software engineering and AI studio specializing in scalable web applications, mobile apps, SaaS development, and enterprise cloud infrastructure.",
       },
+      { name: "keywords", content: "Zeploy Tech, software engineering, AI studio, web applications, mobile apps, SaaS development, cloud infrastructure, AI automation, React, Next.js, full-stack" },
       { name: "author", content: "Zeploy Tech" },
-      { name: "theme-color", content: "#0B1535" },
-      { property: "og:title", content: "Zeploy Tech — We Deploy Your Vision" },
+      { name: "theme-color", content: "#020817" },
+      { property: "og:title", content: "Zeploy Tech | Premium Software Engineering & AI Studio" },
+      { property: "og:site_name", content: "Zeploy Tech" },
+      { property: "og:url", content: "https://zeploy.tech" },
       {
         property: "og:description",
         content:
-          "Software engineering & AI studio building scalable systems for modern teams.",
+          "Premium software engineering & AI studio building scalable, production-grade systems for modern businesses.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://zeploy.tech/logo.png" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Zeploy Tech | Premium Software Engineering & AI Studio" },
+      { name: "twitter:description", content: "Premium software engineering & AI studio building scalable, production-grade systems for modern businesses." },
+      { name: "twitter:image", content: "https://zeploy.tech/logo.png" },
+      { rel: "canonical", href: "https://zeploy.tech" },
     ],
     links: [
       { rel: "icon", href: "/logo.png" },
@@ -117,6 +125,28 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              "name": "Zeploy Tech",
+              "url": "https://zeploy.tech",
+              "logo": "https://zeploy.tech/logo.png",
+              "description": "A premium software engineering and AI studio dedicated to building robust, scalable, and visually stunning digital products.",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "Pakistan"
+              },
+              "sameAs": [
+                "https://www.linkedin.com/company/zeploy-tech/",
+                "https://www.instagram.com/zeploy.tech/",
+                "https://www.facebook.com/zeploytech"
+              ]
+            })
+          }}
+        />
       </head>
       <body>
         {children}
