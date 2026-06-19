@@ -1000,9 +1000,6 @@ export function Footer() {
               <a href="https://www.linkedin.com/company/zeploy-tech/" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech LinkedIn" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="https://github.com/syedasjadabbas" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech GitHub" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
-                <Github className="w-5 h-5" />
-              </a>
               <a href="https://www.instagram.com/zeploy.tech/" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech Instagram" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
                 <Instagram className="w-5 h-5" />
               </a>
@@ -1044,13 +1041,33 @@ export function FounderMessage() {
           <blockquote className="mt-12 text-2xl md:text-3xl lg:text-4xl font-medium leading-[1.4] text-foreground/90 tracking-tight">
             "At Zeploy, our goal is simple: build software that solves real business problems. We focus on scalable systems, modern technology, and long-term value for every client we work with."
           </blockquote>
-          <div className="mt-12 flex flex-col items-center justify-center gap-4">
-            <div className="h-16 w-16 overflow-hidden rounded-full border border-electric/30 bg-surface">
-              <img src={imgAsjad} alt="Syed Asjad Abbas" className="h-full w-full object-cover object-top" />
+          <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-12 sm:gap-24">
+            <div className="flex flex-col items-center justify-center gap-4">
+              <div className="h-20 w-20 overflow-hidden rounded-full border border-electric/30 bg-surface">
+                <img src={imgAsjad} alt="Syed Asjad Abbas" className="h-full w-full object-cover object-top" />
+              </div>
+              <div>
+                <div className="text-lg font-semibold text-foreground">Syed Asjad Abbas</div>
+                <div className="font-mono text-xs uppercase tracking-widest text-electric mt-1">CEO & Founder</div>
+                <div className="flex justify-center gap-3 mt-4">
+                  <a href="https://www.linkedin.com/in/syed-asjad-abbas/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Linkedin className="w-4 h-4" /></a>
+                  <a href="https://github.com/syedasjadabbas" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Github className="w-4 h-4" /></a>
+                </div>
+              </div>
             </div>
-            <div>
-              <div className="text-lg font-semibold text-foreground">Syed Asjad Abbas</div>
-              <div className="font-mono text-xs uppercase tracking-widest text-electric mt-1">CEO & Founder</div>
+
+            <div className="flex flex-col items-center justify-center gap-4">
+              <div className="h-20 w-20 overflow-hidden rounded-full border border-electric/30 bg-surface">
+                <img src={imgAsad} alt="Rana Asad Ur Rehman" className="h-full w-full object-cover object-top" />
+              </div>
+              <div>
+                <div className="text-lg font-semibold text-foreground">Rana Asad Ur Rehman</div>
+                <div className="font-mono text-xs uppercase tracking-widest text-electric mt-1">Co-Founder</div>
+                <div className="flex justify-center gap-3 mt-4">
+                  <a href="https://www.linkedin.com/in/rana-asad-ur-rahman-0a2457339/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Linkedin className="w-4 h-4" /></a>
+                  <a href="https://github.com/asad-rana306" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Github className="w-4 h-4" /></a>
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>

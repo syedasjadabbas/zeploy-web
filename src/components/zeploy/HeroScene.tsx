@@ -16,10 +16,10 @@ function CoreLogo({ hovered }: { hovered: boolean }) {
   return (
     <group ref={zRef}>
       <Text
-        fontSize={2}
+        fontSize={2.5}
         fontWeight="bold"
         color="#ffffff"
-        position={[0, 0, 0]}
+        position={[0, 0, 2.2]}
       >
         Z
         <meshStandardMaterial color="#ffffff" emissive="#3B82F6" emissiveIntensity={hovered ? 6 : 2} toneMapped={false} />
