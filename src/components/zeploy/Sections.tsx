@@ -883,34 +883,34 @@ export function ProjectInquiry() {
           <form className="grid gap-6" onSubmit={handleSubmit}>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Full Name</label>
-                <input required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} type="text" placeholder="Full Name" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+                <label htmlFor="form-name" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Full Name</label>
+                <input id="form-name" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} type="text" placeholder="Full Name" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-base md:text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Email</label>
-                <input required value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} type="email" placeholder="Email Address" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+                <label htmlFor="form-email" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Email</label>
+                <input id="form-email" required value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} type="email" placeholder="Email Address" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-base md:text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Company</label>
-              <input value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} type="text" placeholder="Company Name" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+              <label htmlFor="form-company" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Company</label>
+              <input id="form-company" value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} type="text" placeholder="Company Name" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-base md:text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Estimated Budget</label>
-                <input value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})} type="text" placeholder="Estimated Budget" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+                <label htmlFor="form-budget" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Estimated Budget</label>
+                <input id="form-budget" value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})} type="text" placeholder="Estimated Budget" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-base md:text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Project Type</label>
-                <input value={formData.type} onChange={(e) => setFormData({...formData, type: e.target.value})} type="text" placeholder="Project Type" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+                <label htmlFor="form-type" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Project Type</label>
+                <input id="form-type" value={formData.type} onChange={(e) => setFormData({...formData, type: e.target.value})} type="text" placeholder="Project Type" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-base md:text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Project Description</label>
-              <textarea required value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} rows={4} placeholder="Describe your project..." className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors resize-none" />
+              <label htmlFor="form-message" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Project Description</label>
+              <textarea id="form-message" required value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} rows={4} placeholder="Describe your project..." className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-base md:text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors resize-none" />
             </div>
 
             {status === "success" && (
@@ -1016,8 +1016,8 @@ export function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-6 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-          <p>© {new Date().getFullYear()} Zeploy Tech. All rights reserved.</p>
-          <div className="flex flex-col items-end gap-2 text-right">
+          <p className="text-center md:text-left">© {new Date().getFullYear()} Zeploy Tech. All rights reserved.</p>
+          <div className="flex flex-col items-center md:items-end gap-2 text-center md:text-right">
             <div className="flex items-center gap-3 text-electric-soft">
               <span className="h-1.5 w-1.5 rounded-full bg-electric animate-pulse" />
               We Deploy Your Vision.
@@ -1102,7 +1102,9 @@ export function Faq() {
             <motion.div key={i} {...fadeUp} transition={{ delay: i * 0.05 }} className="glass-card rounded-2xl overflow-hidden">
               <button 
                 onClick={() => setOpen(open === i ? null : i)}
-                className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none"
+                className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-electric rounded-xl"
+                aria-expanded={open === i}
+                aria-controls={`faq-answer-${i}`}
               >
                 <span className="text-lg font-medium text-foreground/90">{faq.q}</span>
                 <span className="ml-4 shrink-0 text-electric">
@@ -1110,8 +1112,9 @@ export function Faq() {
                 </span>
               </button>
               <div 
+                id={`faq-answer-${i}`}
                 className="px-6 text-muted-foreground leading-relaxed transition-all duration-300 ease-in-out overflow-hidden"
-                style={{ maxHeight: open === i ? '200px' : '0', paddingBottom: open === i ? '1.25rem' : '0', opacity: open === i ? 1 : 0 }}
+                style={{ maxHeight: open === i ? '500px' : '0', paddingBottom: open === i ? '1.25rem' : '0', opacity: open === i ? 1 : 0 }}
               >
                 {faq.a}
               </div>

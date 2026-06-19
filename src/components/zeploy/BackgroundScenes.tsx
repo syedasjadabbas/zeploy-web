@@ -19,7 +19,7 @@ const generatePoints = (count: number, radius: number) => {
 
 function NodesCloud() {
   const ref = useRef<THREE.Points>(null);
-  const sphere = generatePoints(100, 1.5);
+  const sphere = useMemo(() => generatePoints(100, 1.5), []);
 
   useFrame((state, delta) => {
     if (ref.current) {
@@ -47,7 +47,7 @@ function NodesCloud() {
 const NetworkNodesBase = () => {
   return (
     <div className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen">
-      <Canvas camera={{ position: [0, 0, 2] }} gl={{ alpha: true, antialias: false }} dpr={[1, 1.5]}>
+      <Canvas camera={{ position: [0, 0, 2] }} gl={{ alpha: true, antialias: false }} dpr={[1, 1.5]} performance={{ min: 0.5 }}>
         <NodesCloud />
       </Canvas>
     </div>
@@ -57,13 +57,13 @@ const NetworkNodesBase = () => {
 function FallingLines() {
   const ref = useRef<THREE.Group>(null);
   const lineCount = 20;
-  const lines = Array.from({ length: lineCount }).map((_, i) => {
+  const lines = useMemo(() => Array.from({ length: lineCount }).map((_, i) => {
     const x = (Math.random() - 0.5) * 10;
     const z = (Math.random() - 0.5) * 5;
     const length = Math.random() * 2 + 1;
     const speed = Math.random() * 2 + 1;
     return { x, z, length, speed, yOffset: Math.random() * 10 };
-  });
+  }), []);
 
   useFrame((state, delta) => {
     if (ref.current) {
@@ -99,7 +99,7 @@ function FallingLines() {
 const DataStreamsBase = () => {
   return (
     <div className="absolute inset-0 z-0 pointer-events-none opacity-30 mix-blend-screen">
-      <Canvas camera={{ position: [0, 0, 5] }} gl={{ alpha: true, antialias: false }} dpr={[1, 1.5]}>
+      <Canvas camera={{ position: [0, 0, 5] }} gl={{ alpha: true, antialias: false }} dpr={[1, 1.5]} performance={{ min: 0.5 }}>
         <FallingLines />
       </Canvas>
     </div>
@@ -109,7 +109,7 @@ const DataStreamsBase = () => {
 const BlueprintGridBase = () => {
   return (
     <div className="absolute inset-0 z-0 pointer-events-none opacity-20 mix-blend-screen overflow-hidden">
-      <Canvas camera={{ position: [0, 2, 5], fov: 45 }} gl={{ alpha: true, antialias: false }}>
+      <Canvas camera={{ position: [0, 2, 5], fov: 45 }} gl={{ alpha: true, antialias: false }} dpr={[1, 1.5]} performance={{ min: 0.5 }}>
         <color attach="background" args={["transparent"]} />
         <ambientLight intensity={0.5} />
         <Grid

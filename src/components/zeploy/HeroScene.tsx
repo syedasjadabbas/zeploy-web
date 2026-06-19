@@ -29,6 +29,9 @@ function CoreLogo({ hovered }: { hovered: boolean }) {
 }
 
 // 2. Liquid AI Brain (Morphing Sphere)
+const liquidSphereArgs1 = [2, 64, 64] as const;
+const liquidSphereArgs2 = [2.05, 32, 32] as const;
+
 function LiquidCore({ hovered }: { hovered: boolean }) {
   const materialRef = useRef<any>(null);
   const wireframeRef = useRef<any>(null);
@@ -49,7 +52,7 @@ function LiquidCore({ hovered }: { hovered: boolean }) {
   return (
     <group>
       {/* Dark Glossy Inner Morph */}
-      <Sphere args={[2, 64, 64]}>
+      <Sphere args={liquidSphereArgs1}>
         <MeshDistortMaterial
           ref={materialRef}
           color="#020817"
@@ -65,7 +68,7 @@ function LiquidCore({ hovered }: { hovered: boolean }) {
       </Sphere>
       
       {/* Glowing Outer Wireframe Morph */}
-      <Sphere args={[2.05, 32, 32]}>
+      <Sphere args={liquidSphereArgs2}>
         <MeshDistortMaterial
           ref={wireframeRef}
           color="#3B82F6"
@@ -81,6 +84,10 @@ function LiquidCore({ hovered }: { hovered: boolean }) {
 }
 
 // 3. Orbiting Data Rings
+const torusArgs1 = [3, 0.02, 16, 100] as const;
+const torusArgs2 = [3.2, 0.01, 16, 100] as const;
+const torusArgs3 = [3.5, 0.015, 16, 100] as const;
+
 function EnergyRings({ hovered }: { hovered: boolean }) {
   const groupRef = useRef<THREE.Group>(null);
   
@@ -95,13 +102,13 @@ function EnergyRings({ hovered }: { hovered: boolean }) {
 
   return (
     <group ref={groupRef}>
-      <Torus args={[3, 0.02, 16, 100]} rotation={[Math.PI / 2, 0, 0]}>
+      <Torus args={torusArgs1} rotation={[Math.PI / 2, 0, 0]}>
         <meshBasicMaterial color="#3B82F6" transparent opacity={hovered ? 0.6 : 0.2} />
       </Torus>
-      <Torus args={[3.2, 0.01, 16, 100]} rotation={[0, Math.PI / 3, 0]}>
+      <Torus args={torusArgs2} rotation={[0, Math.PI / 3, 0]}>
         <meshBasicMaterial color="#60A5FA" transparent opacity={hovered ? 0.4 : 0.1} />
       </Torus>
-      <Torus args={[3.5, 0.015, 16, 100]} rotation={[0, 0, Math.PI / 4]}>
+      <Torus args={torusArgs3} rotation={[0, 0, Math.PI / 4]}>
         <meshBasicMaterial color="#AFD2FA" transparent opacity={hovered ? 0.2 : 0.05} />
       </Torus>
     </group>
