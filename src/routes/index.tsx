@@ -268,7 +268,7 @@ function Hero() {
               <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
             <a
-              href="mailto:hello@zeploytech.com"
+              href="mailto:zeploytech@gmail.com?subject=Project%20Inquiry%20-%20Portfolio%20Website"
               className="rounded-full border border-white/20 bg-surface/50 px-8 py-4 text-base font-medium text-foreground backdrop-blur-md transition-colors hover:border-electric/50 hover:bg-surface hover:text-electric"
             >
               Start a project
@@ -331,13 +331,6 @@ function Hero() {
         </div>
       </div>
 
-      {/* Bottom marquee */}
-      <div className="relative z-10 border-y border-white/5 py-5">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-6 px-6 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground md:px-12">
-          <span>Trusted execution · Senior engineering · Production-grade</span>
-          <span className="text-electric-soft">Lahore · Remote · Globally distributed</span>
-        </div>
-      </div>
     </section>
   );
 }

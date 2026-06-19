@@ -202,7 +202,7 @@ export function FeaturedWork() {
     <section id="work" className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-background">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
-          <SectionLabel>Case Studies</SectionLabel>
+          <SectionLabel>Featured Projects</SectionLabel>
           <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
             Representative product concepts demonstrating Zeploy's engineering capabilities.
           </h2>
@@ -214,7 +214,7 @@ export function FeaturedWork() {
               key={p.name}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.05 }}
-              className="group glass-card overflow-hidden rounded-[2.5rem]"
+              className="group glass-card glass-card-hover overflow-hidden rounded-[2.5rem]"
             >
               <div className="grid lg:grid-cols-2">
                 <div className={`p-10 md:p-16 flex flex-col justify-center ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
@@ -982,9 +982,13 @@ export function Footer() {
 
         <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-6 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
           <p>© {new Date().getFullYear()} Zeploy Tech. All rights reserved.</p>
-          <div className="flex items-center gap-3 text-electric-soft">
-            <span className="h-1.5 w-1.5 rounded-full bg-electric animate-pulse" />
-            We Deploy Your Vision.
+          <div className="flex flex-col items-end gap-2 text-right">
+            <div className="flex items-center gap-3 text-electric-soft">
+              <span className="h-1.5 w-1.5 rounded-full bg-electric animate-pulse" />
+              We Deploy Your Vision.
+            </div>
+            <span className="text-muted-foreground">Trusted execution · Senior engineering · Production-grade</span>
+            <span className="text-electric-soft">Lahore · Remote · Globally distributed</span>
           </div>
         </div>
       </div>
