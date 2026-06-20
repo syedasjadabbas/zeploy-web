@@ -500,7 +500,8 @@ const team = [
     image: imgAsjad,
     socials: {
       linkedin: "https://www.linkedin.com/in/syed-asjad-abbas/",
-      github: "https://github.com/syedasjadabbas"
+      github: "https://github.com/syedasjadabbas",
+      portfolio: "https://www.syedasjadabbas.dev/"
     }
   },
   {
@@ -571,6 +572,11 @@ export function Team() {
                       {m.socials.github && (
                         <a href={m.socials.github} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} GitHub`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
                           <Github className="w-4 h-4" />
+                        </a>
+                      )}
+                      {(m.socials as any).portfolio && (
+                        <a href={(m.socials as any).portfolio} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} Portfolio`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
+                          <Globe2 className="w-4 h-4" />
                         </a>
                       )}
                     </div>
