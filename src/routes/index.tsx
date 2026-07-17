@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense, useEffect, useState, useRef, type ReactNode } from "react";
 import { motion, useInView, animate } from "framer-motion";
 
-import { ArrowUp } from "lucide-react";
+import { ArrowUpRight, ArrowUp } from "lucide-react";
 import Nav from "@/components/zeploy/Nav";
 import {
   Services,
