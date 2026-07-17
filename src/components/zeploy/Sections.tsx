@@ -1,4 +1,4 @@
-import { motion, animate, useInView } from "framer-motion";
+import { motion, animate, useInView, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import {
   Activity,
@@ -27,7 +27,9 @@ import {
   Mail,
   MessageCircle,
   Plus,
-  Minus
+  Minus,
+  ArrowLeft,
+  ArrowRight
 } from "lucide-react";
 import { DataStreams, NetworkNodes, BlueprintGrid } from "./BackgroundScenes";
 import { InfraVisualization } from "./InfraVisualization";
@@ -206,9 +208,52 @@ const work = [
 ];
 
 export function FeaturedWork() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState(0); // -1 for left, 1 for right
+
+  const nextSlide = () => {
+    setDirection(1);
+    setActiveIndex((prev) => (prev + 1) % work.length);
+  };
+
+  const prevSlide = () => {
+    setDirection(-1);
+    setActiveIndex((prev) => (prev - 1 + work.length) % work.length);
+  };
+
+  const carouselVariants = {
+    enter: (dir: number) => ({
+      x: dir > 0 ? 100 : -100,
+      opacity: 0,
+      scale: 0.98,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        x: { type: "spring", stiffness: 300, damping: 30 },
+        opacity: { duration: 0.25 },
+        scale: { duration: 0.25 }
+      }
+    },
+    exit: (dir: number) => ({
+      x: dir < 0 ? 100 : -100,
+      opacity: 0,
+      scale: 0.98,
+      transition: {
+        x: { type: "spring", stiffness: 300, damping: 30 },
+        opacity: { duration: 0.25 },
+        scale: { duration: 0.25 }
+      }
+    })
+  };
+
+  const p = work[activeIndex];
+
   return (
-    <section className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-background">
-      <div className="mx-auto max-w-7xl">
+    <section className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-background overflow-hidden">
+      <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Featured Projects</SectionLabel>
           <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
@@ -216,59 +261,65 @@ export function FeaturedWork() {
           </h2>
         </motion.div>
 
-        <div className="mt-24 space-y-24">
-          {work.map((p, i) => (
+        <div className="mt-20 relative">
+          <AnimatePresence initial={false} custom={direction} mode="wait">
             <motion.article
               key={p.name}
-              {...fadeUp}
-              transition={{ ...fadeUp.transition, delay: i * 0.05 }}
-              className="group glass-card glass-card-hover overflow-hidden rounded-[2.5rem]"
+              custom={direction}
+              variants={carouselVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="group glass-card overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] w-full"
             >
-              <div className="grid lg:grid-cols-2">
-                <div className={`p-6 sm:p-10 md:p-16 flex flex-col justify-center ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
-                  <div className="flex items-center gap-3">
-                    <span className="h-2 w-2 rounded-full bg-electric animate-pulse" />
-                    <p className="font-mono text-xs uppercase tracking-widest text-electric">
-                      {p.kind}
+              <div className="grid lg:grid-cols-2 gap-0">
+                {/* Left Side: Details */}
+                <div className="p-6 sm:p-10 md:p-14 lg:p-16 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-3">
+                      <span className="h-2 w-2 rounded-full bg-electric animate-pulse" />
+                      <p className="font-mono text-xs uppercase tracking-widest text-electric">
+                        {p.kind}
+                      </p>
+                    </div>
+                    <h3 className="mt-6 text-4xl font-semibold md:text-5xl">{p.name}</h3>
+
+                    <p className="mt-6 text-base leading-relaxed text-muted-foreground">
+                      {p.desc}
                     </p>
-                  </div>
-                  <h3 className="mt-6 text-4xl font-semibold md:text-5xl">{p.name}</h3>
 
-                  <p className="mt-8 text-lg leading-relaxed text-muted-foreground">
-                    {p.desc}
-                  </p>
+                    <div className="mt-8">
+                      <p className="font-mono text-[11px] uppercase tracking-widest text-electric-soft mb-3">Key Features</p>
+                      <ul className="grid sm:grid-cols-2 gap-3">
+                        {p.features.map(f => (
+                          <li key={f} className="flex items-center gap-3 text-sm text-foreground/90">
+                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/80" />
+                            {f}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                  <div className="mt-10">
-                    <p className="font-mono text-[11px] uppercase tracking-widest text-electric-soft mb-4">Key Features</p>
-                    <ul className="grid sm:grid-cols-2 gap-4">
-                      {p.features.map(f => (
-                        <li key={f} className="flex items-center gap-3 text-sm text-foreground/90">
-                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/80" />
-                          {f}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="mt-8">
-                    <p className="font-mono text-[11px] uppercase tracking-widest text-emerald-400/80 mb-4">Outcomes & Metrics</p>
-                    <ul className="space-y-3">
-                      {p.outcomes?.map(o => (
-                        <li key={o} className="flex items-start gap-3 text-sm text-foreground/90 leading-snug">
-                          <span className="mt-0.5 text-emerald-400">✓</span>
-                          {o}
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="mt-6">
+                      <p className="font-mono text-[11px] uppercase tracking-widest text-emerald-400/80 mb-3">Outcomes & Metrics</p>
+                      <ul className="space-y-2">
+                        {p.outcomes?.map(o => (
+                          <li key={o} className="flex items-start gap-3 text-sm text-foreground/90 leading-snug">
+                            <span className="mt-0.5 text-emerald-400 font-bold">✓</span>
+                            {o}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
 
-                  <div className="mt-12 pt-8 border-t border-white/5">
-                    <p className="font-mono text-[11px] uppercase tracking-widest text-electric-soft mb-4">Technology Stack</p>
+                  <div className="mt-10 pt-6 border-t border-white/5">
+                    <p className="font-mono text-[11px] uppercase tracking-widest text-electric-soft mb-3">Technology Stack</p>
                     <div className="flex flex-wrap gap-2">
                       {p.tech.map((t) => (
                         <span
                           key={t}
-                          className="rounded-md border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-xs text-foreground transition-colors hover:border-electric/50"
+                          className="rounded-md border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-foreground transition-colors hover:border-electric/50"
                         >
                           {t}
                         </span>
@@ -277,18 +328,63 @@ export function FeaturedWork() {
                   </div>
                 </div>
 
-                <div className={`relative border-white/5 bg-surface/30 overflow-hidden min-h-[250px] lg:min-h-[400px] ${i % 2 === 1 ? 'lg:border-r lg:order-1' : 'border-l'}`}>
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent z-10 pointer-events-none" />
-                  <img 
-                    src={p.image} 
-                    alt={p.name} 
-                    loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
+                {/* Right Side: Mockup Image */}
+                <div className="relative border-white/5 bg-surface/30 overflow-hidden flex items-center justify-center p-6 sm:p-8 lg:p-12 lg:border-l">
+                  <div className="w-full relative border border-white/10 bg-background/50 rounded-2xl overflow-hidden shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]">
+                    {/* Browser-style titlebar */}
+                    <div className="flex items-center gap-1.5 px-4 py-3 bg-background/60 border-b border-white/5">
+                      <span className="w-2 h-2 rounded-full bg-red-500/80" />
+                      <span className="w-2 h-2 rounded-full bg-amber-500/80" />
+                      <span className="w-2 h-2 rounded-full bg-emerald-500/80" />
+                      <span className="ml-2 font-mono text-[9px] text-muted-foreground uppercase tracking-widest bg-white/5 px-2 py-0.5 rounded-md">zeploy.live</span>
+                    </div>
+                    {/* Image Area */}
+                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-background">
+                      <img 
+                        src={p.image} 
+                        alt={p.name} 
+                        loading="lazy"
+                        className="absolute inset-0 h-full w-full object-cover object-top"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.article>
-          ))}
+          </AnimatePresence>
+        </div>
+
+        {/* Carousel Controls */}
+        <div className="mt-10 flex items-center justify-center gap-6">
+          <button
+            onClick={prevSlide}
+            className="p-3.5 rounded-full border border-white/10 bg-surface/60 text-foreground transition-all hover:bg-electric hover:text-white hover:scale-110 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] focus:outline-none focus:ring-2 focus:ring-electric"
+            aria-label="Previous Project"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <div className="flex gap-2">
+            {work.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => {
+                  setDirection(idx > activeIndex ? 1 : -1);
+                  setActiveIndex(idx);
+                }}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  activeIndex === idx ? "w-6 bg-electric" : "w-2 bg-white/20"
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+          <button
+            onClick={nextSlide}
+            className="p-3.5 rounded-full border border-white/10 bg-surface/60 text-foreground transition-all hover:bg-electric hover:text-white hover:scale-110 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] focus:outline-none focus:ring-2 focus:ring-electric"
+            aria-label="Next Project"
+          >
+            <ArrowRight className="w-5 h-5" />
+          </button>
         </div>
       </div>
     </section>
