@@ -594,6 +594,7 @@ const team = [
     skills: ["Chief Architect", "System Architecture", "Cloud Infrastructure", "Engineering Strategy"],
     initials: "SA",
     image: imgAsjad,
+    transform: "scale(1.0) translateY(0%)",
     socials: {
       linkedin: "https://www.linkedin.com/in/syed-asjad-abbas/",
       github: "https://github.com/syedasjadabbas",
@@ -606,6 +607,7 @@ const team = [
     skills: ["Backend Systems", "API Development", "Database Architecture"],
     initials: "RA",
     image: imgAsad,
+    transform: "scale(1.95) translateY(9%)",
     socials: {
       linkedin: "https://www.linkedin.com/in/rana-asad-ur-rahman-0a2457339/",
       github: "https://github.com/asad-rana306"
@@ -617,6 +619,7 @@ const team = [
     skills: ["AI Automation", "Intelligent Workflows", "Automation Infrastructure"],
     initials: "AR",
     image: imgAhsan,
+    transform: "scale(1.75) translateY(-2%)",
   },
   {
     name: "Hassan Kazmi",
@@ -624,6 +627,7 @@ const team = [
     skills: ["Data Systems", "Research Intelligence", "Analytical Strategy"],
     initials: "HK",
     image: imgHassan,
+    transform: "scale(1.95) translateY(-6%)",
   },
 ];
 
@@ -649,8 +653,8 @@ export function Team() {
               <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-electric/15 blur-[100px] transition-all duration-500 group-hover:bg-electric/25" />
               <div className="flex flex-col gap-6">
                 <div className="group/avatar relative aspect-square w-[55%] mx-auto p-4 rounded-2xl border border-electric/20 bg-surface/40 transition-all duration-300 hover:border-electric/50 hover:bg-surface/60">
-                  <div className="relative w-full h-full rounded-xl overflow-hidden bg-background">
-                    <img src={m.image} alt={m.name} loading="lazy" className="h-full w-full object-cover object-[center_top] transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]" />
+                  <div className="absolute inset-4 rounded-xl overflow-hidden bg-background transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]">
+                    <img src={m.image} alt={m.name} loading="lazy" style={{ transform: m.transform }} className="h-full w-full object-cover object-[center_top]" />
                   </div>
                 </div>
                 <div className="min-w-0 px-2 transition-transform duration-300 group-hover:translate-x-1 text-center mt-2">
