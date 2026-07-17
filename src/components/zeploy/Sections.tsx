@@ -111,7 +111,7 @@ export function Services() {
           </p>
         </motion.div>
 
-        <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/5 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => (
             <motion.div
               key={s.title}
@@ -225,7 +225,7 @@ export function FeaturedWork() {
               className="group glass-card glass-card-hover overflow-hidden rounded-[2.5rem]"
             >
               <div className="grid lg:grid-cols-2">
-                <div className={`p-10 md:p-16 flex flex-col justify-center ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
+                <div className={`p-6 sm:p-10 md:p-16 flex flex-col justify-center ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
                   <div className="flex items-center gap-3">
                     <span className="h-2 w-2 rounded-full bg-electric animate-pulse" />
                     <p className="font-mono text-xs uppercase tracking-widest text-electric">
@@ -277,7 +277,7 @@ export function FeaturedWork() {
                   </div>
                 </div>
 
-                <div className={`relative border-white/5 bg-surface/30 overflow-hidden min-h-[400px] ${i % 2 === 1 ? 'lg:border-r lg:order-1' : 'border-l'}`}>
+                <div className={`relative border-white/5 bg-surface/30 overflow-hidden min-h-[250px] lg:min-h-[400px] ${i % 2 === 1 ? 'lg:border-r lg:order-1' : 'border-l'}`}>
                   <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent z-10 pointer-events-none" />
                   <img 
                     src={p.image} 
@@ -394,7 +394,7 @@ export function Reliability() {
             <span className="font-mono text-xs text-electric-soft">Last sync · just now</span>
           </div>
 
-          <div className="grid grid-cols-2 gap-px bg-white/5 md:grid-cols-3 xl:grid-cols-5">
+          <div className="grid grid-cols-1 gap-px bg-white/5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
             {[
               { k: "Deployment Success", v: <AnimatedDecimalCounter from={0} to={99.7} decimals={1} suffix="%" duration={2} />, icon: Rocket },
               { k: "Infra Health", v: "Nominal", icon: Server },
@@ -708,7 +708,7 @@ export function Testimonials() {
           </p>
         </motion.div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-12 grid gap-4 md:gap-6 md:grid-cols-2 xl:grid-cols-4">
           {testimonials.map((t, i) => (
             <motion.figure
               key={i}
@@ -785,14 +785,14 @@ export function Blog() {
             >
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[11px] uppercase tracking-widest text-electric">
-                  {p.tag}
+                  {p.category}
                 </span>
                 <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
               </div>
               <h3 className="mt-12 text-2xl font-semibold leading-snug text-foreground group-hover:text-electric-soft">
                 {p.title}
               </h3>
-              <p className="mt-6 font-mono text-xs text-muted-foreground">{p.read}</p>
+              <p className="mt-6 font-mono text-xs text-muted-foreground">{p.description}</p>
             </motion.a>
           ))}
         </div>
@@ -847,7 +847,7 @@ export function ProjectInquiry() {
 
   return (
     <section className="relative border-t border-white/5 px-6 py-32 md:px-12 overflow-hidden bg-background">
-      <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-16 lg:gap-24">
+      <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-12 lg:gap-24">
         <motion.div {...fadeUp}>
           <SectionLabel>Project Inquiry</SectionLabel>
           <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
@@ -885,7 +885,7 @@ export function ProjectInquiry() {
           </div>
         </motion.div>
 
-        <motion.div {...fadeUp} className="glass-card rounded-[2.5rem] p-8 md:p-12">
+        <motion.div {...fadeUp} className="glass-card rounded-[2rem] sm:rounded-[2.5rem] p-5 sm:p-8 md:p-12">
           <form className="grid gap-6" onSubmit={handleSubmit}>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
@@ -960,7 +960,7 @@ export function Footer() {
   return (
     <footer className="border-t border-white/5 bg-background pt-32 pb-12 px-6 md:px-12">
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-5 border-b border-white/5 pb-20">
+        <div className="grid gap-10 md:gap-16 md:grid-cols-2 lg:grid-cols-5 border-b border-white/5 pb-20">
           <div className="lg:col-span-2">
             <div className="flex flex-col items-start">
               <img src="/logo.png" alt="Zeploy Tech" className="h-12 w-auto mb-6" />

@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense, useEffect, useState, useRef, type ReactNode } from "react";
 import { motion, useInView, animate } from "framer-motion";
 
-import { ArrowUpRight, ArrowUp } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import Nav from "@/components/zeploy/Nav";
 import {
   Services,
@@ -41,29 +41,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-import { LoadingScreen } from "@/components/zeploy/LoadingScreen";
 
-export function AnimatedDecimalCounter({ from, to, duration, prefix = "", suffix = "", decimals = 0 }: { from: number; to: number; duration: number; prefix?: string; suffix?: string; decimals?: number; }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
-
-  useEffect(() => {
-    if (isInView && ref.current) {
-      const controls = animate(from, to, {
-        duration,
-        ease: "easeOut",
-        onUpdate(value) {
-          if (ref.current) {
-            ref.current.textContent = `${prefix}${value.toFixed(decimals)}${suffix}`;
-          }
-        }
-      });
-      return () => controls.stop();
-    }
-  }, [isInView, from, to, duration, prefix, suffix, decimals]);
-
-  return <span ref={ref}>{prefix}{from.toFixed(decimals)}{suffix}</span>;
-}
 
 function AnimatedCounter({ from, to, duration, suffix = "" }: { from: number; to: number; duration: number; suffix?: string; }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -179,7 +157,6 @@ function Index() {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-background text-foreground">
-      <LoadingScreen />
       <Nav />
       <BackToTop />
       <div id="hero">
@@ -244,7 +221,7 @@ function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.05 }}
-            className="mt-4 font-display text-5xl font-semibold leading-[1.02] tracking-tight md:text-6xl lg:text-7xl"
+            className="mt-4 font-display text-4xl font-semibold leading-[1.02] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
           >
             <span className="text-gradient-soft">We build software</span>
             <br />
@@ -256,7 +233,7 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="mt-8 max-w-xl text-xl leading-relaxed text-muted-foreground md:text-2xl"
+            className="mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl md:text-2xl"
           >
             Zeploy Tech is a software engineering studio delivering custom web apps, mobile apps,
             AI systems, cloud infrastructure, and scalable digital products.
@@ -311,7 +288,7 @@ function Hero() {
         </div>
 
         {/* Three.js scene */}
-        <div className="relative h-[420px] w-full sm:h-[520px] lg:h-[640px]">
+        <div className="relative h-[320px] w-full sm:h-[420px] md:h-[520px] lg:h-[640px]">
           <div className="absolute inset-0">
             <ClientHeroScene />
           </div>
@@ -322,7 +299,7 @@ function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
-            className="absolute left-4 top-8 glass-card rounded-xl px-4 py-3 font-mono text-[11px] uppercase tracking-widest"
+            className="absolute left-4 top-8 glass-card rounded-xl px-4 py-3 font-mono text-[11px] uppercase tracking-widest hidden sm:block"
           >
             <p className="text-electric font-semibold">ZEPLOY TECH</p>
             <p className="mt-1 text-muted-foreground">AI · WEB · CLOUD</p>
@@ -331,7 +308,7 @@ function Hero() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.6 }}
-            className="absolute bottom-10 right-2 glass-card rounded-xl px-4 py-3 font-mono text-[11px] uppercase tracking-widest"
+            className="absolute bottom-10 right-2 glass-card rounded-xl px-4 py-3 font-mono text-[11px] uppercase tracking-widest hidden sm:block"
           >
             <p className="text-muted-foreground">CURRENT STATUS</p>
             <p className="mt-1 text-emerald-400">✓ ACCEPTING PROJECTS</p>

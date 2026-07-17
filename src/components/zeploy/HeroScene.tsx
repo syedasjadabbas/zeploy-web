@@ -29,8 +29,8 @@ function CoreLogo({ hovered }: { hovered: boolean }) {
 }
 
 // 2. Liquid AI Brain (Morphing Sphere)
-const liquidSphereArgs1 = [2, 64, 64] as const;
-const liquidSphereArgs2 = [2.05, 32, 32] as const;
+const liquidSphereArgs1 = [2, 48, 48] as const;
+const liquidSphereArgs2 = [2.05, 24, 24] as const;
 
 function LiquidCore({ hovered }: { hovered: boolean }) {
   const materialRef = useRef<any>(null);
@@ -121,7 +121,7 @@ function Particles({ hovered }: { hovered: boolean }) {
 
   const geom = useMemo(() => {
     const g = new THREE.BufferGeometry();
-    const count = 400;
+    const count = 200;
     const positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       const r = 4 + Math.random() * 6;
@@ -155,7 +155,7 @@ const HeroScene = () => {
   return (
     <Canvas
       camera={{ position: [0, 0, 9], fov: 45 }}
-      dpr={[1, 2]}
+      dpr={[1, 1.5]}
       performance={{ min: 0.5 }}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
     >

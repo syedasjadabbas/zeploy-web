@@ -139,8 +139,9 @@ function MetricChip({ icon: Icon, label, value, className, delay }: { icon: any,
   return (
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay, repeat: Infinity, repeatType: "reverse", repeatDelay: 5 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay }}
       className={`absolute ${className} z-10 glass-card bg-surface/60 backdrop-blur-md border border-white/5 rounded-lg p-3 flex items-center gap-3 shadow-lg`}
     >
       <div className="w-8 h-8 rounded-full bg-electric/10 flex items-center justify-center text-electric">

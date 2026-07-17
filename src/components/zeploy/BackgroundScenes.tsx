@@ -19,7 +19,7 @@ const generatePoints = (count: number, radius: number) => {
 
 function NodesCloud() {
   const ref = useRef<THREE.Points>(null);
-  const sphere = useMemo(() => generatePoints(100, 1.5), []);
+  const sphere = useMemo(() => generatePoints(60, 1.5), []);
 
   useFrame((state, delta) => {
     if (ref.current) {
@@ -56,7 +56,7 @@ const NetworkNodesBase = () => {
 
 function FallingLines() {
   const ref = useRef<THREE.Group>(null);
-  const lineCount = 20;
+  const lineCount = 12;
   const lines = useMemo(() => Array.from({ length: lineCount }).map((_, i) => {
     const x = (Math.random() - 0.5) * 10;
     const z = (Math.random() - 0.5) * 5;
