@@ -607,7 +607,7 @@ const team = [
     skills: ["Backend Systems", "API Development", "Database Architecture"],
     initials: "RA",
     image: imgAsad,
-    transform: "scale(1.95) translateY(9%)",
+    transform: "scale(1.55) translateY(1%)",
     socials: {
       linkedin: "https://www.linkedin.com/in/rana-asad-ur-rahman-0a2457339/",
       github: "https://github.com/asad-rana306"
@@ -619,7 +619,7 @@ const team = [
     skills: ["AI Automation", "Intelligent Workflows", "Automation Infrastructure"],
     initials: "AR",
     image: imgAhsan,
-    transform: "scale(1.75) translateY(-2%)",
+    transform: "scale(1.45) translateY(3%)",
   },
   {
     name: "Hassan Kazmi",
@@ -627,7 +627,7 @@ const team = [
     skills: ["Data Systems", "Research Intelligence", "Analytical Strategy"],
     initials: "HK",
     image: imgHassan,
-    transform: "scale(1.95) translateY(-6%)",
+    transform: "scale(1.55) translateY(-1%)",
   },
 ];
 
