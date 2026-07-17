@@ -1,5 +1,6 @@
 import { motion, animate, useInView, AnimatePresence } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
+import useEmblaCarousel from "embla-carousel-react";
 import {
   Activity,
   ArrowUpRight,
@@ -208,154 +209,184 @@ const work = [
 ];
 
 export function FeaturedWork() {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "center",
+    containScroll: false,
+  });
+
   const [activeIndex, setActiveIndex] = useState(0);
-  const [direction, setDirection] = useState(0); // -1 for left, 1 for right
+  const [isHovered, setIsHovered] = useState(false);
 
-  const nextSlide = () => {
-    setDirection(1);
-    setActiveIndex((prev) => (prev + 1) % work.length);
-  };
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setActiveIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
 
-  const prevSlide = () => {
-    setDirection(-1);
-    setActiveIndex((prev) => (prev - 1 + work.length) % work.length);
-  };
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+  }, [emblaApi, onSelect]);
 
-  const carouselVariants = {
-    enter: (dir: number) => ({
-      x: dir > 0 ? 100 : -100,
-      opacity: 0,
-      scale: 0.98,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      scale: 1,
-      transition: {
-        x: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.25 },
-        scale: { duration: 0.25 }
-      }
-    },
-    exit: (dir: number) => ({
-      x: dir < 0 ? 100 : -100,
-      opacity: 0,
-      scale: 0.98,
-      transition: {
-        x: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.25 },
-        scale: { duration: 0.25 }
-      }
-    })
-  };
+  useEffect(() => {
+    if (!emblaApi) return;
+    let intervalId: any;
 
-  const p = work[activeIndex];
+    const startAutoplay = () => {
+      intervalId = setInterval(() => {
+        if (!isHovered) {
+          emblaApi.scrollNext();
+        }
+      }, 7000);
+    };
+
+    const stopAutoplay = () => {
+      clearInterval(intervalId);
+    };
+
+    startAutoplay();
+
+    emblaApi.on("pointerDown", stopAutoplay);
+
+    return () => {
+      stopAutoplay();
+    };
+  }, [emblaApi, isHovered]);
+
+  const prevSlide = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const nextSlide = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  const scrollToSlide = useCallback((index: number) => {
+    if (emblaApi) emblaApi.scrollTo(index);
+  }, [emblaApi]);
 
   return (
-    <section className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-background overflow-hidden">
-      <div className="mx-auto max-w-7xl relative z-10">
-        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
+    <section className="relative border-t border-white/5 py-32 bg-background overflow-hidden">
+      <div className="w-full relative z-10">
+        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center px-6 md:px-12 mb-20">
           <SectionLabel>Featured Projects</SectionLabel>
           <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
             Representative product concepts demonstrating Zeploy's engineering capabilities.
           </h2>
         </motion.div>
 
-        <div className="mt-20 relative">
-          <AnimatePresence initial={false} custom={direction} mode="wait">
-            <motion.article
-              key={p.name}
-              custom={direction}
-              variants={carouselVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              className="group glass-card overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] w-full"
-            >
-              <div className="grid lg:grid-cols-2 gap-0">
-                {/* Left Side: Details */}
-                <div className="p-6 sm:p-10 md:p-14 lg:p-16 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center gap-3">
-                      <span className="h-2 w-2 rounded-full bg-electric animate-pulse" />
-                      <p className="font-mono text-xs uppercase tracking-widest text-electric">
-                        {p.kind}
-                      </p>
-                    </div>
-                    <h3 className="mt-6 text-4xl font-semibold md:text-5xl">{p.name}</h3>
+        {/* Embla Viewport */}
+        <div 
+          className="overflow-hidden w-full cursor-grab active:cursor-grabbing px-0" 
+          ref={emblaRef}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {/* Embla Container */}
+          <div className="flex select-none">
+            {work.map((p, idx) => {
+              const isActive = idx === activeIndex;
+              return (
+                <div 
+                  key={p.name} 
+                  className="flex-[0_0_85vw] md:flex-[0_0_65vw] max-w-[950px] min-w-0 px-3 md:px-6 py-6"
+                >
+                  <div
+                    className={`group/card glass-card overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] w-full transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+                      isActive 
+                        ? "opacity-100 scale-100 blur-0 shadow-[0_0_50px_rgba(59,130,246,0.15)] border-white/10 hover:shadow-[0_0_60px_rgba(59,130,246,0.3)] hover:-translate-y-1 hover:border-electric/40"
+                        : "opacity-30 scale-[0.94] md:scale-[0.96] blur-[2px] pointer-events-none select-none border-white/5 shadow-none"
+                    }`}
+                  >
+                    <div className="grid lg:grid-cols-2 gap-0">
+                      {/* Left Side: Details */}
+                      <div className="p-6 sm:p-10 md:p-14 lg:p-16 flex flex-col justify-between">
+                        <div>
+                          <div className="flex items-center gap-3">
+                            <span className="h-2 w-2 rounded-full bg-electric animate-pulse" />
+                            <p className="font-mono text-xs uppercase tracking-widest text-electric">
+                              {p.kind}
+                            </p>
+                          </div>
+                          <h3 className="mt-6 text-4xl font-semibold md:text-5xl">{p.name}</h3>
 
-                    <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-                      {p.desc}
-                    </p>
+                          <p className="mt-6 text-base leading-relaxed text-muted-foreground">
+                            {p.desc}
+                          </p>
 
-                    <div className="mt-8">
-                      <p className="font-mono text-[11px] uppercase tracking-widest text-electric-soft mb-3">Key Features</p>
-                      <ul className="grid sm:grid-cols-2 gap-3">
-                        {p.features.map(f => (
-                          <li key={f} className="flex items-center gap-3 text-sm text-foreground/90">
-                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/80" />
-                            {f}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                          <div className="mt-8">
+                            <p className="font-mono text-[11px] uppercase tracking-widest text-electric-soft mb-3">Key Features</p>
+                            <ul className="grid sm:grid-cols-2 gap-3">
+                              {p.features.map(f => (
+                                <li key={f} className="flex items-center gap-3 text-sm text-foreground/90">
+                                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/80" />
+                                  {f}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
 
-                    <div className="mt-6">
-                      <p className="font-mono text-[11px] uppercase tracking-widest text-emerald-400/80 mb-3">Outcomes & Metrics</p>
-                      <ul className="space-y-2">
-                        {p.outcomes?.map(o => (
-                          <li key={o} className="flex items-start gap-3 text-sm text-foreground/90 leading-snug">
-                            <span className="mt-0.5 text-emerald-400 font-bold">✓</span>
-                            {o}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
+                          <div className="mt-6">
+                            <p className="font-mono text-[11px] uppercase tracking-widest text-emerald-400/80 mb-3">Outcomes & Metrics</p>
+                            <ul className="space-y-2">
+                              {p.outcomes?.map(o => (
+                                <li key={o} className="flex items-start gap-3 text-sm text-foreground/90 leading-snug">
+                                  <span className="mt-0.5 text-emerald-400 font-bold">✓</span>
+                                  {o}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
 
-                  <div className="mt-10 pt-6 border-t border-white/5">
-                    <p className="font-mono text-[11px] uppercase tracking-widest text-electric-soft mb-3">Technology Stack</p>
-                    <div className="flex flex-wrap gap-2">
-                      {p.tech.map((t) => (
-                        <span
-                          key={t}
-                          className="rounded-md border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-foreground transition-colors hover:border-electric/50"
-                        >
-                          {t}
-                        </span>
-                      ))}
+                        <div className="mt-10 pt-6 border-t border-white/5">
+                          <p className="font-mono text-[11px] uppercase tracking-widest text-electric-soft mb-3">Technology Stack</p>
+                          <div className="flex flex-wrap gap-2">
+                            {p.tech.map((t) => (
+                              <span
+                                key={t}
+                                className="rounded-md border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-foreground transition-colors hover:border-electric/50"
+                              >
+                                {t}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Right Side: Mockup Image */}
+                      <div className="relative border-white/5 bg-surface/30 overflow-hidden flex items-center justify-center p-6 sm:p-8 lg:p-12 lg:border-l">
+                        <div className="w-full relative border border-white/10 bg-background/50 rounded-2xl overflow-hidden shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]">
+                          {/* Browser-style titlebar */}
+                          <div className="flex items-center gap-1.5 px-4 py-3 bg-background/60 border-b border-white/5">
+                            <span className="w-2 h-2 rounded-full bg-red-500/80" />
+                            <span className="w-2 h-2 rounded-full bg-amber-500/80" />
+                            <span className="w-2 h-2 rounded-full bg-emerald-500/80" />
+                            <span className="ml-2 font-mono text-[9px] text-muted-foreground uppercase tracking-widest bg-white/5 px-2 py-0.5 rounded-md">zeploy.live</span>
+                          </div>
+                          {/* Image Area */}
+                          <div className="relative aspect-[16/10] w-full overflow-hidden bg-background">
+                            <img 
+                              src={p.image} 
+                              alt={p.name} 
+                              loading="lazy"
+                              className="absolute inset-0 h-full w-full object-cover object-top"
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-
-                {/* Right Side: Mockup Image */}
-                <div className="relative border-white/5 bg-surface/30 overflow-hidden flex items-center justify-center p-6 sm:p-8 lg:p-12 lg:border-l">
-                  <div className="w-full relative border border-white/10 bg-background/50 rounded-2xl overflow-hidden shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]">
-                    {/* Browser-style titlebar */}
-                    <div className="flex items-center gap-1.5 px-4 py-3 bg-background/60 border-b border-white/5">
-                      <span className="w-2 h-2 rounded-full bg-red-500/80" />
-                      <span className="w-2 h-2 rounded-full bg-amber-500/80" />
-                      <span className="w-2 h-2 rounded-full bg-emerald-500/80" />
-                      <span className="ml-2 font-mono text-[9px] text-muted-foreground uppercase tracking-widest bg-white/5 px-2 py-0.5 rounded-md">zeploy.live</span>
-                    </div>
-                    {/* Image Area */}
-                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-background">
-                      <img 
-                        src={p.image} 
-                        alt={p.name} 
-                        loading="lazy"
-                        className="absolute inset-0 h-full w-full object-cover object-top"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.article>
-          </AnimatePresence>
+              );
+            })}
+          </div>
         </div>
 
         {/* Carousel Controls */}
-        <div className="mt-10 flex items-center justify-center gap-6">
+        <div className="mt-8 flex items-center justify-center gap-6 px-6 md:px-12">
           <button
             onClick={prevSlide}
             className="p-3.5 rounded-full border border-white/10 bg-surface/60 text-foreground transition-all hover:bg-electric hover:text-white hover:scale-110 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] focus:outline-none focus:ring-2 focus:ring-electric"
@@ -367,12 +398,11 @@ export function FeaturedWork() {
             {work.map((_, idx) => (
               <button
                 key={idx}
-                onClick={() => {
-                  setDirection(idx > activeIndex ? 1 : -1);
-                  setActiveIndex(idx);
-                }}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  activeIndex === idx ? "w-6 bg-electric" : "w-2 bg-white/20"
+                onClick={() => scrollToSlide(idx)}
+                className={`h-2 rounded-full transition-all duration-500 ${
+                  activeIndex === idx 
+                    ? "w-8 bg-electric shadow-[0_0_10px_rgba(59,130,246,0.8)]" 
+                    : "w-2 bg-white/20 hover:bg-white/40"
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
