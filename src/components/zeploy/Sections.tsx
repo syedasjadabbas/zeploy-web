@@ -372,6 +372,7 @@ export function FeaturedWork() {
                               src={p.image} 
                               alt={p.name} 
                               loading="lazy"
+                              decoding="async"
                               className="absolute inset-0 h-full w-full object-cover object-top"
                             />
                           </div>
@@ -575,7 +576,7 @@ const process = [
 
 export function Process() {
   return (
-    <section className="relative border-t border-white/5 px-6 py-32 md:px-12 overflow-hidden">
+    <section id="process" className="relative border-t border-white/5 px-6 py-32 md:px-12 overflow-hidden">
       <BlueprintGrid />
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
@@ -692,6 +693,7 @@ export function Team() {
                       src={m.image} 
                       alt={m.name} 
                       loading="lazy" 
+                      decoding="async"
                       style={{ transform: m.transform, objectPosition: m.objectPosition }} 
                       className="h-full w-full object-cover" 
                     />
@@ -1189,7 +1191,7 @@ export function FounderMessage() {
           <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-12 sm:gap-24">
             <div className="flex flex-col items-center justify-center gap-4">
               <div className="h-20 w-20 overflow-hidden rounded-full border border-electric/30 bg-surface">
-                <img src={imgAsjad} alt="Syed Asjad Abbas" className="h-full w-full object-cover object-top" />
+                <img src={imgAsjad} alt="Syed Asjad Abbas" loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
               </div>
               <div>
                 <div className="text-lg font-semibold text-foreground">Syed Asjad Abbas</div>
@@ -1203,7 +1205,7 @@ export function FounderMessage() {
 
             <div className="flex flex-col items-center justify-center gap-4">
               <div className="h-20 w-20 overflow-hidden rounded-full border border-electric/30 bg-surface">
-                <img src={imgAsad} alt="Rana Asad Ur Rehman" className="h-full w-full object-cover object-top" />
+                <img src={imgAsad} alt="Rana Asad Ur Rehman" loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
               </div>
               <div>
                 <div className="text-lg font-semibold text-foreground">Rana Asad Ur Rehman</div>
