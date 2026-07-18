@@ -221,7 +221,7 @@ function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.05 }}
-            className="mt-4 font-display text-4xl font-semibold leading-[1.02] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+            className="mt-4 font-display text-4xl font-semibold leading-[1.02] tracking-tight sm:text-5xl md:text-6xl lg:text-[clamp(3.75rem,5vw,4.5rem)]"
           >
             <span className="text-gradient-soft">We build software</span>
             <br />

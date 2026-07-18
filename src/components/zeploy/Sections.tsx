@@ -107,7 +107,7 @@ export function Services() {
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Services</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Engineering across the full product surface.
           </h2>
           <p className="mt-5 text-lg text-muted-foreground">
@@ -274,7 +274,7 @@ export function FeaturedWork() {
       <div className="w-full relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center px-6 md:px-12 mb-20">
           <SectionLabel>Featured Projects</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Representative product concepts demonstrating Zeploy's engineering capabilities.
           </h2>
         </motion.div>
@@ -440,7 +440,7 @@ export function WhyChoose() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Why Teams Choose Zeploy</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             A studio, not a staffing agency.
           </h2>
         </motion.div>
@@ -462,7 +462,7 @@ export function WhyChoose() {
             ))}
           </div>
 
-          <div className="relative w-full h-[600px] rounded-3xl border border-white/10 bg-surface/20 overflow-hidden hidden lg:block">
+          <div className="relative w-full min-h-[600px] h-full rounded-3xl border border-white/10 bg-surface/20 overflow-hidden hidden lg:block">
             <Suspense fallback={null}><InfraVisualization /></Suspense>
           </div>
         </div>
@@ -501,7 +501,7 @@ export function Reliability() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Reliability</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Operations you can monitor in real time.
           </h2>
         </motion.div>
@@ -583,7 +583,7 @@ export function Process() {
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Process</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             From signed contract to shipped system.
           </h2>
         </motion.div>
@@ -674,7 +674,7 @@ export function Team() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Leadership</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             The engineers behind the studio.
           </h2>
         </motion.div>
@@ -829,7 +829,7 @@ export function Testimonials() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Testimonials</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Trusted by teams shipping at scale.
           </h2>
         </motion.div>
@@ -913,7 +913,7 @@ export function Blog() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Engineering Notes</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Field notes from production systems.
           </h2>
         </motion.div>
@@ -994,7 +994,7 @@ export function ProjectInquiry() {
       <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-12 lg:gap-24">
         <motion.div {...fadeUp}>
           <SectionLabel>Project Inquiry</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-7xl">
+          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Let's architect your next platform.
           </h2>
           <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
