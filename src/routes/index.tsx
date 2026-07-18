@@ -4,20 +4,18 @@ import { motion, useInView, animate } from "framer-motion";
 
 import { ArrowUpRight, ArrowUp } from "lucide-react";
 import Nav from "@/components/zeploy/Nav";
-import {
-  Services,
-  FeaturedWork,
-  WhyChoose,
-  Reliability,
-  Process,
-  Team,
-  Testimonials,
-  Blog,
-  ProjectInquiry,
-  Footer,
-  FounderMessage,
-  Faq
-} from "@/components/zeploy/Sections";
+const Services = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.Services })));
+const FeaturedWork = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.FeaturedWork })));
+const WhyChoose = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.WhyChoose })));
+const Reliability = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.Reliability })));
+const Process = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.Process })));
+const Team = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.Team })));
+const Testimonials = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.Testimonials })));
+const Blog = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.Blog })));
+const ProjectInquiry = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.ProjectInquiry })));
+const Footer = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.Footer })));
+const FounderMessage = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.FounderMessage })));
+const Faq = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.Faq })));
 
 const HeroScene = lazy(() => import("@/components/zeploy/HeroScene"));
 
@@ -83,10 +81,35 @@ function AnimatedCounter({ from, to, duration, suffix = "" }: { from: number; to
   );
 }
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
+
 function ClientHeroScene() {
   const [mounted, setMounted] = useState(false);
+  const isMobile = useIsMobile();
+  
   useEffect(() => setMounted(true), []);
+  
   if (!mounted) return <div className="h-full w-full rounded-3xl bg-surface/30" />;
+  
+  if (isMobile) {
+    return (
+      <div className="h-full w-full rounded-3xl bg-[#020817] border border-white/5 relative overflow-hidden flex items-center justify-center">
+        <div className="absolute w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-600/15 via-[#020817]/80 to-[#020817] animate-[pulse_4s_ease-in-out_infinite]" />
+        <div className="absolute w-32 h-32 rounded-full bg-blue-500/10 blur-3xl animate-[pulse_3s_ease-in-out_infinite]" />
+        <div className="font-display text-5xl font-bold text-white z-10 opacity-80" style={{ textShadow: "0 0 20px rgba(59,130,246,0.5)" }}>Z</div>
+      </div>
+    );
+  }
+
   return (
     <Suspense fallback={<div className="h-full w-full rounded-3xl bg-surface/30" />}>
       <HeroScene />
@@ -118,7 +141,13 @@ function LazySection({ children, fallbackHeight = "200px", id }: { children: Rea
 
   return (
     <div ref={ref} id={id} className="section-lazy">
-      {visible ? children : <div style={{ minHeight: fallbackHeight }} />}
+      {visible ? (
+        <Suspense fallback={<div style={{ minHeight: fallbackHeight }} />}>
+          {children}
+        </Suspense>
+      ) : (
+        <div style={{ minHeight: fallbackHeight }} />
+      )}
     </div>
   );
 }
@@ -162,7 +191,9 @@ function Index() {
       <div id="hero">
         <Hero />
       </div>
-      <Services />
+      <LazySection fallbackHeight="600px">
+        <Services />
+      </LazySection>
       <LazySection id="why-zeploy" fallbackHeight="500px">
         <WhyChoose />
       </LazySection>
@@ -193,7 +224,9 @@ function Index() {
       <LazySection id="contact" fallbackHeight="400px">
         <ProjectInquiry />
       </LazySection>
-      <Footer />
+      <Suspense fallback={<div style={{ minHeight: "400px" }} />}>
+        <Footer />
+      </Suspense>
     </main>
   );
 }
