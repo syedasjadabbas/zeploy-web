@@ -645,7 +645,8 @@ const team = [
     objectPosition: "center bottom",
     socials: {
       linkedin: "https://www.linkedin.com/in/rana-asad-ur-rahman-0a2457339/",
-      github: "https://github.com/asad-rana306"
+      github: "https://github.com/asad-rana306",
+      portfolio: "https://www.ranaasad.dev/"
     }
   },
   {
