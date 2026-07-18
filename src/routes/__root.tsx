@@ -100,7 +100,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Premium software engineering & AI studio building scalable, production-grade systems for modern businesses.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://zeploy.tech/logo.png" },
+      { property: "og:image", content: "https://zeploy.tech/logo.webp" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Zeploy Tech | Premium Software Engineering & AI Studio" },
       {
@@ -108,11 +108,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Premium software engineering & AI studio building scalable, production-grade systems for modern businesses.",
       },
-      { name: "twitter:image", content: "https://zeploy.tech/logo.png" },
+      { name: "twitter:image", content: "https://zeploy.tech/logo.webp" },
       { rel: "canonical", href: "https://zeploy.tech" },
     ],
     links: [
-      { rel: "icon", href: "/logo.png" },
+      { rel: "icon", href: "/logo.webp" },
+      { rel: "preload", as: "image", href: "/logo.webp" },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "" },
@@ -142,7 +143,7 @@ function RootShell({ children }: { children: ReactNode }) {
               "@type": "ProfessionalService",
               name: "Zeploy Tech",
               url: "https://zeploy.tech",
-              logo: "https://zeploy.tech/logo.png",
+              logo: "https://zeploy.tech/logo.webp",
               description:
                 "A premium software engineering and AI studio dedicated to building robust, scalable, and visually stunning digital products.",
               address: {

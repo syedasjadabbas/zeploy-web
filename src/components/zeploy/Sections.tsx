@@ -37,10 +37,10 @@ const NetworkNodes = lazy(() => import("./BackgroundScenes").then(module => ({ d
 const BlueprintGrid = lazy(() => import("./BackgroundScenes").then(module => ({ default: module.BlueprintGrid })));
 const InfraVisualization = lazy(() => import("./InfraVisualization").then(module => ({ default: module.InfraVisualization })));
 
-import imgAsjad from "@/assets/images/asjad_compressed.jpeg";
-import imgAsad from "@/assets/images/asad.jpeg";
-import imgAhsan from "@/assets/images/ahsan.jpeg";
-import imgHassan from "@/assets/images/hassan.jpeg";
+import imgAsjad from "@/assets/images/asjad.webp";
+import imgAsad from "@/assets/images/asad.webp";
+import imgAhsan from "@/assets/images/ahsan.webp";
+import imgHassan from "@/assets/images/hassan.webp";
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -163,7 +163,7 @@ const work = [
       "Performance reports"
     ],
     outcomes: ["Reduced manual interview screening by 70%", "Automated candidate evaluation workflow"],
-    image: "/projects/mockai.png"
+    image: "/projects/mockai.webp"
   },
   {
     name: "EduCart",
@@ -179,7 +179,7 @@ const work = [
       "AI assistant"
     ],
     outcomes: ["Increased sales conversion by 25%", "Reduced order processing time by 40%"],
-    image: "/projects/educart.png"
+    image: "/projects/educart.webp"
   },
   {
     name: "NeuralPay",
@@ -188,7 +188,7 @@ const work = [
     tech: ["Next.js", "Node.js", "PostgreSQL", "Redis", "Stripe"],
     features: ["Idempotent Webhooks", "Real-time Metrics", "Dynamic Proration", "Automated Dunning"],
     outcomes: ["Reduced failed renewals by 62%", "Increased operational efficiency by 60%"],
-    image: "/projects/neuralpay.png"
+    image: "/projects/neuralpay.webp"
   },
   {
     name: "Cortex Mesh",
@@ -197,7 +197,7 @@ const work = [
     tech: ["Python", "FastAPI", "Kubernetes", "gRPC", "vLLM"],
     features: ["Dynamic Batching", "Cost-aware Routing", "Auto-scaling Pools", "Model Caching"],
     outcomes: ["Reduced processing time by 50%", "Lowered compute costs by 40%"],
-    image: "/projects/cortex.png"
+    image: "/projects/cortex.webp"
   },
   {
     name: "Synthwave",
@@ -206,7 +206,7 @@ const work = [
     tech: ["TypeScript", "Kafka", "ClickHouse", "React", "WebSocket"],
     features: ["Live Geographic Maps", "Anomaly Detection", "Custom Aggregations", "Role-based Access"],
     outcomes: ["Achieved sub-second real-time latency", "Scaled to process 1M+ events per minute"],
-    image: "/projects/synthwave.png"
+    image: "/projects/synthwave.webp"
   }
 ];
 
@@ -375,6 +375,8 @@ export function FeaturedWork() {
                               alt={p.name} 
                               loading="lazy"
                               decoding="async"
+                              width="1920"
+                              height="1200"
                               className="absolute inset-0 h-full w-full object-cover object-top"
                             />
                           </div>
@@ -697,6 +699,8 @@ export function Team() {
                       alt={m.name} 
                       loading="lazy" 
                       decoding="async"
+                      width="400"
+                      height="400"
                       style={{ transform: m.transform, objectPosition: m.objectPosition }} 
                       className="h-full w-full object-cover" 
                     />
@@ -1108,7 +1112,7 @@ export function Footer() {
         <div className="grid gap-10 md:gap-16 md:grid-cols-2 lg:grid-cols-5 border-b border-white/5 pb-20">
           <div className="lg:col-span-2">
             <div className="flex flex-col items-start">
-              <img src="/logo.png" alt="Zeploy Tech" className="h-12 w-auto mb-6" />
+              <img src="/logo.webp" alt="Zeploy Tech" width="120" height="48" className="h-12 w-auto mb-6" />
               <h3 className="font-display text-2xl font-semibold tracking-widest text-foreground">
                 <span className="text-electric">ZEPLOY</span> TECH
               </h3>
@@ -1194,7 +1198,7 @@ export function FounderMessage() {
           <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-12 sm:gap-24">
             <div className="flex flex-col items-center justify-center gap-4">
               <div className="h-20 w-20 overflow-hidden rounded-full border border-electric/30 bg-surface">
-                <img src={imgAsjad} alt="Syed Asjad Abbas" loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
+                <img src={imgAsjad} alt="Syed Asjad Abbas" loading="lazy" decoding="async" width="400" height="400" className="h-full w-full object-cover object-top" />
               </div>
               <div>
                 <div className="text-lg font-semibold text-foreground">Syed Asjad Abbas</div>
@@ -1208,7 +1212,7 @@ export function FounderMessage() {
 
             <div className="flex flex-col items-center justify-center gap-4">
               <div className="h-20 w-20 overflow-hidden rounded-full border border-electric/30 bg-surface">
-                <img src={imgAsad} alt="Rana Asad Ur Rehman" loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
+                <img src={imgAsad} alt="Rana Asad Ur Rehman" loading="lazy" decoding="async" width="400" height="400" className="h-full w-full object-cover object-top" />
               </div>
               <div>
                 <div className="text-lg font-semibold text-foreground">Rana Asad Ur Rehman</div>
