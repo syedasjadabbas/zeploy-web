@@ -1,6 +1,7 @@
 import { motion, animate, useInView, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState, useCallback, lazy, Suspense } from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import { trackGAEvent } from "../../lib/analytics";
 import {
   Activity,
   ArrowUpRight,
@@ -711,25 +712,25 @@ export function Team() {
                   <p className="mt-2 font-mono text-xs uppercase tracking-widest text-electric-soft">
                     {m.role}
                   </p>
-                  {m.socials && (
-                    <div className="mt-4 flex justify-center gap-3">
-                      {m.socials.linkedin && (
-                        <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} LinkedIn`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
-                          <Linkedin className="w-4 h-4" />
-                        </a>
-                      )}
-                      {m.socials.github && (
-                        <a href={m.socials.github} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} GitHub`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
-                          <Github className="w-4 h-4" />
-                        </a>
-                      )}
-                      {(m.socials as any).portfolio && (
-                        <a href={(m.socials as any).portfolio} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} Portfolio`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
-                          <Globe2 className="w-4 h-4" />
-                        </a>
-                      )}
-                    </div>
+              {m.socials && (
+                <div className="mt-4 flex justify-center gap-3">
+                  {m.socials.linkedin && (
+                    <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: `${m.name} LinkedIn` })} aria-label={`${m.name} LinkedIn`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
+                      <Linkedin className="w-4 h-4" />
+                    </a>
                   )}
+                  {m.socials.github && (
+                    <a href={m.socials.github} target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('contact_click', { button_text: `${m.name} GitHub` })} aria-label={`${m.name} GitHub`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
+                      <Github className="w-4 h-4" />
+                    </a>
+                  )}
+                  {(m.socials as any).portfolio && (
+                    <a href={(m.socials as any).portfolio} target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('portfolio_click', { button_text: `${m.name} Portfolio Website` })} aria-label={`${m.name} Portfolio`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
+                      <Globe2 className="w-4 h-4" />
+                    </a>
+                  )}
+                </div>
+              )}
                 </div>
               </div>
               <div className="mt-8 grid gap-2 sm:grid-cols-2 px-2">
@@ -927,6 +928,7 @@ export function Blog() {
           {posts.map((p, i) => (
             <motion.a
               href={`/notes/${p.slug}`}
+              onClick={() => trackGAEvent('case_study_click', { button_text: p.title })}
               key={p.title}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.05 }}
@@ -985,6 +987,11 @@ export function ProjectInquiry() {
 
       if (response.ok) {
         setStatus("success");
+        trackGAEvent('form_submit', {
+          button_text: "Submit Request",
+          budget: formData.budget,
+          project_type: formData.type,
+        });
         setFormData({ name: "", email: "", company: "", budget: "", type: "", message: "" });
       } else {
         setStatus("error");
@@ -1084,7 +1091,10 @@ export function ProjectInquiry() {
               <div className="relative flex justify-center text-[10px] uppercase tracking-widest bg-background/50 backdrop-blur-md px-3 text-muted-foreground font-mono">Or</div>
             </div>
 
-            <a href="https://wa.me/923033236878" target="_blank" rel="noopener noreferrer" className="w-full rounded-xl border border-[#25D366]/20 bg-[#25D366]/10 px-6 py-4 text-sm font-semibold text-[#25D366] transition-all flex items-center justify-center gap-2 hover:bg-[#25D366]/20 hover:border-[#25D366]/50">
+            <a href="https://wa.me/923033236878" target="_blank" rel="noopener noreferrer" onClick={() => {
+              trackGAEvent('whatsapp_click', { button_text: 'Chat on WhatsApp' });
+              trackGAEvent('book_call_click', { button_text: 'Chat on WhatsApp' });
+            }} className="w-full rounded-xl border border-[#25D366]/20 bg-[#25D366]/10 px-6 py-4 text-sm font-semibold text-[#25D366] transition-all flex items-center justify-center gap-2 hover:bg-[#25D366]/20 hover:border-[#25D366]/50">
               <MessageCircle className="w-5 h-5" />
               Chat on WhatsApp
             </a>
@@ -1122,28 +1132,28 @@ export function Footer() {
             </p>
             <div className="mt-10">
               <p className="font-mono text-xs uppercase tracking-widest text-electric-soft mb-4">Contact Us</p>
-              <a href="mailto:zeploytech@gmail.com" className="text-foreground text-lg hover:text-electric transition-colors">zeploytech@gmail.com</a>
+              <a href="mailto:zeploytech@gmail.com" onClick={() => { trackGAEvent('email_click', { button_text: 'zeploytech@gmail.com text' }); trackGAEvent('contact_click', { button_text: 'zeploytech@gmail.com text' }); }} className="text-foreground text-lg hover:text-electric transition-colors">zeploytech@gmail.com</a>
             </div>
           </div>
           
           <div>
             <h4 className="font-mono text-xs uppercase tracking-widest text-foreground mb-8">Services</h4>
             <ul className="space-y-4 text-sm">
-              <FooterLink href="#services">Web Applications</FooterLink>
-              <FooterLink href="#services">Mobile Apps</FooterLink>
-              <FooterLink href="#services">SaaS Development</FooterLink>
-              <FooterLink href="#services">AI Systems</FooterLink>
-              <FooterLink href="#services">Cloud Solutions</FooterLink>
+              <FooterLink href="#services" onClick={() => trackGAEvent('service_click', { button_text: 'Web Applications Footer' })}>Web Applications</FooterLink>
+              <FooterLink href="#services" onClick={() => trackGAEvent('service_click', { button_text: 'Mobile Apps Footer' })}>Mobile Apps</FooterLink>
+              <FooterLink href="#services" onClick={() => trackGAEvent('service_click', { button_text: 'SaaS Development Footer' })}>SaaS Development</FooterLink>
+              <FooterLink href="#services" onClick={() => trackGAEvent('service_click', { button_text: 'AI Systems Footer' })}>AI Systems</FooterLink>
+              <FooterLink href="#services" onClick={() => trackGAEvent('service_click', { button_text: 'Cloud Solutions Footer' })}>Cloud Solutions</FooterLink>
             </ul>
           </div>
 
           <div>
             <h4 className="font-mono text-xs uppercase tracking-widest text-foreground mb-8">Studio</h4>
             <ul className="space-y-4 text-sm">
-              <FooterLink href="#work">Featured Work</FooterLink>
+              <FooterLink href="#work" onClick={() => trackGAEvent('portfolio_click', { button_text: 'Featured Work Footer' })}>Featured Work</FooterLink>
               <FooterLink href="#team">Our Team</FooterLink>
               <FooterLink href="#process">The Process</FooterLink>
-              <FooterLink href="#insights">Engineering Notes</FooterLink>
+              <FooterLink href="#insights" onClick={() => trackGAEvent('case_study_click', { button_text: 'Engineering Notes Footer' })}>Engineering Notes</FooterLink>
               <FooterLink href="#faq">FAQ</FooterLink>
             </ul>
           </div>
@@ -1151,19 +1161,22 @@ export function Footer() {
           <div>
             <h4 className="font-mono text-xs uppercase tracking-widest text-foreground mb-8">Socials</h4>
             <div className="flex flex-wrap gap-4 text-sm">
-              <a href="https://www.linkedin.com/company/zeploy-tech/" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech LinkedIn" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+              <a href="https://www.linkedin.com/company/zeploy-tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: 'LinkedIn Footer' })} aria-label="Zeploy Tech LinkedIn" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="https://www.instagram.com/zeploy.tech/" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech Instagram" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+              <a href="https://www.instagram.com/zeploy.tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('instagram_click', { button_text: 'Instagram Footer' })} aria-label="Zeploy Tech Instagram" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech Facebook" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+              <a href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('facebook_click', { button_text: 'Facebook Footer' })} aria-label="Zeploy Tech Facebook" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="https://wa.me/923033236878" target="_blank" rel="noopener noreferrer" aria-label="Zeploy Tech WhatsApp" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-[#25D366]/20 text-[#25D366] transition-all hover:bg-[#25D366]/20 hover:border-[#25D366]/50 hover:scale-110 hover:shadow-[0_0_15px_rgba(37,211,102,0.3)]">
+              <a href="https://wa.me/923033236878" target="_blank" rel="noopener noreferrer" onClick={() => {
+                trackGAEvent('whatsapp_click', { button_text: 'WhatsApp Footer' });
+                trackGAEvent('book_call_click', { button_text: 'WhatsApp Footer' });
+              }} aria-label="Zeploy Tech WhatsApp" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-[#25D366]/20 text-[#25D366] transition-all hover:bg-[#25D366]/20 hover:border-[#25D366]/50 hover:scale-110 hover:shadow-[0_0_15px_rgba(37,211,102,0.3)]">
                 <MessageCircle className="w-5 h-5" />
               </a>
-              <a href="mailto:zeploytech@gmail.com" aria-label="Zeploy Tech Email" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+              <a href="mailto:zeploytech@gmail.com" onClick={() => { trackGAEvent('email_click', { button_text: 'Email Icon Footer' }); trackGAEvent('contact_click', { button_text: 'Email Icon Footer' }); }} aria-label="Zeploy Tech Email" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
                 <Mail className="w-5 h-5" />
               </a>
             </div>
@@ -1204,8 +1217,8 @@ export function FounderMessage() {
                 <div className="text-lg font-semibold text-foreground">Syed Asjad Abbas</div>
                 <div className="font-mono text-xs uppercase tracking-widest text-electric mt-1">CEO & Founder</div>
                 <div className="flex justify-center gap-3 mt-4">
-                  <a href="https://www.linkedin.com/in/syed-asjad-abbas/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Linkedin className="w-4 h-4" /></a>
-                  <a href="https://github.com/syedasjadabbas" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Github className="w-4 h-4" /></a>
+                  <a href="https://www.linkedin.com/in/syed-asjad-abbas/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: 'Syed Asjad Abbas LinkedIn' })} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Linkedin className="w-4 h-4" /></a>
+                  <a href="https://github.com/syedasjadabbas" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('contact_click', { button_text: 'Syed Asjad Abbas GitHub' })} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Github className="w-4 h-4" /></a>
                 </div>
               </div>
             </div>
@@ -1218,8 +1231,8 @@ export function FounderMessage() {
                 <div className="text-lg font-semibold text-foreground">Rana Asad Ur Rehman</div>
                 <div className="font-mono text-xs uppercase tracking-widest text-electric mt-1">Co-Founder</div>
                 <div className="flex justify-center gap-3 mt-4">
-                  <a href="https://www.linkedin.com/in/rana-asad-ur-rahman-0a2457339/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Linkedin className="w-4 h-4" /></a>
-                  <a href="https://github.com/asad-rana306" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Github className="w-4 h-4" /></a>
+                  <a href="https://www.linkedin.com/in/rana-asad-ur-rahman-0a2457339/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: 'Rana Asad Ur Rehman LinkedIn' })} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Linkedin className="w-4 h-4" /></a>
+                  <a href="https://github.com/asad-rana306" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('contact_click', { button_text: 'Rana Asad Ur Rehman GitHub' })} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Github className="w-4 h-4" /></a>
                 </div>
               </div>
             </div>

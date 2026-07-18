@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Menu, X, Linkedin, Instagram, Facebook } from "lucide-react";
+import { trackGAEvent } from "../../lib/analytics";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -99,7 +100,12 @@ export default function Nav() {
             <a
               key={l.href}
               href={l.href}
-              onClick={(e) => handleNavClick(e, l.id)}
+              onClick={(e) => {
+                handleNavClick(e, l.id);
+                if (l.id === 'services') trackGAEvent('service_click', { button_text: l.label });
+                if (l.id === 'work') trackGAEvent('portfolio_click', { button_text: l.label });
+                if (l.id === 'contact') trackGAEvent('contact_click', { button_text: l.label });
+              }}
               className={`relative font-mono text-xs uppercase tracking-widest transition-colors ${
                 activeSection === l.id ? "text-electric" : "text-muted-foreground hover:text-foreground"
               }`}
@@ -114,13 +120,17 @@ export default function Nav() {
 
         <div className="flex items-center gap-3">
           <div className="hidden md:flex items-center gap-2 mr-2">
-            <a href="https://www.linkedin.com/company/zeploy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Linkedin className="w-4 h-4" /></a>
-            <a href="https://instagram.com/zeploytech" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Instagram className="w-4 h-4" /></a>
-            <a href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Facebook className="w-4 h-4" /></a>
+            <a href="https://www.linkedin.com/company/zeploy" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: 'LinkedIn Header' })} aria-label="LinkedIn" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Linkedin className="w-4 h-4" /></a>
+            <a href="https://instagram.com/zeploytech" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('instagram_click', { button_text: 'Instagram Header' })} aria-label="Instagram" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Instagram className="w-4 h-4" /></a>
+            <a href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('facebook_click', { button_text: 'Facebook Header' })} aria-label="Facebook" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Facebook className="w-4 h-4" /></a>
           </div>
 
           <a
             href="mailto:zeploytech@gmail.com?subject=Project%20Inquiry%20-%20Portfolio%20Website"
+            onClick={() => {
+              trackGAEvent('email_click', { button_text: 'Start a project' });
+              trackGAEvent('contact_click', { button_text: 'Start a project' });
+            }}
             className="rounded-full border border-white/10 bg-surface/60 px-4 py-2 font-mono text-xs uppercase tracking-widest text-foreground transition-colors hover:border-electric/50 hover:text-electric whitespace-nowrap"
           >
             Start a project
@@ -149,7 +159,12 @@ export default function Nav() {
               <a
                 key={l.href}
                 href={l.href}
-                onClick={(e) => handleNavClick(e, l.id)}
+                onClick={(e) => {
+                  handleNavClick(e, l.id);
+                  if (l.id === 'services') trackGAEvent('service_click', { button_text: l.label });
+                  if (l.id === 'work') trackGAEvent('portfolio_click', { button_text: l.label });
+                  if (l.id === 'contact') trackGAEvent('contact_click', { button_text: l.label });
+                }}
                 className={`flex items-center gap-3 rounded-xl px-4 py-3.5 font-mono text-sm uppercase tracking-widest transition-colors ${
                   activeSection === l.id
                     ? "bg-electric/10 text-electric"
@@ -164,9 +179,9 @@ export default function Nav() {
             ))}
           </div>
           <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-center gap-4">
-            <a href="https://www.linkedin.com/company/zeploy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-muted-foreground hover:text-electric transition-colors p-3 rounded-xl border border-white/5 bg-surface/50 flex items-center justify-center"><Linkedin className="w-5 h-5" /></a>
-            <a href="https://www.instagram.com/zeploy.tech/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-muted-foreground hover:text-electric transition-colors p-3 rounded-xl border border-white/5 bg-surface/50 flex items-center justify-center"><Instagram className="w-5 h-5" /></a>
-            <a href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-muted-foreground hover:text-electric transition-colors p-3 rounded-xl border border-white/5 bg-surface/50 flex items-center justify-center"><Facebook className="w-5 h-5" /></a>
+            <a href="https://www.linkedin.com/company/zeploy" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: 'LinkedIn Mobile Header' })} aria-label="LinkedIn" className="text-muted-foreground hover:text-electric transition-colors p-3 rounded-xl border border-white/5 bg-surface/50 flex items-center justify-center"><Linkedin className="w-5 h-5" /></a>
+            <a href="https://www.instagram.com/zeploy.tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('instagram_click', { button_text: 'Instagram Mobile Header' })} aria-label="Instagram" className="text-muted-foreground hover:text-electric transition-colors p-3 rounded-xl border border-white/5 bg-surface/50 flex items-center justify-center"><Instagram className="w-5 h-5" /></a>
+            <a href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('facebook_click', { button_text: 'Facebook Mobile Header' })} aria-label="Facebook" className="text-muted-foreground hover:text-electric transition-colors p-3 rounded-xl border border-white/5 bg-surface/50 flex items-center justify-center"><Facebook className="w-5 h-5" /></a>
           </div>
         </nav>
       </div>

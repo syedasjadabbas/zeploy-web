@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense, useEffect, useState, useRef, type ReactNode } from "react";
 import { motion, useInView, animate } from "framer-motion";
+import { trackGAEvent } from "../lib/analytics";
 
 import { ArrowUpRight, ArrowUp } from "lucide-react";
 import Nav from "@/components/zeploy/Nav";
@@ -280,6 +281,7 @@ function Hero() {
           >
             <a
               href="#work"
+              onClick={() => trackGAEvent("portfolio_click", { button_text: "View our work" })}
               className="group inline-flex items-center gap-2 rounded-full bg-electric px-8 py-4 text-base font-medium text-primary-foreground shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)] transition-all hover:scale-105 hover:shadow-[0_0_60px_-10px_rgba(59,130,246,0.7)]"
             >
               View our work
@@ -287,6 +289,10 @@ function Hero() {
             </a>
             <a
               href="mailto:zeploytech@gmail.com?subject=Project%20Inquiry%20-%20Portfolio%20Website"
+              onClick={() => {
+                trackGAEvent("email_click", { button_text: "Start a project" });
+                trackGAEvent("contact_click", { button_text: "Start a project" });
+              }}
               className="rounded-full border border-white/20 bg-surface/50 px-8 py-4 text-base font-medium text-foreground backdrop-blur-md transition-colors hover:border-electric/50 hover:bg-surface hover:text-electric"
             >
               Start a project
