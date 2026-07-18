@@ -1,5 +1,5 @@
 import { motion, animate, useInView, AnimatePresence } from "framer-motion";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, lazy, Suspense } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import {
   Activity,
@@ -32,10 +32,12 @@ import {
   ArrowLeft,
   ArrowRight
 } from "lucide-react";
-import { DataStreams, NetworkNodes, BlueprintGrid } from "./BackgroundScenes";
-import { InfraVisualization } from "./InfraVisualization";
+const DataStreams = lazy(() => import("./BackgroundScenes").then(module => ({ default: module.DataStreams })));
+const NetworkNodes = lazy(() => import("./BackgroundScenes").then(module => ({ default: module.NetworkNodes })));
+const BlueprintGrid = lazy(() => import("./BackgroundScenes").then(module => ({ default: module.BlueprintGrid })));
+const InfraVisualization = lazy(() => import("./InfraVisualization").then(module => ({ default: module.InfraVisualization })));
 
-import imgAsjad from "@/assets/images/asjad.png";
+import imgAsjad from "@/assets/images/asjad_compressed.jpeg";
 import imgAsad from "@/assets/images/asad.jpeg";
 import imgAhsan from "@/assets/images/ahsan.jpeg";
 import imgHassan from "@/assets/images/hassan.jpeg";
@@ -101,7 +103,7 @@ const services = [
 export function Services() {
   return (
     <section id="services" className="relative border-t border-white/5 px-6 py-32 md:px-12">
-      <DataStreams />
+      <Suspense fallback={null}><DataStreams /></Suspense>
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Services</SectionLabel>
@@ -461,7 +463,7 @@ export function WhyChoose() {
           </div>
 
           <div className="relative w-full h-[600px] rounded-3xl border border-white/10 bg-surface/20 overflow-hidden hidden lg:block">
-            <InfraVisualization />
+            <Suspense fallback={null}><InfraVisualization /></Suspense>
           </div>
         </div>
       </div>
@@ -577,7 +579,7 @@ const process = [
 export function Process() {
   return (
     <section id="process" className="relative border-t border-white/5 px-6 py-32 md:px-12 overflow-hidden">
-      <BlueprintGrid />
+      <Suspense fallback={null}><BlueprintGrid /></Suspense>
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Process</SectionLabel>
