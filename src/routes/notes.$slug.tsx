@@ -5,8 +5,45 @@ import Nav from '@/components/zeploy/Nav';
 import { Footer } from '@/components/zeploy/Sections';
 import { useEffect } from 'react';
 
+const posts = [
+  {
+    category: "Architecture",
+    date: "Aug 12, 2025",
+    title: "Why we abandoned microservices for a modular monolith",
+    description: "A deep dive into our infrastructure rewrite that reduced AWS costs by 40% and improved developer velocity.",
+    slug: "abandoned-microservices",
+  },
+  {
+    category: "AI Systems",
+    date: "Sep 28, 2025",
+    title: "Scaling LLM inference in production",
+    description: "Techniques for managing latency, token streaming, and cost when deploying large language models to thousands of users.",
+    slug: "scaling-llm-inference",
+  },
+  {
+    category: "Performance",
+    date: "Nov 04, 2026",
+    title: "Achieving 99.99% uptime with global edge networks",
+    description: "How we architected a multi-region failover system that survived two major cloud provider outages.",
+    slug: "edge-networks-uptime",
+  },
+];
+
 export const Route = createFileRoute('/notes/$slug')({
   component: NotePage,
+  head: ({ params }) => {
+    const post = posts.find(p => p.slug === params.slug) || posts[0];
+    return {
+      meta: [
+        { title: `${post.title} | Zeploy Tech Engineering Notes` },
+        { name: "description", content: post.description },
+        { property: "og:title", content: `${post.title} | Zeploy Tech Engineering Notes` },
+        { property: "og:description", content: post.description },
+        { property: "og:url", content: `https://zeploy.tech/notes/${params.slug}` },
+        { rel: "canonical", href: `https://zeploy.tech/notes/${params.slug}` },
+      ],
+    };
+  },
 });
 
 function NotePage() {
@@ -15,30 +52,6 @@ function NotePage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const posts = [
-    {
-      category: "Architecture",
-      date: "Aug 12, 2025",
-      title: "Why we abandoned microservices for a modular monolith",
-      description: "A deep dive into our infrastructure rewrite that reduced AWS costs by 40% and improved developer velocity.",
-      slug: "abandoned-microservices",
-    },
-    {
-      category: "AI Systems",
-      date: "Sep 28, 2025",
-      title: "Scaling LLM inference in production",
-      description: "Techniques for managing latency, token streaming, and cost when deploying large language models to thousands of users.",
-      slug: "scaling-llm-inference",
-    },
-    {
-      category: "Performance",
-      date: "Nov 04, 2026",
-      title: "Achieving 99.99% uptime with global edge networks",
-      description: "How we architected a multi-region failover system that survived two major cloud provider outages.",
-      slug: "edge-networks-uptime",
-    },
-  ];
 
   const post = posts.find(p => p.slug === slug) || posts[0];
 
