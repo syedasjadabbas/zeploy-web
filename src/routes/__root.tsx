@@ -95,14 +95,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#020817" },
       { property: "og:title", content: "Zeploy Tech | Premium Software Engineering & AI Studio" },
       { property: "og:site_name", content: "Zeploy Tech" },
-      { property: "og:url", content: "https://zeploy.tech" },
+      { property: "og:url", content: "https://www.zeploy.tech" },
       {
         property: "og:description",
         content:
           "Premium software engineering & AI studio building scalable, production-grade systems for modern businesses.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://zeploy.tech/logo.webp" },
+      { property: "og:image", content: "https://www.zeploy.tech/logo.webp" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Zeploy Tech | Premium Software Engineering & AI Studio" },
       {
@@ -110,10 +110,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Premium software engineering & AI studio building scalable, production-grade systems for modern businesses.",
       },
-      { name: "twitter:image", content: "https://zeploy.tech/logo.webp" },
-      { rel: "canonical", href: "https://zeploy.tech" },
+      { name: "twitter:image", content: "https://www.zeploy.tech/logo.webp" },
     ],
     links: [
+      { rel: "canonical", href: "https://www.zeploy.tech" },
       { rel: "icon", href: "/logo.webp" },
       { rel: "preload", as: "image", href: "/logo.webp" },
       { rel: "stylesheet", href: appCss },
@@ -144,13 +144,16 @@ function RootShell({ children }: { children: ReactNode }) {
               "@context": "https://schema.org",
               "@type": "ProfessionalService",
               name: "Zeploy Tech",
-              url: "https://zeploy.tech",
-              logo: "https://zeploy.tech/logo.webp",
+              url: "https://www.zeploy.tech",
+              logo: "https://www.zeploy.tech/logo.webp",
               description:
                 "A premium software engineering and AI studio dedicated to building robust, scalable, and visually stunning digital products.",
+              priceRange: "$$",
               address: {
                 "@type": "PostalAddress",
                 addressCountry: "Pakistan",
+                addressLocality: "Lahore",
+                addressRegion: "Punjab",
               },
               sameAs: [
                 "https://www.linkedin.com/company/zeploy-tech/",

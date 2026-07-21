@@ -2,6 +2,7 @@ import { motion, animate, useInView, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState, useCallback, lazy, Suspense } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { trackGAEvent } from "../../lib/analytics";
+import { Link } from "@tanstack/react-router";
 import {
   Activity,
   ArrowUpRight,
@@ -373,7 +374,7 @@ export function FeaturedWork() {
                           <div className="relative aspect-[16/10] w-full overflow-hidden bg-background">
                             <img 
                               src={p.image} 
-                              alt={p.name} 
+                              alt={`${p.name} - ${p.kind}`} 
                               loading="lazy"
                               decoding="async"
                               width="1920"
@@ -926,25 +927,30 @@ export function Blog() {
 
         <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/5 md:grid-cols-3">
           {posts.map((p, i) => (
-            <motion.a
-              href={`/notes/${p.slug}`}
-              onClick={() => trackGAEvent('case_study_click', { button_text: p.title })}
+            <motion.div
               key={p.title}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.05 }}
-              className="group bg-background p-10 transition-colors hover:bg-surface/60 md:p-12"
+              className="group bg-background transition-colors hover:bg-surface/60"
             >
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[11px] uppercase tracking-widest text-electric">
-                  {p.category}
-                </span>
-                <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
-              </div>
-              <h3 className="mt-12 text-2xl font-semibold leading-snug text-foreground group-hover:text-electric-soft">
-                {p.title}
-              </h3>
-              <p className="mt-6 font-mono text-xs text-muted-foreground">{p.description}</p>
-            </motion.a>
+              <Link
+                to="/notes/$slug"
+                params={{ slug: p.slug }}
+                onClick={() => trackGAEvent('case_study_click', { button_text: p.title })}
+                className="block p-10 md:p-12 h-full w-full"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[11px] uppercase tracking-widest text-electric">
+                    {p.category}
+                  </span>
+                  <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
+                </div>
+                <h3 className="mt-12 text-2xl font-semibold leading-snug text-foreground group-hover:text-electric-soft">
+                  {p.title}
+                </h3>
+                <p className="mt-6 font-mono text-xs text-muted-foreground">{p.description}</p>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -1205,6 +1211,7 @@ export function FounderMessage() {
       <div className="mx-auto max-w-4xl text-center">
         <motion.div {...fadeUp}>
           <SectionLabel>A Word from the Founder</SectionLabel>
+          <h2 className="sr-only">A Word from the Founder</h2>
           <blockquote className="mt-12 text-2xl md:text-3xl lg:text-4xl font-medium leading-[1.4] text-foreground/90 tracking-tight">
             "At Zeploy, our goal is simple: build software that solves real business problems. We focus on scalable systems, modern technology, and long-term value for every client we work with."
           </blockquote>

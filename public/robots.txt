@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://zeploy.tech/sitemap.xml
+Sitemap: https://www.zeploy.tech/sitemap.xml

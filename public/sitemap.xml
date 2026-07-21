@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://zeploy.tech/</loc>
+    <loc>https://www.zeploy.tech/</loc>
     <lastmod>2026-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://zeploy.tech/notes/abandoned-microservices</loc>
+    <loc>https://www.zeploy.tech/notes/abandoned-microservices</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://zeploy.tech/notes/scaling-llm-inference</loc>
+    <loc>https://www.zeploy.tech/notes/scaling-llm-inference</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://zeploy.tech/notes/edge-networks-uptime</loc>
+    <loc>https://www.zeploy.tech/notes/edge-networks-uptime</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

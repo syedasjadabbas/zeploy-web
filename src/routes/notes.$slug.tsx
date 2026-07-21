@@ -39,8 +39,15 @@ export const Route = createFileRoute('/notes/$slug')({
         { name: "description", content: post.description },
         { property: "og:title", content: `${post.title} | Zeploy Tech Engineering Notes` },
         { property: "og:description", content: post.description },
-        { property: "og:url", content: `https://zeploy.tech/notes/${params.slug}` },
-        { rel: "canonical", href: `https://zeploy.tech/notes/${params.slug}` },
+        { property: "og:url", content: `https://www.zeploy.tech/notes/${params.slug}` },
+        { property: "og:image", content: "https://www.zeploy.tech/logo.webp" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: `${post.title} | Zeploy Tech Engineering Notes` },
+        { name: "twitter:description", content: post.description },
+        { name: "twitter:image", content: "https://www.zeploy.tech/logo.webp" },
+      ],
+      links: [
+        { rel: "canonical", href: `https://www.zeploy.tech/notes/${params.slug}` },
       ],
     };
   },
