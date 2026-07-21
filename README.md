@@ -6,7 +6,7 @@ Official website of Zeploy Tech, a software engineering and AI studio focused on
 
 ## Live Website
 
-https://zeploy-web.vercel.app/
+https://zeploy.tech/
 
 ## About
 
