@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <a href="https://zeploy-web.vercel.app/"><img src="https://img.shields.io/badge/Live_Demo-Online-00FF66?style=for-the-badge&logo=vercel&logoColor=black" alt="Live Demo" /></a>
+  <a href="https://www.zeploy.tech/"><img src="https://img.shields.io/badge/Live_Demo-Online-00FF66?style=for-the-badge&logo=vercel&logoColor=black" alt="Live Demo" /></a>
   <a href="https://wa.me/923033236878"><img src="https://img.shields.io/badge/Contact-WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="WhatsApp" /></a>
 </p>
 
