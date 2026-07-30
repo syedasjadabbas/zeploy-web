@@ -9,6 +9,10 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 export default defineConfig({
   nitro: {
     preset: "vercel",
+    routeRules: {
+      "/": { isr: 3600 },
+      "/notes/**": { isr: 3600 },
+    },
   },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
@@ -16,6 +20,29 @@ export default defineConfig({
     server: { 
       entry: "server",
       preset: "vercel"
+    },
+  },
+  vite: {
+    build: {
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks(id: string) {
+            if (id.includes("node_modules/three") || id.includes("node_modules/@react-three")) {
+              return "vendor-three";
+            }
+            if (id.includes("node_modules/framer-motion") || id.includes("node_modules/motion")) {
+              return "vendor-motion";
+            }
+            if (id.includes("node_modules/lucide-react")) {
+              return "vendor-icons";
+            }
+            if (id.includes("node_modules/@tanstack")) {
+              return "vendor-tanstack";
+            }
+          },
+        },
+      },
     },
   },
 });

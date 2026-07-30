@@ -66,8 +66,8 @@ function AnimatedCounter({ from, to, duration, suffix = "" }: { from: number; to
   }, [isInView, from, to, duration, suffix]);
 
   return (
-    <div className="relative inline-block">
-      <span ref={ref} className="relative z-10 font-display text-2xl font-semibold text-foreground sm:text-3xl md:text-4xl">
+    <div className="relative inline-block min-w-[2.5ch]">
+      <span ref={ref} className="relative z-10 font-display text-2xl font-semibold text-foreground sm:text-3xl md:text-4xl tabular-nums">
         {from}{suffix}
       </span>
       {isFinished && (
@@ -118,37 +118,13 @@ function ClientHeroScene() {
   );
 }
 
-/** Defers mounting of children until the wrapper enters the viewport.
- *  Uses content-visibility: auto via the section-lazy utility for paint deferral. */
-function LazySection({ children, fallbackHeight = "200px", id }: { children: ReactNode; fallbackHeight?: string; id?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "200px 0px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
+/** Wrapper using browser-native content-visibility for paint deferral without layout shift. */
+function LazySection({ children, fallbackHeight = "400px", id }: { children: ReactNode; fallbackHeight?: string; id?: string }) {
   return (
-    <div ref={ref} id={id} className="section-lazy">
-      {visible ? (
-        <Suspense fallback={<div style={{ minHeight: fallbackHeight }} />}>
-          {children}
-        </Suspense>
-      ) : (
-        <div style={{ minHeight: fallbackHeight }} />
-      )}
+    <div id={id} className="section-lazy" style={{ containIntrinsicSize: `auto ${fallbackHeight}` }}>
+      <Suspense fallback={<div style={{ minHeight: fallbackHeight }} />}>
+        {children}
+      </Suspense>
     </div>
   );
 }
@@ -241,7 +217,7 @@ function Hero() {
       <div className="mx-auto grid max-w-7xl gap-16 px-6 pb-32 pt-12 md:px-12 lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:pt-20">
         <div className="relative z-10 flex flex-col justify-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
             className="mb-4"
@@ -252,7 +228,7 @@ function Hero() {
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 24 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.05 }}
             className="mt-4 font-display text-4xl font-semibold leading-[1.02] tracking-tight sm:text-5xl md:text-6xl lg:text-[clamp(3.75rem,5vw,4.5rem)]"
@@ -264,7 +240,7 @@ function Hero() {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
             className="mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl md:text-2xl"
@@ -274,7 +250,7 @@ function Hero() {
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.25 }}
             className="mt-12 flex flex-wrap items-center gap-4"
@@ -300,7 +276,7 @@ function Hero() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.35 }}
             className="mt-16 grid max-w-lg grid-cols-3 gap-3 border-t border-white/5 pt-8 sm:gap-6"

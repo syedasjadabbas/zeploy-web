@@ -495,7 +495,7 @@ export function AnimatedDecimalCounter({ from, to, duration, prefix = "", suffix
     }
   }, [isInView, from, to, duration, prefix, suffix, decimals]);
 
-  return <span ref={ref}>{prefix}{from.toFixed(decimals)}{suffix}</span>;
+  return <span ref={ref} className="tabular-nums inline-block min-w-[2.5ch]">{prefix}{from.toFixed(decimals)}{suffix}</span>;
 }
 
 export function Reliability() {

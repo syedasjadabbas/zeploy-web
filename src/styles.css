@@ -151,6 +151,10 @@
   contain-intrinsic-size: auto 600px;
 }
 
+@utility tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
 @keyframes ping {
   75%, 100% { transform: scale(2.2); opacity: 0; }
 }
