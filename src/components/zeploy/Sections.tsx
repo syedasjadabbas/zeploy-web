@@ -216,11 +216,14 @@ export function FeaturedWork() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "center",
-    containScroll: false,
+    skipSnaps: false,
+    duration: 35,
+    watchDrag: true,
   });
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -232,6 +235,19 @@ export function FeaturedWork() {
     onSelect();
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
+
+    const onPointerDown = () => setIsDragging(true);
+    const onPointerUp = () => setIsDragging(false);
+
+    emblaApi.on("pointerDown", onPointerDown);
+    emblaApi.on("pointerUp", onPointerUp);
+
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
+      emblaApi.off("pointerDown", onPointerDown);
+      emblaApi.off("pointerUp", onPointerUp);
+    };
   }, [emblaApi, onSelect]);
 
   useEffect(() => {
@@ -240,7 +256,7 @@ export function FeaturedWork() {
 
     const startAutoplay = () => {
       intervalId = setInterval(() => {
-        if (!isHovered) {
+        if (!isHovered && !isDragging) {
           emblaApi.scrollNext();
         }
       }, 7000);
@@ -257,7 +273,7 @@ export function FeaturedWork() {
     return () => {
       stopAutoplay();
     };
-  }, [emblaApi, isHovered]);
+  }, [emblaApi, isHovered, isDragging]);
 
   const prevSlide = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -283,7 +299,10 @@ export function FeaturedWork() {
 
         {/* Embla Viewport */}
         <div 
-          className="overflow-hidden w-full cursor-grab active:cursor-grabbing px-0" 
+          className={`overflow-hidden w-full px-0 select-none ${
+            isDragging ? "cursor-grabbing" : "cursor-grab"
+          }`}
+          style={{ touchAction: "pan-y" }}
           ref={emblaRef}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -296,17 +315,22 @@ export function FeaturedWork() {
                 <div 
                   key={p.name} 
                   className="flex-[0_0_88vw] sm:flex-[0_0_85vw] md:flex-[0_0_65vw] max-w-[950px] min-w-0 px-2 sm:px-3 md:px-6 py-4 sm:py-6"
+                  onClick={() => {
+                    if (!isActive && emblaApi && emblaApi.clickAllowed()) {
+                      scrollToSlide(idx);
+                    }
+                  }}
                 >
                   <div
-                    className={`group/card glass-card overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] w-full transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+                    className={`group/card glass-card overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
                       isActive 
                         ? "opacity-100 scale-100 blur-0 shadow-[0_0_50px_rgba(59,130,246,0.15)] border-white/10 hover:shadow-[0_0_60px_rgba(59,130,246,0.3)] hover:-translate-y-1 hover:border-electric/40"
-                        : "opacity-30 scale-[0.94] md:scale-[0.96] blur-[2px] pointer-events-none select-none border-white/5 shadow-none"
+                        : "opacity-40 scale-[0.94] md:scale-[0.96] blur-[1px] cursor-pointer select-none border-white/5 shadow-none hover:opacity-60"
                     }`}
                   >
                     <div className="grid lg:grid-cols-2 gap-0">
                       {/* Left Side: Details */}
-                      <div className="p-5 sm:p-8 md:p-14 lg:p-16 flex flex-col justify-between">
+                      <div className="p-5 sm:p-8 md:p-14 lg:p-16 flex flex-col justify-between select-none">
                         <div>
                           <div className="flex items-center gap-3">
                             <span className="h-2 w-2 rounded-full bg-electric animate-pulse" />
@@ -361,7 +385,7 @@ export function FeaturedWork() {
                       </div>
 
                       {/* Right Side: Mockup Image */}
-                      <div className="relative border-white/5 bg-surface/30 overflow-hidden flex items-center justify-center p-6 sm:p-8 lg:p-12 lg:border-l">
+                      <div className="relative border-white/5 bg-surface/30 overflow-hidden flex items-center justify-center p-6 sm:p-8 lg:p-12 lg:border-l select-none">
                         <div className="w-full relative border border-white/10 bg-background/50 rounded-2xl overflow-hidden shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]">
                           {/* Browser-style titlebar */}
                           <div className="flex items-center gap-1.5 px-4 py-3 bg-background/60 border-b border-white/5">
@@ -371,15 +395,16 @@ export function FeaturedWork() {
                             <span className="ml-2 font-mono text-[9px] text-muted-foreground uppercase tracking-widest bg-white/5 px-2 py-0.5 rounded-md">zeploy.live</span>
                           </div>
                           {/* Image Area */}
-                          <div className="relative aspect-[16/10] w-full overflow-hidden bg-background">
+                          <div className="relative aspect-[16/10] w-full overflow-hidden bg-background select-none">
                             <img 
                               src={p.image} 
                               alt={`${p.name} - ${p.kind}`} 
                               loading="lazy"
                               decoding="async"
+                              draggable={false}
                               width="1920"
                               height="1200"
-                              className="absolute inset-0 h-full w-full object-cover object-top"
+                              className="absolute inset-0 h-full w-full object-cover object-top select-none pointer-events-none"
                             />
                           </div>
                         </div>
