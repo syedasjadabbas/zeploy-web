@@ -225,7 +225,7 @@ export function FeaturedWork() {
     loop: true,
     align: "center",
     skipSnaps: false,
-    duration: 35,
+    duration: 25,
     watchDrag: true,
   });
 
@@ -296,11 +296,11 @@ export function FeaturedWork() {
   }, [emblaApi]);
 
   return (
-    <section className="relative border-t border-white/5 py-16 md:py-24 bg-background overflow-hidden">
+    <section className="relative border-t border-white/5 py-10 md:py-14 lg:py-16 bg-background overflow-hidden">
       <div className="w-full relative z-10">
-        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center px-4 sm:px-6 md:px-12 mb-10 md:mb-14">
+        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center px-4 sm:px-6 md:px-12 mb-6 md:mb-8">
           <SectionLabel>Featured Projects</SectionLabel>
-          <h2 className="mt-5 text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] text-gradient-soft md:text-5xl lg:text-[clamp(3rem,4vw,4rem)]">
+          <h2 className="mt-4 text-3xl font-bold tracking-tight leading-[1.1] text-gradient-soft sm:text-4xl lg:text-[clamp(2.25rem,3vw,3rem)]">
             Representative product concepts demonstrating Zeploy's engineering capabilities.
           </h2>
         </motion.div>
@@ -322,7 +322,7 @@ export function FeaturedWork() {
               return (
                 <div 
                   key={p.name} 
-                  className="flex-[0_0_88vw] sm:flex-[0_0_82vw] md:flex-[0_0_80vw] lg:flex-[0_0_72vw] xl:flex-[0_0_68vw] max-w-[800px] min-w-0 px-2 sm:px-3 md:px-4 py-3 sm:py-4"
+                  className="flex-[0_0_88vw] sm:flex-[0_0_80vw] md:flex-[0_0_680px] lg:flex-[0_0_740px] xl:flex-[0_0_760px] max-w-[760px] min-w-0 px-2 sm:px-3 py-2 sm:py-3"
                   onClick={() => {
                     if (!isActive && emblaApi && emblaApi.clickAllowed()) {
                       scrollToSlide(idx);
@@ -330,33 +330,33 @@ export function FeaturedWork() {
                   }}
                 >
                   <div
-                    className={`group/card glass-card overflow-hidden rounded-[1.75rem] sm:rounded-[2.25rem] w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+                    className={`group/card glass-card overflow-hidden rounded-2xl sm:rounded-3xl w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
                       isActive 
-                        ? "opacity-100 scale-100 blur-0 shadow-[0_0_40px_rgba(59,130,246,0.15)] border-white/10 hover:shadow-[0_0_50px_rgba(59,130,246,0.25)] hover:-translate-y-0.5 hover:border-electric/40"
+                        ? "opacity-100 scale-100 blur-0 shadow-[0_0_35px_rgba(59,130,246,0.12)] border-white/10 hover:shadow-[0_0_45px_rgba(59,130,246,0.22)] hover:-translate-y-0.5 hover:border-electric/40"
                         : "opacity-40 scale-[0.93] md:scale-[0.95] blur-[1.5px] cursor-pointer select-none border-white/5 shadow-none hover:opacity-75 hover:scale-[0.96]"
                     }`}
                   >
                     <div className="grid lg:grid-cols-2 gap-0">
                       {/* Left Side: Details */}
-                      <div className="p-5 sm:p-7 md:p-8 lg:p-10 flex flex-col justify-between select-none">
+                      <div className="p-4 sm:p-5 md:p-6 lg:p-7 flex flex-col justify-between select-none">
                         <div>
-                          <div className="flex items-center gap-2.5">
+                          <div className="flex items-center gap-2">
                             <span className="h-2 w-2 rounded-full bg-electric animate-pulse" />
-                            <p className="font-mono text-xs uppercase tracking-widest text-electric">
+                            <p className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-electric">
                               {p.kind}
                             </p>
                           </div>
-                          <h3 className="mt-4 text-3xl font-semibold sm:text-4xl lg:text-4xl">{p.name}</h3>
+                          <h3 className="mt-2 text-2xl font-semibold sm:text-3xl lg:text-3xl tracking-tight">{p.name}</h3>
 
-                          <p className="mt-4 text-sm sm:text-base leading-relaxed text-muted-foreground">
+                          <p className="mt-2 text-xs sm:text-sm leading-relaxed text-muted-foreground">
                             {p.desc}
                           </p>
 
-                          <div className="mt-6">
-                            <p className="font-mono text-[11px] uppercase tracking-widest text-electric-soft mb-2.5">Key Features</p>
-                            <ul className="grid sm:grid-cols-2 gap-2.5">
+                          <div className="mt-4">
+                            <p className="font-mono text-[10px] uppercase tracking-widest text-electric-soft mb-1.5">Key Features</p>
+                            <ul className="grid sm:grid-cols-2 gap-2">
                               {p.features.map(f => (
-                                <li key={f} className="flex items-center gap-2.5 text-xs sm:text-sm text-foreground/90">
+                                <li key={f} className="flex items-center gap-2 text-xs text-foreground/90">
                                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/80 shrink-0" />
                                   {f}
                                 </li>
@@ -364,11 +364,11 @@ export function FeaturedWork() {
                             </ul>
                           </div>
 
-                          <div className="mt-5">
-                            <p className="font-mono text-[11px] uppercase tracking-widest text-emerald-400/80 mb-2.5">Outcomes & Metrics</p>
-                            <ul className="space-y-1.5">
+                          <div className="mt-3">
+                            <p className="font-mono text-[10px] uppercase tracking-widest text-emerald-400/80 mb-1.5">Outcomes & Metrics</p>
+                            <ul className="space-y-1">
                               {p.outcomes?.map(o => (
-                                <li key={o} className="flex items-start gap-2.5 text-xs sm:text-sm text-foreground/90 leading-snug">
+                                <li key={o} className="flex items-start gap-2 text-xs text-foreground/90 leading-tight">
                                   <span className="mt-0.5 text-emerald-400 font-bold shrink-0">✓</span>
                                   {o}
                                 </li>
@@ -377,13 +377,13 @@ export function FeaturedWork() {
                           </div>
                         </div>
 
-                        <div className="mt-8 pt-5 border-t border-white/5">
-                          <p className="font-mono text-[11px] uppercase tracking-widest text-electric-soft mb-2.5">Technology Stack</p>
-                          <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                        <div className="mt-4 pt-3.5 border-t border-white/5">
+                          <p className="font-mono text-[10px] uppercase tracking-widest text-electric-soft mb-1.5">Technology Stack</p>
+                          <div className="flex flex-wrap gap-1.5">
                             {p.tech.map((t) => (
                               <span
                                 key={t}
-                                className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[11px] text-foreground transition-colors hover:border-electric/50"
+                                className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] sm:text-[11px] text-foreground transition-colors hover:border-electric/50"
                               >
                                 {t}
                               </span>
@@ -393,14 +393,14 @@ export function FeaturedWork() {
                       </div>
 
                       {/* Right Side: Mockup Image */}
-                      <div className="relative border-white/5 bg-surface/30 overflow-hidden flex items-center justify-center p-5 sm:p-6 lg:p-8 lg:border-l select-none">
-                        <div className="w-full relative border border-white/10 bg-background/50 rounded-2xl overflow-hidden shadow-2xl transition-transform duration-500 group-hover:scale-[1.01]">
+                      <div className="relative border-white/5 bg-surface/30 overflow-hidden flex items-center justify-center p-4 sm:p-5 lg:p-6 lg:border-l select-none">
+                        <div className="w-full relative border border-white/10 bg-background/50 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:scale-[1.01]">
                           {/* Browser-style titlebar */}
-                          <div className="flex items-center gap-1.5 px-3.5 py-2.5 bg-background/60 border-b border-white/5">
-                            <span className="w-2 h-2 rounded-full bg-red-500/80" />
-                            <span className="w-2 h-2 rounded-full bg-amber-500/80" />
-                            <span className="w-2 h-2 rounded-full bg-emerald-500/80" />
-                            <span className="ml-2 font-mono text-[9px] text-muted-foreground uppercase tracking-widest bg-white/5 px-2 py-0.5 rounded-md">zeploy.live</span>
+                          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-background/60 border-b border-white/5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-red-500/80" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500/80" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/80" />
+                            <span className="ml-2 font-mono text-[8px] text-muted-foreground uppercase tracking-widest bg-white/5 px-1.5 py-0.5 rounded-md">zeploy.live</span>
                           </div>
                           {/* Image Area */}
                           <div className="relative aspect-[16/10] w-full overflow-hidden bg-background select-none">
