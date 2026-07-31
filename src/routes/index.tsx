@@ -1,24 +1,24 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { lazy, Suspense, useEffect, useState, useRef, type ReactNode } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, useInView, animate } from "framer-motion";
 import { trackGAEvent } from "../lib/analytics";
 
 import { ArrowUpRight, ArrowUp } from "lucide-react";
 import Nav from "@/components/zeploy/Nav";
-const Services = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.Services })));
-const FeaturedWork = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.FeaturedWork })));
-const WhyChoose = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.WhyChoose })));
-const Reliability = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.Reliability })));
-const Process = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.Process })));
-const Team = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.Team })));
-const Testimonials = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.Testimonials })));
-const Blog = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.Blog })));
-const ProjectInquiry = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.ProjectInquiry })));
-const Footer = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.Footer })));
-const FounderMessage = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.FounderMessage })));
-const Faq = lazy(() => import("@/components/zeploy/Sections").then(m => ({ default: m.Faq })));
-
-const HeroScene = lazy(() => import("@/components/zeploy/HeroScene"));
+import {
+  Services,
+  FeaturedWork,
+  WhyChoose,
+  Reliability,
+  Process,
+  Team,
+  Testimonials,
+  Blog,
+  ProjectInquiry,
+  Footer,
+  FounderMessage,
+  Faq,
+} from "@/components/zeploy/Sections";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -39,8 +39,6 @@ export const Route = createFileRoute("/")({
   }),
   component: Index,
 });
-
-
 
 function AnimatedCounter({ from, to, duration, suffix = "" }: { from: number; to: number; duration: number; suffix?: string; }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -82,26 +80,26 @@ function AnimatedCounter({ from, to, duration, suffix = "" }: { from: number; to
   );
 }
 
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isMobile;
-}
-
 function ClientHeroScene() {
+  const [HeroComponent, setHeroComponent] = useState<React.ComponentType | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const isMobile = useIsMobile();
-  
-  useEffect(() => setMounted(true), []);
-  
+
+  useEffect(() => {
+    setMounted(true);
+    const mobile = window.innerWidth < 768;
+    setIsMobile(mobile);
+
+    if (!mobile) {
+      import("@/components/zeploy/HeroScene").then((m) => {
+        setHeroComponent(() => m.default);
+      });
+    }
+  }, []);
+
   if (!mounted) return <div className="h-full w-full rounded-3xl bg-surface/30" />;
-  
-  if (isMobile) {
+
+  if (isMobile || !HeroComponent) {
     return (
       <div className="h-full w-full rounded-3xl bg-[#020817] border border-white/5 relative overflow-hidden flex items-center justify-center">
         <div className="absolute w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-600/15 via-[#020817]/80 to-[#020817] animate-[pulse_4s_ease-in-out_infinite]" />
@@ -111,24 +109,8 @@ function ClientHeroScene() {
     );
   }
 
-  return (
-    <Suspense fallback={<div className="h-full w-full rounded-3xl bg-surface/30" />}>
-      <HeroScene />
-    </Suspense>
-  );
+  return <HeroComponent />;
 }
-
-/** Wrapper using browser-native content-visibility for paint deferral without layout shift. */
-function LazySection({ children, fallbackHeight = "400px", id }: { children: ReactNode; fallbackHeight?: string; id?: string }) {
-  return (
-    <div id={id} className="section-lazy" style={{ containIntrinsicSize: `auto ${fallbackHeight}` }}>
-      <Suspense fallback={<div style={{ minHeight: fallbackHeight }} />}>
-        {children}
-      </Suspense>
-    </div>
-  );
-}
-
 
 function BackToTop() {
   const [visible, setVisible] = useState(false);
@@ -168,42 +150,28 @@ function Index() {
       <div id="hero">
         <Hero />
       </div>
-      <LazySection fallbackHeight="600px">
-        <Services />
-      </LazySection>
-      <LazySection id="why-zeploy" fallbackHeight="500px">
+      <Services />
+      <div id="why-zeploy">
         <WhyChoose />
-      </LazySection>
-      <LazySection id="work" fallbackHeight="600px">
+      </div>
+      <div id="work">
         <FeaturedWork />
-      </LazySection>
-      <LazySection fallbackHeight="400px">
-        <Reliability />
-      </LazySection>
-      <LazySection fallbackHeight="400px">
-        <Process />
-      </LazySection>
-      <LazySection fallbackHeight="500px">
-        <Testimonials />
-      </LazySection>
-      <LazySection id="team" fallbackHeight="500px">
+      </div>
+      <Reliability />
+      <Process />
+      <Testimonials />
+      <div id="team">
         <Team />
-      </LazySection>
-      <LazySection fallbackHeight="300px">
-        <Blog />
-      </LazySection>
-      <LazySection fallbackHeight="400px">
-        <FounderMessage />
-      </LazySection>
-      <LazySection id="faq" fallbackHeight="400px">
+      </div>
+      <Blog />
+      <FounderMessage />
+      <div id="faq">
         <Faq />
-      </LazySection>
-      <LazySection id="contact" fallbackHeight="400px">
+      </div>
+      <div id="contact">
         <ProjectInquiry />
-      </LazySection>
-      <Suspense fallback={<div style={{ minHeight: "400px" }} />}>
-        <Footer />
-      </Suspense>
+      </div>
+      <Footer />
     </main>
   );
 }

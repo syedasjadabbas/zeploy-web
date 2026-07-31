@@ -34,10 +34,18 @@ import {
   ArrowLeft,
   ArrowRight
 } from "lucide-react";
-const DataStreams = lazy(() => import("./BackgroundScenes").then(module => ({ default: module.DataStreams })));
-const NetworkNodes = lazy(() => import("./BackgroundScenes").then(module => ({ default: module.NetworkNodes })));
-const BlueprintGrid = lazy(() => import("./BackgroundScenes").then(module => ({ default: module.BlueprintGrid })));
-const InfraVisualization = lazy(() => import("./InfraVisualization").then(module => ({ default: module.InfraVisualization })));
+function DesktopOnly3D({ load }: { load: () => Promise<{ default: React.ComponentType }> }) {
+  const [Comp, setComp] = useState<React.ComponentType | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.innerWidth >= 768) {
+      load().then((m) => setComp(() => m.default));
+    }
+  }, [load]);
+
+  if (!Comp) return null;
+  return <Comp />;
+}
 
 import imgAsjad from "@/assets/images/asjad.webp";
 import imgAsad from "@/assets/images/asad.webp";
@@ -105,7 +113,7 @@ const services = [
 export function Services() {
   return (
     <section id="services" className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12">
-      <Suspense fallback={null}><DataStreams /></Suspense>
+      <DesktopOnly3D load={() => import("./BackgroundScenes").then(m => ({ default: m.DataStreams }))} />
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Services</SectionLabel>
@@ -397,7 +405,9 @@ export function FeaturedWork() {
                           {/* Image Area */}
                           <div className="relative aspect-[16/10] w-full overflow-hidden bg-background select-none">
                             <img 
-                              src={p.image} 
+                              src={p.image}
+                              srcSet={`/projects/mobile/${p.image.split('/').pop()} 600w, ${p.image} 1024w`}
+                              sizes="(max-width: 768px) 88vw, 45vw"
                               alt={`${p.name} - ${p.kind}`} 
                               loading="lazy"
                               decoding="async"
@@ -492,7 +502,7 @@ export function WhyChoose() {
           </div>
 
           <div className="relative w-full min-h-[600px] h-full rounded-3xl border border-white/10 bg-surface/20 overflow-hidden hidden lg:block">
-            <Suspense fallback={null}><InfraVisualization /></Suspense>
+            <DesktopOnly3D load={() => import("./InfraVisualization").then(m => ({ default: m.InfraVisualization }))} />
           </div>
         </div>
       </div>
@@ -608,7 +618,7 @@ const process = [
 export function Process() {
   return (
     <section id="process" className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12 overflow-hidden">
-      <Suspense fallback={null}><BlueprintGrid /></Suspense>
+      <DesktopOnly3D load={() => import("./BackgroundScenes").then(m => ({ default: m.BlueprintGrid }))} />
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Process</SectionLabel>

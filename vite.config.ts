@@ -10,8 +10,8 @@ export default defineConfig({
   nitro: {
     preset: "vercel",
     routeRules: {
-      "/": { isr: 3600 },
-      "/notes/**": { isr: 3600 },
+      "/": { isr: 3600, headers: { "cache-control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400" } },
+      "/notes/**": { isr: 3600, headers: { "cache-control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400" } },
     },
   },
   tanstackStart: {
