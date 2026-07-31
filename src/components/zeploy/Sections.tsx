@@ -104,7 +104,7 @@ const services = [
 
 export function Services() {
   return (
-    <section id="services" className="relative border-t border-white/5 px-6 py-32 md:px-12">
+    <section id="services" className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12">
       <Suspense fallback={null}><DataStreams /></Suspense>
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
@@ -124,7 +124,7 @@ export function Services() {
               key={s.title}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.04 }}
-              className="group relative bg-background p-10 transition-colors hover:bg-surface/60 md:p-12"
+              className="group relative bg-background p-6 sm:p-10 transition-colors hover:bg-surface/60 md:p-12"
             >
               <div className="flex items-center justify-between">
                 <div className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-surface text-electric transition-all group-hover:border-electric/60 group-hover:glow-electric">
@@ -272,9 +272,9 @@ export function FeaturedWork() {
   }, [emblaApi]);
 
   return (
-    <section className="relative border-t border-white/5 py-32 bg-background overflow-hidden">
+    <section className="relative border-t border-white/5 py-24 md:py-32 bg-background overflow-hidden">
       <div className="w-full relative z-10">
-        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center px-6 md:px-12 mb-20">
+        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center px-4 sm:px-6 md:px-12 mb-16 md:mb-20">
           <SectionLabel>Featured Projects</SectionLabel>
           <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Representative product concepts demonstrating Zeploy's engineering capabilities.
@@ -295,7 +295,7 @@ export function FeaturedWork() {
               return (
                 <div 
                   key={p.name} 
-                  className="flex-[0_0_85vw] md:flex-[0_0_65vw] max-w-[950px] min-w-0 px-3 md:px-6 py-6"
+                  className="flex-[0_0_88vw] sm:flex-[0_0_85vw] md:flex-[0_0_65vw] max-w-[950px] min-w-0 px-2 sm:px-3 md:px-6 py-4 sm:py-6"
                 >
                   <div
                     className={`group/card glass-card overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] w-full transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${
@@ -306,7 +306,7 @@ export function FeaturedWork() {
                   >
                     <div className="grid lg:grid-cols-2 gap-0">
                       {/* Left Side: Details */}
-                      <div className="p-6 sm:p-10 md:p-14 lg:p-16 flex flex-col justify-between">
+                      <div className="p-5 sm:p-8 md:p-14 lg:p-16 flex flex-col justify-between">
                         <div>
                           <div className="flex items-center gap-3">
                             <span className="h-2 w-2 rounded-full bg-electric animate-pulse" />
@@ -393,7 +393,7 @@ export function FeaturedWork() {
         </div>
 
         {/* Carousel Controls */}
-        <div className="mt-8 flex items-center justify-center gap-6 px-6 md:px-12">
+        <div className="mt-8 flex items-center justify-center gap-3 sm:gap-6 px-4 md:px-12">
           <button
             onClick={prevSlide}
             className="p-3.5 rounded-full border border-white/10 bg-surface/60 text-foreground transition-all hover:bg-electric hover:text-white hover:scale-110 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] focus:outline-none focus:ring-2 focus:ring-electric"
@@ -440,7 +440,7 @@ const reasons = [
 
 export function WhyChoose() {
   return (
-    <section className="relative border-t border-white/5 px-6 py-32 md:px-12">
+    <section className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Why Teams Choose Zeploy</SectionLabel>
@@ -456,7 +456,7 @@ export function WhyChoose() {
                 key={r.title}
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: i * 0.04 }}
-                className="glass-card glass-card-hover group relative overflow-hidden rounded-3xl p-8"
+                className="glass-card glass-card-hover group relative overflow-hidden rounded-3xl p-6 sm:p-8"
               >
                 <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-electric/10 blur-3xl opacity-0 transition-opacity group-hover:opacity-100" />
                 <r.icon className="h-8 w-8 text-electric" />
@@ -501,7 +501,7 @@ export function AnimatedDecimalCounter({ from, to, duration, prefix = "", suffix
 export function Reliability() {
   const bars = Array.from({ length: 40 }, () => 0.6 + Math.random() * 0.4);
   return (
-    <section id="reliability" className="relative border-t border-white/5 px-6 py-32 md:px-12">
+    <section id="reliability" className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Reliability</SectionLabel>
@@ -514,7 +514,7 @@ export function Reliability() {
           {...fadeUp}
           className="glass-card mt-12 overflow-hidden rounded-3xl"
         >
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/5 px-6 py-4 md:px-8">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/5 px-4 py-3 sm:px-6 sm:py-4 md:px-8">
             <div className="flex items-center gap-3">
               <span className="relative h-2 w-2">
                 <span className="absolute inset-0 rounded-full bg-emerald-400" />
@@ -535,7 +535,7 @@ export function Reliability() {
               { k: "Response Time", v: <AnimatedDecimalCounter from={0} to={2} decimals={0} prefix="< " suffix="h" duration={2} />, icon: Zap },
               { k: "Uptime (90d)", v: <AnimatedDecimalCounter from={0} to={99.99} decimals={2} suffix="%" duration={2} />, icon: ShieldCheck },
             ].map((m) => (
-              <div key={m.k} className="bg-background p-6">
+              <div key={m.k} className="bg-background p-4 sm:p-6">
                 <m.icon className="h-4 w-4 text-electric" />
                 <p className="mt-4 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
                   {m.k}
@@ -582,7 +582,7 @@ const process = [
 
 export function Process() {
   return (
-    <section id="process" className="relative border-t border-white/5 px-6 py-32 md:px-12 overflow-hidden">
+    <section id="process" className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12 overflow-hidden">
       <Suspense fallback={null}><BlueprintGrid /></Suspense>
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
@@ -602,7 +602,7 @@ export function Process() {
                 transition={{ ...fadeUp.transition, delay: i * 0.05 }}
                 className={`relative grid gap-6 md:grid-cols-2 md:gap-16 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}
               >
-                <div className="relative pl-12 md:pl-0 md:text-right md:pr-12">
+                <div className="relative pl-10 sm:pl-12 md:pl-0 md:text-right md:pr-12">
                   <span className="absolute left-0 top-1 h-6 w-6 rounded-full border border-electric/60 bg-background md:left-auto md:right-[-13px] md:top-2">
                     <span className="absolute inset-1.5 rounded-full bg-electric" />
                   </span>
@@ -611,7 +611,7 @@ export function Process() {
                   </p>
                   <h3 className="mt-2 text-2xl font-semibold">{step.k}</h3>
                 </div>
-                <div className="pl-12 md:pl-12">
+                <div className="pl-10 sm:pl-12 md:pl-12">
                   <p className="max-w-md text-muted-foreground">{step.d}</p>
                 </div>
               </motion.div>
@@ -675,7 +675,7 @@ const team = [
 
 export function Team() {
   return (
-    <section className="relative border-t border-white/5 px-6 py-32 md:px-12">
+    <section className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Leadership</SectionLabel>
@@ -690,11 +690,11 @@ export function Team() {
               key={m.name}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.05 }}
-              className="glass-card glass-card-hover relative overflow-hidden rounded-3xl p-10"
+              className="glass-card glass-card-hover relative overflow-hidden rounded-3xl p-6 sm:p-10"
             >
               <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-electric/15 blur-[100px] transition-all duration-500 group-hover:bg-electric/25" />
               <div className="flex flex-col gap-6">
-                <div className="group/avatar relative aspect-square w-[55%] mx-auto p-4 rounded-2xl border border-electric/20 bg-surface/40 transition-all duration-300 hover:border-electric/50 hover:bg-surface/60">
+                <div className="group/avatar relative aspect-square w-[65%] sm:w-[55%] mx-auto p-3 sm:p-4 rounded-2xl border border-electric/20 bg-surface/40 transition-all duration-300 hover:border-electric/50 hover:bg-surface/60">
                   <div className="absolute inset-4 rounded-xl overflow-hidden bg-background transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]">
                     <img 
                       src={m.image} 
@@ -832,7 +832,7 @@ function StarRating({ rating }: { rating: number }) {
 
 export function Testimonials() {
   return (
-    <section id="reviews" className="relative border-t border-white/5 px-6 py-32 md:px-12">
+    <section id="reviews" className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Testimonials</SectionLabel>
@@ -865,7 +865,7 @@ export function Testimonials() {
               key={i}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.04 }}
-              className="glass-card glass-card-hover rounded-3xl p-8 md:p-10 flex flex-col"
+              className="glass-card glass-card-hover rounded-3xl p-6 sm:p-8 md:p-10 flex flex-col"
             >
               <StarRating rating={t.rating} />
               <blockquote className="mt-5 flex-1 text-base leading-relaxed text-foreground/90">
@@ -916,7 +916,7 @@ const posts = [
 
 export function Blog() {
   return (
-    <section id="insights" className="relative border-t border-white/5 px-6 py-32 md:px-12">
+    <section id="insights" className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Engineering Notes</SectionLabel>
@@ -937,7 +937,7 @@ export function Blog() {
                 to="/notes/$slug"
                 params={{ slug: p.slug }}
                 onClick={() => trackGAEvent('case_study_click', { button_text: p.title })}
-                className="block p-10 md:p-12 h-full w-full"
+                className="block p-6 sm:p-10 md:p-12 h-full w-full"
               >
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[11px] uppercase tracking-widest text-electric">
@@ -1008,7 +1008,7 @@ export function ProjectInquiry() {
   };
 
   return (
-    <section className="relative border-t border-white/5 px-6 py-32 md:px-12 overflow-hidden bg-background">
+    <section className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12 overflow-hidden bg-background">
       <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-12 lg:gap-24">
         <motion.div {...fadeUp}>
           <SectionLabel>Project Inquiry</SectionLabel>
@@ -1123,12 +1123,12 @@ function FooterLink({ href, children, ...props }: React.AnchorHTMLAttributes<HTM
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/5 bg-background pt-32 pb-12 px-6 md:px-12">
+    <footer className="border-t border-white/5 bg-background pt-20 md:pt-32 pb-12 px-4 sm:px-6 md:px-12">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-10 md:gap-16 md:grid-cols-2 lg:grid-cols-5 border-b border-white/5 pb-20">
           <div className="lg:col-span-2">
             <div className="flex flex-col items-start">
-              <img src="/logo.webp" alt="Zeploy Tech" width="120" height="48" className="h-12 w-auto mb-6" />
+              <img src="/logo.webp" alt="Zeploy Tech" width="48" height="48" className="h-12 w-12 object-contain aspect-square mb-6" />
               <h3 className="font-display text-2xl font-semibold tracking-widest text-foreground">
                 <span className="text-electric">ZEPLOY</span> TECH
               </h3>
@@ -1207,7 +1207,7 @@ export function Footer() {
 
 export function FounderMessage() {
   return (
-    <section className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-background">
+    <section className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12 bg-background">
       <div className="mx-auto max-w-4xl text-center">
         <motion.div {...fadeUp}>
           <SectionLabel>A Word from the Founder</SectionLabel>
@@ -1263,7 +1263,7 @@ export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="relative border-t border-white/5 px-6 py-32 md:px-12 bg-surface/20">
+    <section id="faq" className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12 bg-surface/20">
       <div className="mx-auto max-w-4xl">
         <motion.div {...fadeUp} className="text-center">
           <SectionLabel>FAQ</SectionLabel>
@@ -1277,7 +1277,7 @@ export function Faq() {
             <motion.div key={i} {...fadeUp} transition={{ delay: i * 0.05 }} className="glass-card rounded-2xl overflow-hidden">
               <button 
                 onClick={() => setOpen(open === i ? null : i)}
-                className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-electric rounded-xl"
+                className="w-full px-4 py-4 sm:px-6 sm:py-5 flex items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-electric rounded-xl"
                 aria-expanded={open === i}
                 aria-controls={`faq-answer-${i}`}
               >

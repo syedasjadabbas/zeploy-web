@@ -1,7 +1,18 @@
-import { useEffect, useRef, memo, useMemo } from "react";
+import { useEffect, useRef, memo, useMemo, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, Line, Grid } from "@react-three/drei";
 import * as THREE from "three";
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check, { passive: true });
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
 
 // Generate random points in a sphere for the network nodes
 const generatePoints = (count: number, radius: number) => {
@@ -45,6 +56,9 @@ function NodesCloud() {
 }
 
 const NetworkNodesBase = () => {
+  const isMobile = useIsMobile();
+  if (isMobile) return null;
+
   return (
     <div className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen">
       <Canvas camera={{ position: [0, 0, 2] }} gl={{ alpha: true, antialias: false }} dpr={[1, 1.5]} performance={{ min: 0.5 }}>
@@ -97,6 +111,9 @@ function FallingLines() {
 }
 
 const DataStreamsBase = () => {
+  const isMobile = useIsMobile();
+  if (isMobile) return null;
+
   return (
     <div className="absolute inset-0 z-0 pointer-events-none opacity-30 mix-blend-screen">
       <Canvas camera={{ position: [0, 0, 5] }} gl={{ alpha: true, antialias: false }} dpr={[1, 1.5]} performance={{ min: 0.5 }}>
@@ -107,6 +124,9 @@ const DataStreamsBase = () => {
 }
 
 const BlueprintGridBase = () => {
+  const isMobile = useIsMobile();
+  if (isMobile) return null;
+
   return (
     <div className="absolute inset-0 z-0 pointer-events-none opacity-20 mix-blend-screen overflow-hidden">
       <Canvas camera={{ position: [0, 2, 5], fov: 45 }} gl={{ alpha: true, antialias: false }} dpr={[1, 1.5]} performance={{ min: 0.5 }}>

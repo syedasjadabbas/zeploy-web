@@ -145,7 +145,7 @@ function BackToTop() {
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: visible ? 1 : 0, scale: visible ? 1 : 0.8, pointerEvents: visible ? "auto" : "none" }}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-surface/80 border border-electric/30 text-electric shadow-[0_0_20px_rgba(59,130,246,0.3)] backdrop-blur-md transition-all hover:bg-electric hover:text-white hover:scale-110 hover:shadow-[0_0_30px_rgba(59,130,246,0.6)]"
+      className="fixed bottom-6 right-4 sm:bottom-8 sm:right-8 z-50 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-surface/80 border border-electric/30 text-electric shadow-[0_0_20px_rgba(59,130,246,0.3)] backdrop-blur-md transition-all hover:bg-electric hover:text-white hover:scale-110 hover:shadow-[0_0_30px_rgba(59,130,246,0.6)]"
       aria-label="Back to top"
     >
       <ArrowUp className="h-5 w-5" />
@@ -214,7 +214,7 @@ function Hero() {
       <div className="absolute inset-0 grid-bg" />
       <div className="absolute left-1/2 top-1/3 -z-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-electric/20 blur-[160px]" />
 
-      <div className="mx-auto grid max-w-7xl gap-16 px-6 pb-32 pt-12 md:px-12 lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:pt-20">
+      <div className="mx-auto grid max-w-7xl gap-12 sm:gap-16 px-4 sm:px-6 pb-32 pt-12 md:px-12 lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:pt-20">
         <div className="relative z-10 flex flex-col justify-center">
           <motion.div
             initial={false}

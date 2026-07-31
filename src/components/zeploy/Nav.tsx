@@ -1,11 +1,26 @@
 import { useEffect, useState } from "react";
 import { Menu, X, Linkedin, Instagram, Facebook } from "lucide-react";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import { trackGAEvent } from "../../lib/analytics";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleBrandClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setMobileOpen(false);
+    if (location.pathname !== "/") {
+      navigate({ to: "/" }).then(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
     let ticking = false;
@@ -88,9 +103,21 @@ export default function Nav() {
         scrolled || mobileOpen ? "backdrop-blur-xl" : ""
       }`}
     >
-      <div className={`mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-12 ${scrolled || mobileOpen ? "border-b border-white/5" : ""}`}>
-        <a href="#" className="flex items-center gap-2 font-display text-base font-semibold tracking-tight">
-          <img src="/logo.webp" alt="Zeploy Tech Logo" fetchPriority="high" width="120" height="24" className="h-6 w-auto aspect-[5/1]" />
+      <div className={`mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-4 md:px-12 ${scrolled || mobileOpen ? "border-b border-white/5" : ""}`}>
+        <a
+          href="/"
+          onClick={handleBrandClick}
+          className="flex items-center gap-2.5 font-display text-base font-semibold tracking-tight cursor-pointer"
+          aria-label="Zeploy Tech Home"
+        >
+          <img
+            src="/logo.webp"
+            alt="Zeploy Tech Logo"
+            fetchPriority="high"
+            width="28"
+            height="28"
+            className="h-7 w-7 object-contain aspect-square shrink-0"
+          />
           <span><span className="text-electric">ZEPLOY</span> <span className="text-foreground">TECH</span></span>
         </a>
 
