@@ -34,6 +34,8 @@ import {
   ArrowLeft,
   ArrowRight
 } from "lucide-react";
+import { SafeComponentGuard } from "./SafeComponentGuard";
+
 function DesktopOnly3D({ load }: { load: () => Promise<{ default: React.ComponentType }> }) {
   const [Comp, setComp] = useState<React.ComponentType | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -73,7 +75,15 @@ function DesktopOnly3D({ load }: { load: () => Promise<{ default: React.Componen
     };
   }, []);
 
-  return <div ref={containerRef} className="relative min-h-[1px] w-full">{Comp && <Comp />}</div>;
+  return (
+    <div ref={containerRef} className="relative min-h-[1px] w-full">
+      {Comp && (
+        <SafeComponentGuard name="Desktop3D">
+          <Comp />
+        </SafeComponentGuard>
+      )}
+    </div>
+  );
 }
 
 import imgAsjad from "@/assets/images/asjad.webp";

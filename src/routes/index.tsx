@@ -5,6 +5,7 @@ import { trackGAEvent } from "../lib/analytics";
 
 import { ArrowUpRight, ArrowUp } from "lucide-react";
 import Nav from "@/components/zeploy/Nav";
+import { SafeComponentGuard } from "@/components/zeploy/SafeComponentGuard";
 import {
   Services,
   FeaturedWork,
@@ -117,19 +118,25 @@ function ClientHeroScene() {
     }
   }, []);
 
+  const fallback = (
+    <div className="h-full w-full rounded-3xl bg-[#020817] border border-white/5 relative overflow-hidden flex items-center justify-center">
+      <div className="absolute w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-600/15 via-[#020817]/80 to-[#020817] animate-[pulse_4s_ease-in-out_infinite]" />
+      <div className="absolute w-32 h-32 rounded-full bg-blue-500/10 blur-3xl animate-[pulse_3s_ease-in-out_infinite]" />
+      <div className="font-display text-5xl font-bold text-white z-10 opacity-80" style={{ textShadow: "0 0 20px rgba(59,130,246,0.5)" }}>Z</div>
+    </div>
+  );
+
   if (!mounted) return <div className="h-full w-full rounded-3xl bg-surface/30" />;
 
   if (isMobile || !HeroComponent) {
-    return (
-      <div className="h-full w-full rounded-3xl bg-[#020817] border border-white/5 relative overflow-hidden flex items-center justify-center">
-        <div className="absolute w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-600/15 via-[#020817]/80 to-[#020817] animate-[pulse_4s_ease-in-out_infinite]" />
-        <div className="absolute w-32 h-32 rounded-full bg-blue-500/10 blur-3xl animate-[pulse_3s_ease-in-out_infinite]" />
-        <div className="font-display text-5xl font-bold text-white z-10 opacity-80" style={{ textShadow: "0 0 20px rgba(59,130,246,0.5)" }}>Z</div>
-      </div>
-    );
+    return fallback;
   }
 
-  return <HeroComponent />;
+  return (
+    <SafeComponentGuard name="HeroScene" fallback={fallback}>
+      <HeroComponent />
+    </SafeComponentGuard>
+  );
 }
 
 function BackToTop() {

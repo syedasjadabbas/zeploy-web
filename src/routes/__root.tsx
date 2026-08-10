@@ -13,6 +13,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import Analytics from "../components/zeploy/Analytics";
+import { SafeComponentGuard } from "../components/zeploy/SafeComponentGuard";
 
 
 function NotFoundComponent() {
@@ -178,7 +179,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Analytics />
+      <SafeComponentGuard name="Analytics">
+        <Analytics />
+      </SafeComponentGuard>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
     </QueryClientProvider>
