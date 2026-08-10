@@ -1,12 +1,44 @@
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Text, MeshDistortMaterial, Sphere, Torus } from "@react-three/drei";
+import { Float, MeshDistortMaterial, Sphere, Torus } from "@react-three/drei";
 import { Suspense, useMemo, useRef, useState, memo } from "react";
 import * as THREE from "three";
 
-// 1. Central Z Logo
+// 1. Central 3D Z Logo
 function CoreLogo({ hovered }: { hovered: boolean }) {
   const zRef = useRef<THREE.Group>(null);
-  
+
+  const geometry = useMemo(() => {
+    const shape = new THREE.Shape();
+    const w = 0.85;
+    const h = 1.05;
+    const t = 0.36;
+
+    shape.moveTo(-w, h);
+    shape.lineTo(w, h);
+    shape.lineTo(w, h - t);
+    shape.lineTo(-w + t * 1.15, -h + t);
+    shape.lineTo(w, -h + t);
+    shape.lineTo(w, -h);
+    shape.lineTo(-w, -h);
+    shape.lineTo(-w, -h + t);
+    shape.lineTo(w - t * 1.15, h - t);
+    shape.lineTo(-w, h - t);
+    shape.closePath();
+
+    const extrudeSettings = {
+      depth: 0.35,
+      bevelEnabled: true,
+      bevelSegments: 4,
+      steps: 1,
+      bevelSize: 0.04,
+      bevelThickness: 0.04,
+    };
+
+    const geom = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+    geom.center();
+    return geom;
+  }, []);
+
   useFrame((_, dt) => {
     if (zRef.current) {
       zRef.current.rotation.y -= dt * (hovered ? 0.8 : 0.2);
@@ -14,16 +46,17 @@ function CoreLogo({ hovered }: { hovered: boolean }) {
   });
 
   return (
-    <group ref={zRef}>
-      <Text
-        fontSize={2.5}
-        fontWeight="bold"
-        color="#ffffff"
-        position={[0, 0, 2.2]}
-      >
-        Z
-        <meshStandardMaterial color="#ffffff" emissive="#3B82F6" emissiveIntensity={hovered ? 6 : 2} toneMapped={false} />
-      </Text>
+    <group ref={zRef} position={[0, 0, 2.2]}>
+      <mesh geometry={geometry}>
+        <meshStandardMaterial
+          color="#ffffff"
+          emissive="#3B82F6"
+          emissiveIntensity={hovered ? 4 : 1.8}
+          metalness={0.9}
+          roughness={0.1}
+          toneMapped={false}
+        />
+      </mesh>
     </group>
   );
 }
