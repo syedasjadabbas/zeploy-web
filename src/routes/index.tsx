@@ -86,11 +86,15 @@ function ClientHeroScene() {
 
   useEffect(() => {
     let isMounted = true;
+    console.error("[DIAGNOSTIC] ClientHeroScene useEffect mounted. window.innerWidth:", typeof window !== "undefined" ? window.innerWidth : "undefined");
+    console.error("[DIAGNOSTIC] import('@/components/zeploy/HeroScene') STARTED");
+
     import("@/components/zeploy/HeroScene")
       .then((m) => {
+        console.error("[DIAGNOSTIC] import('@/components/zeploy/HeroScene') RESOLVED:", m?.default ? "default export exists" : m);
         if (isMounted) setHeroComponent(() => m.default);
       })
-      .catch((err) => console.error("Failed to load HeroScene:", err));
+      .catch((err) => console.error("[DIAGNOSTIC] Failed to load HeroScene:", err?.message, err?.stack, err));
 
     return () => {
       isMounted = false;
@@ -106,9 +110,11 @@ function ClientHeroScene() {
   );
 
   if (!HeroComponent) {
+    console.error("[DIAGNOSTIC] ClientHeroScene: HeroComponent is null, rendering fallback");
     return fallback;
   }
 
+  console.error("[DIAGNOSTIC] ClientHeroScene: HeroComponent is loaded, rendering inside SafeComponentGuard");
   return (
     <SafeComponentGuard name="HeroScene" fallback={fallback}>
       <HeroComponent />

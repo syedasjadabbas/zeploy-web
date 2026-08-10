@@ -43,25 +43,36 @@ function DesktopOnly3D({ load }: { load: () => Promise<{ default: React.Componen
   loadRef.current = load;
 
   useEffect(() => {
-    if (typeof window === "undefined" || window.innerWidth < 768) return;
+    const width = typeof window !== "undefined" ? window.innerWidth : 0;
+    console.error("[DIAGNOSTIC] DesktopOnly3D useEffect executed. window.innerWidth:", width);
+    if (typeof window === "undefined" || width < 768) {
+      console.error("[DIAGNOSTIC] DesktopOnly3D skipped because width < 768 or server:", width);
+      return;
+    }
     const el = containerRef.current;
     if (!el || !("IntersectionObserver" in window)) {
-      // Fallback if IntersectionObserver is missing
+      console.error("[DIAGNOSTIC] DesktopOnly3D fallback load starting (no observer or ref missing)");
       loadRef.current()
-        .then((m) => setComp(() => m.default))
-        .catch((err) => console.error("Desktop3D fallback load error:", err));
+        .then((m) => {
+          console.error("[DIAGNOSTIC] DesktopOnly3D fallback load RESOLVED:", m);
+          setComp(() => m.default);
+        })
+        .catch((err) => console.error("[DIAGNOSTIC] Desktop3D fallback load error:", err?.message, err));
       return;
     }
 
     let isMounted = true;
     const observer = new IntersectionObserver(
       ([entry]) => {
+        console.error("[DIAGNOSTIC] DesktopOnly3D IntersectionObserver trigger. isIntersecting:", entry.isIntersecting);
         if (entry.isIntersecting) {
+          console.error("[DIAGNOSTIC] DesktopOnly3D dynamic import STARTING...");
           loadRef.current()
             .then((m) => {
+              console.error("[DIAGNOSTIC] DesktopOnly3D dynamic import RESOLVED:", m);
               if (isMounted) setComp(() => m.default);
             })
-            .catch((err) => console.error("Desktop3D load error:", err));
+            .catch((err) => console.error("[DIAGNOSTIC] Desktop3D load error:", err?.message, err));
           observer.disconnect();
         }
       },
