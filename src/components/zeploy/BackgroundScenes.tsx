@@ -14,6 +14,23 @@ function useIsMobile() {
   return isMobile;
 }
 
+function useIsVisible(ref: React.RefObject<HTMLDivElement | null>) {
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [ref]);
+  return isVisible;
+}
+
 // Generate random points in a sphere for the network nodes
 const generatePoints = (count: number, radius: number) => {
   const positions = new Float32Array(count * 3);
@@ -57,11 +74,20 @@ function NodesCloud() {
 
 const NetworkNodesBase = () => {
   const isMobile = useIsMobile();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isVisible = useIsVisible(containerRef);
+
   if (isMobile) return null;
 
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen">
-      <Canvas camera={{ position: [0, 0, 2] }} gl={{ alpha: true, antialias: false }} dpr={[1, 1.5]} performance={{ min: 0.5 }}>
+    <div ref={containerRef} className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen">
+      <Canvas
+        camera={{ position: [0, 0, 2] }}
+        gl={{ alpha: true, antialias: false }}
+        dpr={[1, 1.5]}
+        performance={{ min: 0.5 }}
+        frameloop={isVisible ? "always" : "never"}
+      >
         <NodesCloud />
       </Canvas>
     </div>
@@ -112,11 +138,20 @@ function FallingLines() {
 
 const DataStreamsBase = () => {
   const isMobile = useIsMobile();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isVisible = useIsVisible(containerRef);
+
   if (isMobile) return null;
 
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none opacity-30 mix-blend-screen">
-      <Canvas camera={{ position: [0, 0, 5] }} gl={{ alpha: true, antialias: false }} dpr={[1, 1.5]} performance={{ min: 0.5 }}>
+    <div ref={containerRef} className="absolute inset-0 z-0 pointer-events-none opacity-30 mix-blend-screen">
+      <Canvas
+        camera={{ position: [0, 0, 5] }}
+        gl={{ alpha: true, antialias: false }}
+        dpr={[1, 1.5]}
+        performance={{ min: 0.5 }}
+        frameloop={isVisible ? "always" : "never"}
+      >
         <FallingLines />
       </Canvas>
     </div>
@@ -125,11 +160,20 @@ const DataStreamsBase = () => {
 
 const BlueprintGridBase = () => {
   const isMobile = useIsMobile();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isVisible = useIsVisible(containerRef);
+
   if (isMobile) return null;
 
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none opacity-20 mix-blend-screen overflow-hidden">
-      <Canvas camera={{ position: [0, 2, 5], fov: 45 }} gl={{ alpha: true, antialias: false }} dpr={[1, 1.5]} performance={{ min: 0.5 }}>
+    <div ref={containerRef} className="absolute inset-0 z-0 pointer-events-none opacity-20 mix-blend-screen overflow-hidden">
+      <Canvas
+        camera={{ position: [0, 2, 5], fov: 45 }}
+        gl={{ alpha: true, antialias: false }}
+        dpr={[1, 1.5]}
+        performance={{ min: 0.5 }}
+        frameloop={isVisible ? "always" : "never"}
+      >
         <color attach="background" args={["transparent"]} />
         <ambientLight intensity={0.5} />
         <Grid

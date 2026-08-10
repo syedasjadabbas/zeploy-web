@@ -151,36 +151,56 @@ function Particles({ hovered }: { hovered: boolean }) {
 
 const HeroScene = () => {
   const [hovered, setHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <Canvas
-      camera={{ position: [0, 0, 9], fov: 45 }}
-      dpr={[1, 1.5]}
-      performance={{ min: 0.5 }}
-      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-    >
-      <Suspense fallback={null}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={3} color="#ffffff" />
-        <pointLight position={[-10, -10, -5]} intensity={2} color="#3B82F6" />
-        
-        {/* Interaction Mesh */}
-        <mesh 
-          onPointerOver={() => setHovered(true)} 
-          onPointerOut={() => setHovered(false)}
-        >
-          <sphereGeometry args={[4, 32, 32]} />
-          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-        </mesh>
+    <div ref={containerRef} className="h-full w-full">
+      <Canvas
+        camera={{ position: [0, 0, 9], fov: 45 }}
+        dpr={[1, 1.5]}
+        performance={{ min: 0.5 }}
+        frameloop={isVisible ? "always" : "never"}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+      >
+        <Suspense fallback={null}>
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[10, 10, 5]} intensity={3} color="#ffffff" />
+          <pointLight position={[-10, -10, -5]} intensity={2} color="#3B82F6" />
+          
+          {/* Interaction Mesh */}
+          <mesh 
+            onPointerOver={() => setHovered(true)} 
+            onPointerOut={() => setHovered(false)}
+          >
+            <sphereGeometry args={[4, 32, 32]} />
+            <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+          </mesh>
 
-        <Float speed={2} rotationIntensity={0.8} floatIntensity={1}>
-          <CoreLogo hovered={hovered} />
-          <LiquidCore hovered={hovered} />
-          <EnergyRings hovered={hovered} />
-        </Float>
-        <Particles hovered={hovered} />
-      </Suspense>
-    </Canvas>
+          <Float speed={2} rotationIntensity={0.8} floatIntensity={1}>
+            <CoreLogo hovered={hovered} />
+            <LiquidCore hovered={hovered} />
+            <EnergyRings hovered={hovered} />
+          </Float>
+          <Particles hovered={hovered} />
+        </Suspense>
+      </Canvas>
+    </div>
   );
 };
 

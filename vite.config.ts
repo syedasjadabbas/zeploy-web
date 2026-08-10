@@ -9,9 +9,13 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 export default defineConfig({
   nitro: {
     preset: "vercel",
+    prerender: {
+      routes: ["/"],
+      crawlLinks: true,
+    },
     routeRules: {
-      "/": { isr: 3600, headers: { "cache-control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400" } },
-      "/notes/**": { isr: 3600, headers: { "cache-control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400" } },
+      "/": { prerender: true, isr: 3600 },
+      "/notes/**": { isr: 3600 },
     },
   },
   tanstackStart: {

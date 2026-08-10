@@ -36,15 +36,36 @@ import {
 } from "lucide-react";
 function DesktopOnly3D({ load }: { load: () => Promise<{ default: React.ComponentType }> }) {
   const [Comp, setComp] = useState<React.ComponentType | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const loadRef = useRef(load);
+  loadRef.current = load;
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.innerWidth >= 768) {
-      load().then((m) => setComp(() => m.default));
-    }
-  }, [load]);
+    if (typeof window === "undefined" || window.innerWidth < 768) return;
+    const el = containerRef.current;
+    if (!el) return;
 
-  if (!Comp) return null;
-  return <Comp />;
+    let isMounted = true;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          loadRef.current().then((m) => {
+            if (isMounted) setComp(() => m.default);
+          });
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px 0px" }
+    );
+
+    observer.observe(el);
+    return () => {
+      isMounted = false;
+      observer.disconnect();
+    };
+  }, []);
+
+  return <div ref={containerRef} className="contents">{Comp && <Comp />}</div>;
 }
 
 import imgAsjad from "@/assets/images/asjad.webp";
@@ -231,7 +252,7 @@ export function FeaturedWork() {
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
+  const isDraggingRef = useRef(false);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -244,8 +265,8 @@ export function FeaturedWork() {
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
 
-    const onPointerDown = () => setIsDragging(true);
-    const onPointerUp = () => setIsDragging(false);
+    const onPointerDown = () => { isDraggingRef.current = true; };
+    const onPointerUp = () => { isDraggingRef.current = false; };
 
     emblaApi.on("pointerDown", onPointerDown);
     emblaApi.on("pointerUp", onPointerUp);
@@ -264,7 +285,7 @@ export function FeaturedWork() {
 
     const startAutoplay = () => {
       intervalId = setInterval(() => {
-        if (!isHovered && !isDragging) {
+        if (!isHovered && !isDraggingRef.current) {
           emblaApi.scrollNext();
         }
       }, 7000);
@@ -281,7 +302,7 @@ export function FeaturedWork() {
     return () => {
       stopAutoplay();
     };
-  }, [emblaApi, isHovered, isDragging]);
+  }, [emblaApi, isHovered]);
 
   const prevSlide = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -307,9 +328,7 @@ export function FeaturedWork() {
 
         {/* Embla Viewport */}
         <div 
-          className={`overflow-hidden w-full px-0 select-none ${
-            isDragging ? "cursor-grabbing" : "cursor-grab"
-          }`}
+          className="overflow-hidden w-full px-0 select-none cursor-grab active:cursor-grabbing"
           style={{ touchAction: "pan-y" }}
           ref={emblaRef}
           onMouseEnter={() => setIsHovered(true)}

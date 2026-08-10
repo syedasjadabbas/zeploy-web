@@ -91,9 +91,21 @@ function ClientHeroScene() {
     setIsMobile(mobile);
 
     if (!mobile) {
-      import("@/components/zeploy/HeroScene").then((m) => {
-        setHeroComponent(() => m.default);
+      const schedule = typeof window !== 'undefined' && 'requestIdleCallback' in window
+        ? (cb: () => void) => window.requestIdleCallback(cb, { timeout: 1000 })
+        : (cb: () => void) => setTimeout(cb, 100);
+
+      const timer = schedule(() => {
+        import("@/components/zeploy/HeroScene").then((m) => {
+          setHeroComponent(() => m.default);
+        });
       });
+
+      return () => {
+        if (typeof window !== 'undefined' && 'cancelIdleCallback' in window && typeof timer === 'number') {
+          window.cancelIdleCallback(timer);
+        }
+      };
     }
   }, []);
 
@@ -115,8 +127,16 @@ function ClientHeroScene() {
 function BackToTop() {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setVisible(window.scrollY > 500);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const isPast = window.scrollY > 500;
+          setVisible((prev) => (prev !== isPast ? isPast : prev));
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
