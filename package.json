@@ -4,9 +4,10 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "prebuild": "node -e \"try{fs.rmSync('.vercel',{recursive:true,force:true})}catch(e){}\"",
+    "clean": "node -e \"['dist','.vercel','.tanstack','.output','.nitro'].forEach(d=>{try{fs.rmSync(d,{recursive:true,force:true})}catch(e){}})\"",
+    "prebuild": "npm run clean",
     "dev": "node node_modules/vite/bin/vite.js dev",
-    "build": "node node_modules/vite/bin/vite.js build",
+    "build": "node node_modules/vite/bin/vite.js build && node scripts/verify-build.js",
     "build:dev": "node node_modules/vite/bin/vite.js build --mode development",
     "preview": "node node_modules/vite/bin/vite.js preview",
     "lint": "eslint .",
