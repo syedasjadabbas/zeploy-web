@@ -9,9 +9,9 @@ function CoreLogo({ hovered }: { hovered: boolean }) {
 
   const geometry = useMemo(() => {
     const shape = new THREE.Shape();
-    const w = 0.85;
-    const h = 1.05;
-    const t = 0.36;
+    const w = 0.9;
+    const h = 1.1;
+    const t = 0.38;
 
     shape.moveTo(-w, h);
     shape.lineTo(w, h);
@@ -26,12 +26,12 @@ function CoreLogo({ hovered }: { hovered: boolean }) {
     shape.closePath();
 
     const extrudeSettings = {
-      depth: 0.35,
+      depth: 0.4,
       bevelEnabled: true,
-      bevelSegments: 4,
+      bevelSegments: 5,
       steps: 1,
-      bevelSize: 0.04,
-      bevelThickness: 0.04,
+      bevelSize: 0.05,
+      bevelThickness: 0.05,
     };
 
     const geom = new THREE.ExtrudeGeometry(shape, extrudeSettings);
@@ -41,19 +41,19 @@ function CoreLogo({ hovered }: { hovered: boolean }) {
 
   useFrame((_, dt) => {
     if (zRef.current) {
-      zRef.current.rotation.y -= dt * (hovered ? 0.8 : 0.2);
+      zRef.current.rotation.y -= dt * (hovered ? 0.8 : 0.25);
     }
   });
 
   return (
-    <group ref={zRef} position={[0, 0, 2.2]}>
+    <group ref={zRef} position={[0, 0, 2.6]} scale={1.4}>
       <mesh geometry={geometry}>
         <meshStandardMaterial
           color="#ffffff"
-          emissive="#3B82F6"
-          emissiveIntensity={hovered ? 4 : 1.8}
-          metalness={0.9}
-          roughness={0.1}
+          emissive="#60A5FA"
+          emissiveIntensity={hovered ? 6 : 3.5}
+          metalness={0.95}
+          roughness={0.05}
           toneMapped={false}
         />
       </mesh>
@@ -212,8 +212,9 @@ const HeroScene = () => {
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={0.5} />
+          <ambientLight intensity={0.8} />
           <directionalLight position={[10, 10, 5]} intensity={3} color="#ffffff" />
+          <pointLight position={[0, 0, 8]} intensity={6} color="#60A5FA" />
           <pointLight position={[-10, -10, -5]} intensity={2} color="#3B82F6" />
           
           {/* Interaction Mesh */}

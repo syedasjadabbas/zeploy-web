@@ -83,26 +83,18 @@ function AnimatedCounter({ from, to, duration, suffix = "" }: { from: number; to
 
 function ClientHeroScene() {
   const [HeroComponent, setHeroComponent] = useState<React.ComponentType | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    const mobile = window.innerWidth < 768;
-    setIsMobile(mobile);
+    let isMounted = true;
+    import("@/components/zeploy/HeroScene")
+      .then((m) => {
+        if (isMounted) setHeroComponent(() => m.default);
+      })
+      .catch((err) => console.error("Failed to load HeroScene:", err));
 
-    if (!mobile) {
-      let isMounted = true;
-      import("@/components/zeploy/HeroScene")
-        .then((m) => {
-          if (isMounted) setHeroComponent(() => m.default);
-        })
-        .catch((err) => console.error("Failed to load HeroScene:", err));
-
-      return () => {
-        isMounted = false;
-      };
-    }
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const fallback = (
@@ -113,9 +105,7 @@ function ClientHeroScene() {
     </div>
   );
 
-  if (!mounted) return <div className="h-full w-full rounded-3xl bg-surface/30" />;
-
-  if (isMobile || !HeroComponent) {
+  if (!HeroComponent) {
     return fallback;
   }
 

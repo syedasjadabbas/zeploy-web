@@ -43,7 +43,7 @@ function DesktopOnly3D({ load }: { load: () => Promise<{ default: React.Componen
   loadRef.current = load;
 
   useEffect(() => {
-    if (typeof window === "undefined" || window.innerWidth < 768) return;
+    if (typeof window === "undefined") return;
     const el = containerRef.current;
     if (!el || !("IntersectionObserver" in window)) {
       // Fallback if IntersectionObserver is missing
