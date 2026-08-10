@@ -14,7 +14,7 @@ export default defineConfig({
       crawlLinks: true,
     },
     routeRules: {
-      "/": { prerender: true, isr: 3600 },
+      "/": { prerender: true },
       "/notes/**": { isr: 3600 },
     },
   },

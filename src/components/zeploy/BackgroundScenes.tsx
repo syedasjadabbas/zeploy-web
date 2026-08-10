@@ -15,10 +15,10 @@ function useIsMobile() {
 }
 
 function useIsVisible(ref: React.RefObject<HTMLDivElement | null>) {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || typeof window === "undefined" || !("IntersectionObserver" in window)) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);

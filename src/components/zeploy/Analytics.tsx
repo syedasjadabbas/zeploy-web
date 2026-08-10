@@ -54,18 +54,20 @@ export default function Analytics() {
       })(window, document, "clarity", "script", CLARITY_PROJECT_ID);
     };
 
-    const schedule = typeof window !== 'undefined' && 'requestIdleCallback' in window
-      ? (cb: () => void) => window.requestIdleCallback(cb, { timeout: 3000 })
-      : (cb: () => void) => setTimeout(cb, 2000);
+    let cancelTimer: (() => void) | undefined;
 
-    const timer = schedule(() => {
-      loadAnalytics();
-    });
+    if (typeof window !== 'undefined') {
+      if ('requestIdleCallback' in window) {
+        const handle = window.requestIdleCallback(() => loadAnalytics(), { timeout: 3000 });
+        cancelTimer = () => window.cancelIdleCallback(handle);
+      } else {
+        const handle = setTimeout(() => loadAnalytics(), 2000);
+        cancelTimer = () => clearTimeout(handle);
+      }
+    }
 
     return () => {
-      if (typeof window !== 'undefined' && 'cancelIdleCallback' in window && typeof timer === 'number') {
-        window.cancelIdleCallback(timer);
-      }
+      if (cancelTimer) cancelTimer();
     };
   }, []);
 

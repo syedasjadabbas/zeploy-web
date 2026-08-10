@@ -43,15 +43,23 @@ function DesktopOnly3D({ load }: { load: () => Promise<{ default: React.Componen
   useEffect(() => {
     if (typeof window === "undefined" || window.innerWidth < 768) return;
     const el = containerRef.current;
-    if (!el) return;
+    if (!el || !("IntersectionObserver" in window)) {
+      // Fallback if IntersectionObserver is missing
+      loadRef.current()
+        .then((m) => setComp(() => m.default))
+        .catch((err) => console.error("Desktop3D fallback load error:", err));
+      return;
+    }
 
     let isMounted = true;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          loadRef.current().then((m) => {
-            if (isMounted) setComp(() => m.default);
-          });
+          loadRef.current()
+            .then((m) => {
+              if (isMounted) setComp(() => m.default);
+            })
+            .catch((err) => console.error("Desktop3D load error:", err));
           observer.disconnect();
         }
       },
@@ -65,7 +73,7 @@ function DesktopOnly3D({ load }: { load: () => Promise<{ default: React.Componen
     };
   }, []);
 
-  return <div ref={containerRef} className="contents">{Comp && <Comp />}</div>;
+  return <div ref={containerRef} className="relative min-h-[1px] w-full">{Comp && <Comp />}</div>;
 }
 
 import imgAsjad from "@/assets/images/asjad.webp";
