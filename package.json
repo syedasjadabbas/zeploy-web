@@ -4,6 +4,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
+    "prebuild": "node -e \"try{fs.rmSync('.vercel',{recursive:true,force:true})}catch(e){}\"",
     "dev": "node node_modules/vite/bin/vite.js dev",
     "build": "node node_modules/vite/bin/vite.js build",
     "build:dev": "node node_modules/vite/bin/vite.js build --mode development",
