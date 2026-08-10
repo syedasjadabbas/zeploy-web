@@ -1,4 +1,4 @@
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float, MeshDistortMaterial, Sphere, Torus } from "@react-three/drei";
 import { Suspense, useMemo, useRef, useState, useEffect, memo } from "react";
 import * as THREE from "three";
@@ -9,9 +9,9 @@ function CoreLogo({ hovered }: { hovered: boolean }) {
 
   const geometry = useMemo(() => {
     const shape = new THREE.Shape();
-    const w = 0.9;
-    const h = 1.1;
-    const t = 0.38;
+    const w = 0.82;
+    const h = 1.0;
+    const t = 0.35;
 
     shape.moveTo(-w, h);
     shape.lineTo(w, h);
@@ -26,12 +26,12 @@ function CoreLogo({ hovered }: { hovered: boolean }) {
     shape.closePath();
 
     const extrudeSettings = {
-      depth: 0.4,
+      depth: 0.35,
       bevelEnabled: true,
-      bevelSegments: 5,
+      bevelSegments: 4,
       steps: 1,
-      bevelSize: 0.05,
-      bevelThickness: 0.05,
+      bevelSize: 0.04,
+      bevelThickness: 0.04,
     };
 
     const geom = new THREE.ExtrudeGeometry(shape, extrudeSettings);
@@ -46,12 +46,12 @@ function CoreLogo({ hovered }: { hovered: boolean }) {
   });
 
   return (
-    <group ref={zRef} position={[0, 0, 2.6]} scale={1.4}>
+    <group ref={zRef} position={[0, 0, 1.8]} scale={0.95}>
       <mesh geometry={geometry}>
         <meshStandardMaterial
           color="#ffffff"
           emissive="#60A5FA"
-          emissiveIntensity={hovered ? 6 : 3.5}
+          emissiveIntensity={hovered ? 5 : 3.0}
           metalness={0.95}
           roughness={0.05}
           toneMapped={false}
@@ -182,6 +182,27 @@ function Particles({ hovered }: { hovered: boolean }) {
   );
 }
 
+function ResponsiveScene({ hovered }: { hovered: boolean }) {
+  const { viewport } = useThree();
+
+  const responsiveScale = useMemo(() => {
+    const minBound = Math.min(viewport.width, viewport.height);
+    const factor = minBound / 7.2;
+    return Math.min(Math.max(factor, 0.45), 1.0);
+  }, [viewport.width, viewport.height]);
+
+  return (
+    <group scale={responsiveScale}>
+      <Float speed={2} rotationIntensity={0.8} floatIntensity={1}>
+        <CoreLogo hovered={hovered} />
+        <LiquidCore hovered={hovered} />
+        <EnergyRings hovered={hovered} />
+      </Float>
+      <Particles hovered={hovered} />
+    </group>
+  );
+}
+
 const HeroScene = () => {
   const [hovered, setHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -226,12 +247,7 @@ const HeroScene = () => {
             <meshBasicMaterial transparent opacity={0} depthWrite={false} />
           </mesh>
 
-          <Float speed={2} rotationIntensity={0.8} floatIntensity={1}>
-            <CoreLogo hovered={hovered} />
-            <LiquidCore hovered={hovered} />
-            <EnergyRings hovered={hovered} />
-          </Float>
-          <Particles hovered={hovered} />
+          <ResponsiveScene hovered={hovered} />
         </Suspense>
       </Canvas>
     </div>
