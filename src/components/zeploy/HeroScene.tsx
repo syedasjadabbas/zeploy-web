@@ -1,6 +1,6 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, MeshDistortMaterial, Sphere, Torus } from "@react-three/drei";
-import { Suspense, useMemo, useRef, useState, memo } from "react";
+import { Suspense, useMemo, useRef, useState, useEffect, memo } from "react";
 import * as THREE from "three";
 
 // 1. Central 3D Z Logo

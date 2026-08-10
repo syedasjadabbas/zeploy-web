@@ -174,7 +174,6 @@ const BlueprintGridBase = () => {
         performance={{ min: 0.5 }}
         frameloop={isVisible ? "always" : "never"}
       >
-        <color attach="background" args={["transparent"]} />
         <ambientLight intensity={0.5} />
         <Grid
           position={[0, -1, 0]}

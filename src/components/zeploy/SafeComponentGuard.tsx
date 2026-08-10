@@ -21,8 +21,8 @@ export class SafeComponentGuard extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.warn(
-      `[SafeComponentGuard] Suppressed non-critical component error in ${
+    console.error(
+      `[SafeComponentGuard] Component error in ${
         this.props.name || "optional feature"
       }:`,
       error,

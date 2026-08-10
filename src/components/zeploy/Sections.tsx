@@ -43,7 +43,7 @@ function DesktopOnly3D({ load }: { load: () => Promise<{ default: React.Componen
   loadRef.current = load;
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || window.innerWidth < 768) return;
     const el = containerRef.current;
     if (!el || !("IntersectionObserver" in window)) {
       // Fallback if IntersectionObserver is missing
@@ -76,7 +76,7 @@ function DesktopOnly3D({ load }: { load: () => Promise<{ default: React.Componen
   }, []);
 
   return (
-    <div ref={containerRef} className="relative min-h-[1px] w-full">
+    <div ref={containerRef} className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
       {Comp && (
         <SafeComponentGuard name="Desktop3D">
           <Comp />
@@ -513,7 +513,8 @@ const reasons = [
 export function WhyChoose() {
   return (
     <section className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12">
-      <div className="mx-auto max-w-7xl">
+      <DesktopOnly3D load={() => import("./BackgroundScenes").then(m => ({ default: m.NetworkNodes }))} />
+      <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Why Teams Choose Zeploy</SectionLabel>
           <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
