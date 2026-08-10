@@ -92,28 +92,15 @@ function ClientHeroScene() {
     setIsMobile(mobile);
 
     if (!mobile) {
-      let cancelTimer: (() => void) | undefined;
       let isMounted = true;
-
-      const loadHero = () => {
-        import("@/components/zeploy/HeroScene")
-          .then((m) => {
-            if (isMounted) setHeroComponent(() => m.default);
-          })
-          .catch((err) => console.error("Failed to load HeroScene:", err));
-      };
-
-      if (typeof window !== "undefined" && "requestIdleCallback" in window) {
-        const handle = window.requestIdleCallback(loadHero, { timeout: 1000 });
-        cancelTimer = () => window.cancelIdleCallback(handle);
-      } else {
-        const handle = setTimeout(loadHero, 100);
-        cancelTimer = () => clearTimeout(handle);
-      }
+      import("@/components/zeploy/HeroScene")
+        .then((m) => {
+          if (isMounted) setHeroComponent(() => m.default);
+        })
+        .catch((err) => console.error("Failed to load HeroScene:", err));
 
       return () => {
         isMounted = false;
-        if (cancelTimer) cancelTimer();
       };
     }
   }, []);
