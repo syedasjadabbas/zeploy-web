@@ -23,7 +23,7 @@ function useIsVisible(ref: React.RefObject<HTMLDivElement | null>) {
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.05 }
+      { threshold: 0, rootMargin: "200px 0px" }
     );
     observer.observe(el);
     return () => observer.disconnect();

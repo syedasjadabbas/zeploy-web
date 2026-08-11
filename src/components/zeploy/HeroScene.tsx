@@ -216,7 +216,7 @@ const HeroScene = () => {
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.05 }
+      { threshold: 0, rootMargin: "200px 0px" }
     );
 
     observer.observe(el);

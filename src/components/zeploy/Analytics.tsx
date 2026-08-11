@@ -76,11 +76,12 @@ export default function Analytics() {
     if (typeof window === 'undefined') return;
 
     if (window.gtag) {
+      const search = (location as any).searchStr ?? window.location.search ?? '';
       window.gtag('config', GA_MEASUREMENT_ID, {
-        page_path: location.pathname + location.search,
+        page_path: location.pathname + search,
       });
     }
-  }, [location.pathname, location.search]);
+  }, [location.pathname, (location as any).searchStr]);
 
   return null;
 }
