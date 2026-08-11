@@ -267,6 +267,60 @@ const work = [
     features: ["Live Geographic Maps", "Anomaly Detection", "Custom Aggregations", "Role-based Access"],
     outcomes: ["Achieved sub-second real-time latency", "Scaled to process 1M+ events per minute"],
     image: "/projects/synthwave.webp"
+  },
+  {
+    name: "PulseFit ERP",
+    kind: "SaaS · Fitness Management",
+    desc: "Comprehensive gym management platform handling member subscriptions, trainer scheduling, automated check-in access control, and revenue analytics for modern fitness centers.",
+    tech: ["React", "Node.js", "PostgreSQL", "Tailwind", "Stripe"],
+    features: ["Member Portal", "Automated Billing", "Class Scheduling", "Attendance Tracking", "Financial Reports"],
+    outcomes: ["Increased member retention by 35%", "Automated 85% of check-in operations"],
+    image: "/projects/gym-management-system.webp"
+  },
+  {
+    name: "TuneBox Studio",
+    kind: "Web Application · Audio Streaming",
+    desc: "Low-latency audio streaming and collaboration suite empowering music producers to share stems, sync tracks in real-time, and manage studio production workflow.",
+    tech: ["React", "WebAudio API", "TypeScript", "Node.js", "AWS S3"],
+    features: ["Multi-track Player", "Real-time Waveforms", "Stem Separation", "Cloud Storage", "Collaboration Tools"],
+    outcomes: ["Streamlined audio feedback loop by 50%", "Handled 100K+ track uploads"],
+    image: "/projects/tunebox.webp"
+  },
+  {
+    name: "FrameGrill Hub",
+    kind: "E-Commerce · Digital Ordering",
+    desc: "Interactive restaurant management and online ordering system featuring real-time kitchen display screens, automated table reservations, and customer loyalty management.",
+    tech: ["Next.js", "Express", "MongoDB", "Tailwind", "WebSocket"],
+    features: ["QR Table Ordering", "Kitchen Display Sync", "Loyalty Rewards", "Menu Management", "Analytics Dashboard"],
+    outcomes: ["Reduced order wait times by 30%", "Boosted repeat customer visits by 40%"],
+    image: "/projects/framegrill.webp"
+  },
+  {
+    name: "Oh My Fries App",
+    kind: "Mobile App · Quick Service Dining",
+    desc: "Vibrant fast-casual food delivery and loyalty application featuring live driver tracking, location-based geofenced offers, and instant mobile checkout.",
+    tech: ["React Native", "TypeScript", "Node.js", "Firebase", "Stripe"],
+    features: ["Geofenced Discounts", "Live Driver Tracking", "In-App Payments", "Push Notifications", "Custom Combos"],
+    outcomes: ["Achieved 4.8★ app store rating", "Increased mobile order volume by 65%"],
+    image: "/projects/oh-my-fries.webp"
+  },
+  {
+    name: "EdilVista Italian ERP",
+    kind: "Enterprise Cloud · Civil Engineering",
+    desc: "Bespoke construction management suite for tracking multi-site project timelines, material supply chains, compliance safety reporting, and heavy equipment allocation.",
+    tech: ["React", "TypeScript", "Python", "FastAPI", "PostgreSQL"],
+    features: ["3D BIM Viewer", "Subcontractor Portal", "Material Inventory", "Safety Compliance", "Budget Variance"],
+    outcomes: ["Lowered material wastage by 22%", "Optimized site scheduling efficiency"],
+    image: "/projects/italian-construction.webp"
+  },
+  {
+    name: "ApexInventory Hub",
+    kind: "SaaS · Supply Chain Logistics",
+    desc: "Enterprise inventory management software with automated stock reordering, barcode and RFID scanning support, and multi-warehouse synchronization.",
+    tech: ["React", "Node.js", "GraphQL", "Redis", "Docker"],
+    features: ["Barcode Scanning", "Multi-warehouse Sync", "Predictive Stocking", "Supplier Integrations", "Audit Logs"],
+    outcomes: ["Eliminated stockouts by 80%", "Reduced inventory auditing time by 60%"],
+    image: "/projects/inventory-system.webp"
   }
 ];
 
@@ -484,7 +538,7 @@ export function FeaturedWork() {
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap justify-center items-center gap-2 max-w-full px-2">
             {work.map((_, idx) => (
               <button
                 key={idx}
