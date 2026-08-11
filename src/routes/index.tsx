@@ -83,25 +83,27 @@ function AnimatedCounter({ from, to, duration, suffix = "" }: { from: number; to
 
 function ClientHeroScene() {
   const [HeroComponent, setHeroComponent] = useState<React.ComponentType | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
-    console.error("[DIAGNOSTIC] ClientHeroScene useEffect mounted. window.innerWidth:", typeof window !== "undefined" ? window.innerWidth : "undefined");
-    console.error("[DIAGNOSTIC] import('@/components/zeploy/HeroScene') STARTED");
-
     import("@/components/zeploy/HeroScene")
       .then((m) => {
-        console.error("[DIAGNOSTIC] import('@/components/zeploy/HeroScene') RESOLVED:", m?.default ? "default export exists" : m);
-        if (isMounted) setHeroComponent(() => m.default);
+        if (isMounted) {
+          setHeroComponent(() => m.default);
+          requestAnimationFrame(() => {
+            if (isMounted) setIsLoaded(true);
+          });
+        }
       })
-      .catch((err) => console.error("[DIAGNOSTIC] Failed to load HeroScene:", err?.message, err?.stack, err));
+      .catch((err) => console.error("Failed to load HeroScene:", err?.message, err));
 
     return () => {
       isMounted = false;
     };
   }, []);
 
-  const fallback = (
+  const webglFallback = (
     <div className="h-full w-full rounded-3xl bg-[#020817] border border-white/5 relative overflow-hidden flex items-center justify-center">
       <div className="absolute w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-600/15 via-[#020817]/80 to-[#020817] animate-[pulse_4s_ease-in-out_infinite]" />
       <div className="absolute w-32 h-32 rounded-full bg-blue-500/10 blur-3xl animate-[pulse_3s_ease-in-out_infinite]" />
@@ -110,14 +112,14 @@ function ClientHeroScene() {
   );
 
   if (!HeroComponent) {
-    console.error("[DIAGNOSTIC] ClientHeroScene: HeroComponent is null, rendering fallback");
-    return fallback;
+    return <div className="h-full w-full opacity-0 pointer-events-none" />;
   }
 
-  console.error("[DIAGNOSTIC] ClientHeroScene: HeroComponent is loaded, rendering inside SafeComponentGuard");
   return (
-    <SafeComponentGuard name="HeroScene" fallback={fallback}>
-      <HeroComponent />
+    <SafeComponentGuard name="HeroScene" fallback={webglFallback}>
+      <div className={`h-full w-full transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
+        <HeroComponent />
+      </div>
     </SafeComponentGuard>
   );
 }
