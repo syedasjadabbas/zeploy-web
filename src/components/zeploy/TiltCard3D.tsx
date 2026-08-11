@@ -28,6 +28,7 @@ export function TiltCard3D({
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
+      if (typeof window !== "undefined" && !window.matchMedia("(hover: hover)").matches) return;
       if (!cardRef.current) return;
       const rect = cardRef.current.getBoundingClientRect();
       const width = rect.width;

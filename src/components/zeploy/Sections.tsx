@@ -168,10 +168,10 @@ export function Services() {
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Services</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Engineering across the full product surface.
           </h2>
-          <p className="mt-5 text-lg text-muted-foreground">
+          <p className="mt-6 text-base sm:text-lg text-muted-foreground">
             From the first commit to the millionth request — we design, build, and operate systems
             that scale with your business.
           </p>
@@ -583,9 +583,9 @@ export function WhyChoose() {
       <DesktopOnly3D load={() => import("./BackgroundScenes").then(m => ({ default: m.NetworkNodes }))} />
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
-          <SectionLabel>Why Teams Choose Zeploy</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
-            A studio, not a staffing agency.
+          <SectionLabel>Why Zeploy</SectionLabel>
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)] font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft">
+            Why high-growth teams partner with us.
           </h2>
         </motion.div>
 
@@ -646,7 +646,7 @@ export function Reliability() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Reliability</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Operations you can monitor in real time.
           </h2>
         </motion.div>
@@ -728,7 +728,7 @@ export function Process() {
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Process</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             From signed contract to shipped system.
           </h2>
         </motion.div>
@@ -820,8 +820,8 @@ export function Team() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Leadership</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
-            The engineers behind the studio.
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
+            Engineering leadership.
           </h2>
         </motion.div>
 
@@ -978,7 +978,7 @@ export function Testimonials() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Testimonials</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Trusted by teams shipping at scale.
           </h2>
         </motion.div>
@@ -1063,7 +1063,7 @@ export function Blog() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Engineering Notes</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Field notes from production systems.
           </h2>
         </motion.div>
@@ -1156,7 +1156,7 @@ export function ProjectInquiry() {
       <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-12 lg:gap-24">
         <motion.div {...fadeUp}>
           <SectionLabel>Project Inquiry</SectionLabel>
-          <h2 className="mt-6 text-5xl font-bold tracking-tight leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Let's architect your next platform.
           </h2>
           <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
@@ -1411,7 +1411,7 @@ export function Faq() {
       <div className="mx-auto max-w-4xl">
         <motion.div {...fadeUp} className="text-center">
           <SectionLabel>FAQ</SectionLabel>
-          <h2 className="mt-6 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl text-gradient-soft">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight md:text-5xl lg:text-6xl text-gradient-soft">
             Frequently Asked Questions
           </h2>
         </motion.div>

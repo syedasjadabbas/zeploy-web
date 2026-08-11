@@ -219,7 +219,7 @@ function Hero() {
             initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.05 }}
-            className="mt-4 font-display text-4xl font-semibold leading-[1.02] tracking-tight sm:text-5xl md:text-6xl lg:text-[clamp(3.75rem,5vw,4.5rem)]"
+            className="mt-4 font-display text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[clamp(3.75rem,5vw,4.5rem)] font-semibold leading-[1.05] sm:leading-[1.02] tracking-tight"
           >
             <span className="text-gradient-soft">We build software</span>
             <br />
@@ -231,7 +231,7 @@ function Hero() {
             initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl md:text-2xl"
+            className="mt-6 sm:mt-8 max-w-xl text-base sm:text-xl md:text-2xl leading-relaxed text-muted-foreground"
           >
             Zeploy Tech is a software engineering studio delivering custom web apps, mobile apps,
             AI systems, cloud infrastructure, and scalable digital products.
@@ -241,12 +241,12 @@ function Hero() {
             initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.25 }}
-            className="mt-12 flex flex-wrap items-center gap-4"
+            className="mt-8 sm:mt-12 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4"
           >
             <a
               href="#work"
               onClick={() => trackGAEvent("portfolio_click", { button_text: "View our work" })}
-              className="group inline-flex items-center gap-2 rounded-full bg-electric px-8 py-4 text-base font-medium text-primary-foreground shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)] transition-all hover:scale-105 hover:shadow-[0_0_60px_-10px_rgba(59,130,246,0.7)]"
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-electric px-6 py-3.5 sm:px-8 sm:py-4 text-sm sm:text-base font-medium text-primary-foreground shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)] transition-all hover:scale-105 hover:shadow-[0_0_60px_-10px_rgba(59,130,246,0.7)]"
             >
               View our work
               <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -257,7 +257,7 @@ function Hero() {
                 trackGAEvent("email_click", { button_text: "Start a project" });
                 trackGAEvent("contact_click", { button_text: "Start a project" });
               }}
-              className="rounded-full border border-white/20 bg-surface/50 px-8 py-4 text-base font-medium text-foreground backdrop-blur-md transition-colors hover:border-electric/50 hover:bg-surface hover:text-electric"
+              className="inline-flex items-center justify-center rounded-full border border-white/20 bg-surface/50 px-6 py-3.5 sm:px-8 sm:py-4 text-sm sm:text-base font-medium text-foreground backdrop-blur-md transition-colors hover:border-electric/50 hover:bg-surface hover:text-electric text-center"
             >
               Start a project
             </a>

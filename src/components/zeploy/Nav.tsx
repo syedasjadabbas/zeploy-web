@@ -103,11 +103,11 @@ export default function Nav() {
         scrolled || mobileOpen ? "backdrop-blur-xl" : ""
       }`}
     >
-      <div className={`mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-4 md:px-12 ${scrolled || mobileOpen ? "border-b border-white/5" : ""}`}>
+      <div className={`mx-auto flex max-w-7xl items-center justify-between px-3 sm:px-6 py-3.5 md:py-4 md:px-12 ${scrolled || mobileOpen ? "border-b border-white/5" : ""}`}>
         <a
           href="/"
           onClick={handleBrandClick}
-          className="flex items-center gap-2.5 font-display text-base font-semibold tracking-tight cursor-pointer"
+          className="flex items-center gap-2 sm:gap-2.5 font-display text-sm sm:text-base font-semibold tracking-tight cursor-pointer shrink-0"
           aria-label="Zeploy Tech Home"
         >
           <img
@@ -116,7 +116,7 @@ export default function Nav() {
             fetchPriority="high"
             width="28"
             height="28"
-            className="h-7 w-7 object-contain aspect-square shrink-0"
+            className="h-6 w-6 sm:h-7 sm:w-7 object-contain aspect-square shrink-0"
           />
           <span><span className="text-electric">ZEPLOY</span> <span className="text-foreground">TECH</span></span>
         </a>
@@ -145,7 +145,7 @@ export default function Nav() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <div className="hidden md:flex items-center gap-2 mr-2">
             <a href="https://www.linkedin.com/company/zeploy-tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: 'LinkedIn Header' })} aria-label="LinkedIn" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Linkedin className="w-4 h-4" /></a>
             <a href="https://www.instagram.com/zeploy.tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('instagram_click', { button_text: 'Instagram Header' })} aria-label="Instagram" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Instagram className="w-4 h-4" /></a>
@@ -158,7 +158,7 @@ export default function Nav() {
               trackGAEvent('email_click', { button_text: 'Start a project' });
               trackGAEvent('contact_click', { button_text: 'Start a project' });
             }}
-            className="rounded-full border border-white/10 bg-surface/60 px-4 py-2 font-mono text-xs uppercase tracking-widest text-foreground transition-colors hover:border-electric/50 hover:text-electric whitespace-nowrap"
+            className="rounded-full border border-white/10 bg-surface/60 px-3 py-1.5 sm:px-4 sm:py-2 font-mono text-[10px] sm:text-xs uppercase tracking-widest text-foreground transition-colors hover:border-electric/50 hover:text-electric whitespace-nowrap"
           >
             Start a project
           </a>
@@ -166,10 +166,10 @@ export default function Nav() {
           {/* Mobile Hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-surface/60 text-foreground transition-colors hover:border-electric/50 hover:text-electric md:hidden"
+            className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-xl border border-white/10 bg-surface/60 text-foreground transition-colors hover:border-electric/50 hover:text-electric md:hidden shrink-0"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
           >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileOpen ? <X className="h-4 w-4 sm:h-5 sm:w-5" /> : <Menu className="h-4 w-4 sm:h-5 sm:w-5" />}
           </button>
         </div>
       </div>
