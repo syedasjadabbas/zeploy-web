@@ -35,6 +35,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import { SafeComponentGuard } from "./SafeComponentGuard";
+import { TiltCard3D } from "./TiltCard3D";
 
 function DesktopOnly3D({ load }: { load: () => Promise<{ default: React.ComponentType }> }) {
   const [Comp, setComp] = useState<React.ComponentType | null>(null);
@@ -176,30 +177,31 @@ export function Services() {
           </p>
         </motion.div>
 
-        <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => (
             <motion.div
               key={s.title}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.04 }}
-              className="group relative bg-background p-6 sm:p-10 transition-colors hover:bg-surface/60 md:p-12"
             >
-              <div className="flex items-center justify-between">
-                <div className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-surface text-electric transition-all group-hover:border-electric/60 group-hover:glow-electric">
-                  <s.icon className="h-5 w-5" />
+              <TiltCard3D className="group relative bg-background p-6 sm:p-10 md:p-12 border border-white/10 rounded-2xl h-full transition-colors hover:border-electric/50 hover:bg-surface/40">
+                <div className="flex items-center justify-between">
+                  <div className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-surface text-electric transition-all group-hover:border-electric/60 group-hover:glow-electric">
+                    <s.icon className="h-5 w-5" />
+                  </div>
+                  <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
                 </div>
-                <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
-              </div>
-              <h3 className="mt-8 text-2xl font-semibold">{s.title}</h3>
-              <p className="mt-3 text-base leading-relaxed text-muted-foreground">{s.desc}</p>
-              <ul className="mt-6 space-y-1.5 font-mono text-xs text-electric-soft/80">
-                {s.caps.map((c) => (
-                  <li key={c} className="flex items-center gap-2">
-                    <span className="h-px w-3 bg-electric/60" />
-                    {c}
-                  </li>
-                ))}
-              </ul>
+                <h3 className="mt-8 text-2xl font-semibold">{s.title}</h3>
+                <p className="mt-3 text-base leading-relaxed text-muted-foreground">{s.desc}</p>
+                <ul className="mt-6 space-y-1.5 font-mono text-xs text-electric-soft/80">
+                  {s.caps.map((c) => (
+                    <li key={c} className="flex items-center gap-2">
+                      <span className="h-px w-3 bg-electric/60" />
+                      {c}
+                    </li>
+                  ))}
+                </ul>
+              </TiltCard3D>
             </motion.div>
           ))}
         </div>
@@ -594,12 +596,13 @@ export function WhyChoose() {
                 key={r.title}
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: i * 0.04 }}
-                className="glass-card glass-card-hover group relative overflow-hidden rounded-3xl p-6 sm:p-8"
               >
-                <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-electric/10 blur-3xl opacity-0 transition-opacity group-hover:opacity-100" />
-                <r.icon className="h-8 w-8 text-electric" />
-                <h3 className="mt-6 text-xl font-semibold">{r.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{r.desc}</p>
+                <TiltCard3D className="glass-card glass-card-hover group relative overflow-hidden rounded-3xl p-6 sm:p-8 h-full">
+                  <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-electric/10 blur-3xl opacity-0 transition-opacity group-hover:opacity-100" />
+                  <r.icon className="h-8 w-8 text-electric" />
+                  <h3 className="mt-6 text-xl font-semibold">{r.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{r.desc}</p>
+                </TiltCard3D>
               </motion.div>
             ))}
           </div>
@@ -828,61 +831,62 @@ export function Team() {
               key={m.name}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.05 }}
-              className="glass-card glass-card-hover relative overflow-hidden rounded-3xl p-6 sm:p-10"
             >
-              <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-electric/15 blur-[100px] transition-all duration-500 group-hover:bg-electric/25" />
-              <div className="flex flex-col gap-6">
-                <div className="group/avatar relative aspect-square w-[65%] sm:w-[55%] mx-auto p-3 sm:p-4 rounded-2xl border border-electric/20 bg-surface/40 transition-all duration-300 hover:border-electric/50 hover:bg-surface/60">
-                  <div className="absolute inset-4 rounded-xl overflow-hidden bg-background transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]">
-                    <img 
-                      src={m.image} 
-                      alt={m.name} 
-                      loading="lazy" 
-                      decoding="async"
-                      width="400"
-                      height="400"
-                      style={{ transform: m.transform, objectPosition: m.objectPosition }} 
-                      className="h-full w-full object-cover" 
-                    />
+              <TiltCard3D className="glass-card glass-card-hover relative overflow-hidden rounded-3xl p-6 sm:p-10 h-full">
+                <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-electric/15 blur-[100px] transition-all duration-500 group-hover:bg-electric/25" />
+                <div className="flex flex-col gap-6">
+                  <div className="group/avatar relative aspect-square w-[65%] sm:w-[55%] mx-auto p-3 sm:p-4 rounded-2xl border border-electric/20 bg-surface/40 transition-all duration-300 hover:border-electric/50 hover:bg-surface/60">
+                    <div className="absolute inset-4 rounded-xl overflow-hidden bg-background transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]">
+                      <img 
+                        src={m.image} 
+                        alt={m.name} 
+                        loading="lazy" 
+                        decoding="async"
+                        width="400"
+                        height="400"
+                        style={{ transform: m.transform, objectPosition: m.objectPosition }} 
+                        className="h-full w-full object-cover" 
+                      />
+                    </div>
+                  </div>
+                  <div className="min-w-0 px-2 transition-transform duration-300 group-hover:translate-x-1 text-center mt-2">
+                    <h3 className="text-2xl font-semibold">{m.name}</h3>
+                    <p className="mt-2 font-mono text-xs uppercase tracking-widest text-electric-soft">
+                      {m.role}
+                    </p>
+                {m.socials && (
+                  <div className="mt-4 flex justify-center gap-3">
+                    {m.socials.linkedin && (
+                      <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: `${m.name} LinkedIn` })} aria-label={`${m.name} LinkedIn`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
+                        <Linkedin className="w-4 h-4" />
+                      </a>
+                    )}
+                    {m.socials.github && (
+                      <a href={m.socials.github} target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('contact_click', { button_text: `${m.name} GitHub` })} aria-label={`${m.name} GitHub`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
+                        <Github className="w-4 h-4" />
+                      </a>
+                    )}
+                    {(m.socials as any).portfolio && (
+                      <a href={(m.socials as any).portfolio} target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('portfolio_click', { button_text: `${m.name} Portfolio Website` })} aria-label={`${m.name} Portfolio`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
+                        <Globe2 className="w-4 h-4" />
+                      </a>
+                    )}
+                  </div>
+                )}
                   </div>
                 </div>
-                <div className="min-w-0 px-2 transition-transform duration-300 group-hover:translate-x-1 text-center mt-2">
-                  <h3 className="text-2xl font-semibold">{m.name}</h3>
-                  <p className="mt-2 font-mono text-xs uppercase tracking-widest text-electric-soft">
-                    {m.role}
-                  </p>
-              {m.socials && (
-                <div className="mt-4 flex justify-center gap-3">
-                  {m.socials.linkedin && (
-                    <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: `${m.name} LinkedIn` })} aria-label={`${m.name} LinkedIn`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
-                      <Linkedin className="w-4 h-4" />
-                    </a>
-                  )}
-                  {m.socials.github && (
-                    <a href={m.socials.github} target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('contact_click', { button_text: `${m.name} GitHub` })} aria-label={`${m.name} GitHub`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
-                      <Github className="w-4 h-4" />
-                    </a>
-                  )}
-                  {(m.socials as any).portfolio && (
-                    <a href={(m.socials as any).portfolio} target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('portfolio_click', { button_text: `${m.name} Portfolio Website` })} aria-label={`${m.name} Portfolio`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
-                      <Globe2 className="w-4 h-4" />
-                    </a>
-                  )}
+                <div className="mt-8 grid gap-2 sm:grid-cols-2 px-2">
+                  {m.skills.map((s) => (
+                    <div
+                      key={s}
+                      className="flex items-center gap-2 rounded-md border border-white/5 bg-surface/40 px-3 py-2 text-xs text-muted-foreground"
+                    >
+                      <span className="h-1 w-1 rounded-full bg-electric" />
+                      {s}
+                    </div>
+                  ))}
                 </div>
-              )}
-                </div>
-              </div>
-              <div className="mt-8 grid gap-2 sm:grid-cols-2 px-2">
-                {m.skills.map((s) => (
-                  <div
-                    key={s}
-                    className="flex items-center gap-2 rounded-md border border-white/5 bg-surface/40 px-3 py-2 text-xs text-muted-foreground"
-                  >
-                    <span className="h-1 w-1 rounded-full bg-electric" />
-                    {s}
-                  </div>
-                ))}
-              </div>
+              </TiltCard3D>
             </motion.div>
           ))}
         </div>
@@ -1003,22 +1007,23 @@ export function Testimonials() {
               key={i}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.04 }}
-              className="glass-card glass-card-hover rounded-3xl p-6 sm:p-8 md:p-10 flex flex-col"
             >
-              <StarRating rating={t.rating} />
-              <blockquote className="mt-5 flex-1 text-base leading-relaxed text-foreground/90">
-                "{t.q}"
-              </blockquote>
-              <figcaption className="mt-6 border-t border-white/5 pt-5">
-                <p className="font-mono text-xs uppercase tracking-widest text-electric-soft">
-                  {t.a}
-                </p>
-                <div className="mt-2 flex items-center gap-2">
-                  <span className="font-mono text-[11px] text-muted-foreground">{t.company}</span>
-                  <span className="h-1 w-1 rounded-full bg-white/20" />
-                  <span className="font-mono text-[11px] text-electric/60">{t.projectType}</span>
-                </div>
-              </figcaption>
+              <TiltCard3D className="glass-card glass-card-hover rounded-3xl p-6 sm:p-8 md:p-10 flex flex-col h-full">
+                <StarRating rating={t.rating} />
+                <blockquote className="mt-5 flex-1 text-base leading-relaxed text-foreground/90">
+                  "{t.q}"
+                </blockquote>
+                <figcaption className="mt-6 border-t border-white/5 pt-5">
+                  <p className="font-mono text-xs uppercase tracking-widest text-electric-soft">
+                    {t.a}
+                  </p>
+                  <div className="mt-2 flex items-center gap-2">
+                    <span className="font-mono text-[11px] text-muted-foreground">{t.company}</span>
+                    <span className="h-1 w-1 rounded-full bg-white/20" />
+                    <span className="font-mono text-[11px] text-electric/60">{t.projectType}</span>
+                  </div>
+                </figcaption>
+              </TiltCard3D>
             </motion.figure>
           ))}
         </div>
@@ -1063,31 +1068,32 @@ export function Blog() {
           </h2>
         </motion.div>
 
-        <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/5 md:grid-cols-3">
+        <div className="mt-16 grid gap-6 md:grid-cols-3">
           {posts.map((p, i) => (
             <motion.div
               key={p.title}
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.05 }}
-              className="group bg-background transition-colors hover:bg-surface/60"
             >
-              <Link
-                to="/notes/$slug"
-                params={{ slug: p.slug }}
-                onClick={() => trackGAEvent('case_study_click', { button_text: p.title })}
-                className="block p-6 sm:p-10 md:p-12 h-full w-full"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-[11px] uppercase tracking-widest text-electric">
-                    {p.category}
-                  </span>
-                  <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
-                </div>
-                <h3 className="mt-12 text-2xl font-semibold leading-snug text-foreground group-hover:text-electric-soft">
-                  {p.title}
-                </h3>
-                <p className="mt-6 font-mono text-xs text-muted-foreground">{p.description}</p>
-              </Link>
+              <TiltCard3D className="group bg-background border border-white/10 hover:border-electric/40 rounded-2xl overflow-hidden h-full">
+                <Link
+                  to="/notes/$slug"
+                  params={{ slug: p.slug }}
+                  onClick={() => trackGAEvent('case_study_click', { button_text: p.title })}
+                  className="block p-6 sm:p-10 md:p-12 h-full w-full"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[11px] uppercase tracking-widest text-electric">
+                      {p.category}
+                    </span>
+                    <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
+                  </div>
+                  <h3 className="mt-12 text-2xl font-semibold leading-snug text-foreground group-hover:text-electric-soft">
+                    {p.title}
+                  </h3>
+                  <p className="mt-6 font-mono text-xs text-muted-foreground">{p.description}</p>
+                </Link>
+              </TiltCard3D>
             </motion.div>
           ))}
         </div>
