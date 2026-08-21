@@ -8,19 +8,29 @@ import {
   ArrowUpRight,
   Boxes,
   Brain,
+  Briefcase,
+  Building2,
   Cloud,
   Code2,
+  Coins,
   Cpu,
   Database,
   GitBranch,
   Globe2,
+  GraduationCap,
+  HeartHandshake,
+  HeartPulse,
+  Hotel,
   LineChart,
   Rocket,
   Server,
   ShieldCheck,
+  ShoppingBag,
   Smartphone,
   Sparkles,
   Star,
+  Store,
+  Truck,
   Workflow,
   Zap,
   Linkedin,
@@ -45,35 +55,28 @@ function DesktopOnly3D({ load }: { load: () => Promise<{ default: React.Componen
 
   useEffect(() => {
     const width = typeof window !== "undefined" ? window.innerWidth : 0;
-    console.error("[DIAGNOSTIC] DesktopOnly3D useEffect executed. window.innerWidth:", width);
     if (typeof window === "undefined" || width < 768) {
-      console.error("[DIAGNOSTIC] DesktopOnly3D skipped because width < 768 or server:", width);
       return;
     }
     const el = containerRef.current;
     if (!el || !("IntersectionObserver" in window)) {
-      console.error("[DIAGNOSTIC] DesktopOnly3D fallback load starting (no observer or ref missing)");
       loadRef.current()
         .then((m) => {
-          console.error("[DIAGNOSTIC] DesktopOnly3D fallback load RESOLVED:", m);
           setComp(() => m.default);
         })
-        .catch((err) => console.error("[DIAGNOSTIC] Desktop3D fallback load error:", err?.message, err));
+        .catch((err) => console.error("Desktop3D load error:", err?.message, err));
       return;
     }
 
     let isMounted = true;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        console.error("[DIAGNOSTIC] DesktopOnly3D IntersectionObserver trigger. isIntersecting:", entry.isIntersecting);
         if (entry.isIntersecting) {
-          console.error("[DIAGNOSTIC] DesktopOnly3D dynamic import STARTING...");
           loadRef.current()
             .then((m) => {
-              console.error("[DIAGNOSTIC] DesktopOnly3D dynamic import RESOLVED:", m);
               if (isMounted) setComp(() => m.default);
             })
-            .catch((err) => console.error("[DIAGNOSTIC] Desktop3D load error:", err?.message, err));
+            .catch((err) => console.error("Desktop3D load error:", err?.message, err));
           observer.disconnect();
         }
       },
@@ -567,6 +570,113 @@ export function FeaturedWork() {
   );
 }
 
+/* ---------- INDUSTRIES WE SERVE ---------- */
+const industries = [
+  {
+    icon: Rocket,
+    title: "Startups",
+    desc: "Rapid MVP development, product-market fit iteration, and scalable tech foundations built to survive hypergrowth.",
+  },
+  {
+    icon: ShoppingBag,
+    title: "E-commerce",
+    desc: "Custom high-conversion storefronts, headless architectures, and integrated order-management engines.",
+  },
+  {
+    icon: HeartPulse,
+    title: "Healthcare",
+    desc: "Secure, HIPAA-compliant patient management, diagnostic workflows, and encrypted medical data infrastructure.",
+  },
+  {
+    icon: GraduationCap,
+    title: "Education",
+    desc: "Interactive learning platforms, automated grading systems, and scalable student and teacher management portals.",
+  },
+  {
+    icon: Building2,
+    title: "Real Estate",
+    desc: "Modern property portals, automated valuation workflows, tenant portals, and transaction management platforms.",
+  },
+  {
+    icon: Coins,
+    title: "Finance & FinTech",
+    desc: "Real-time ledger systems, high-volume payment routing, programmable billing, and compliant reporting tools.",
+  },
+  {
+    icon: Truck,
+    title: "Logistics & Transportation",
+    desc: "Real-time fleet telematics, dispatch algorithms, supply chain observability, and multi-hub routing engines.",
+  },
+  {
+    icon: Hotel,
+    title: "Hospitality",
+    desc: "Direct reservation systems, guest experience apps, dynamic pricing engines, and multi-location operations.",
+  },
+  {
+    icon: HeartHandshake,
+    title: "NGOs & Nonprofits",
+    desc: "Donor engagement platforms, impact tracking dashboards, transparent fundraising, and community systems.",
+  },
+  {
+    icon: Cpu,
+    title: "SaaS & Technology",
+    desc: "Multi-tenant cloud architectures, API-first platforms, AI workflow automation, and enterprise integrations.",
+  },
+  {
+    icon: Briefcase,
+    title: "Professional Services",
+    desc: "Client collaboration portals, automated document intelligence, time & billing engines, and CRM integrations.",
+  },
+  {
+    icon: Store,
+    title: "Retail",
+    desc: "Omnichannel inventory sync, point-of-sale integration, customer loyalty apps, and demand forecasting systems.",
+  },
+];
+
+export function Industries() {
+  return (
+    <section id="industries" className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12">
+      <div className="mx-auto max-w-7xl relative z-10">
+        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
+          <SectionLabel>Industries</SectionLabel>
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
+            Industries We Serve.
+            <br />
+            <span className="text-muted-foreground font-medium">Different markets. Same standard of work.</span>
+          </h2>
+          <p className="mt-6 text-base sm:text-lg text-muted-foreground">
+            From startups and growing businesses to established organizations, we build software around the needs of your industry, users, and operations.
+          </p>
+        </motion.div>
+
+        <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {industries.map((ind, i) => (
+            <motion.div
+              key={ind.title}
+              {...fadeUp}
+              transition={{ ...fadeUp.transition, delay: (i % 4) * 0.04 }}
+            >
+              <TiltCard3D className="group relative bg-background p-6 sm:p-7 border border-white/10 rounded-2xl h-full transition-all duration-300 hover:border-electric/50 hover:bg-surface/40 hover:shadow-[0_0_30px_rgba(59,130,246,0.12)] flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-surface text-electric transition-all duration-300 group-hover:border-electric/60 group-hover:glow-electric">
+                      <ind.icon className="h-5 w-5" />
+                    </div>
+                    <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
+                  </div>
+                  <h3 className="mt-6 text-xl font-semibold text-foreground transition-colors group-hover:text-electric">{ind.title}</h3>
+                  <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">{ind.desc}</p>
+                </div>
+              </TiltCard3D>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------- WHY CHOOSE ---------- */
 const reasons = [
   { icon: Cpu, title: "Senior Engineers Only", desc: "No juniors hidden in the workflow. Every line shipped by engineers with production scars." },
@@ -964,7 +1074,7 @@ function StarRating({ rating }: { rating: number }) {
           className={`h-4 w-4 ${
             i < rating
               ? "fill-amber-400 text-amber-400"
-              : "fill-white/10 text-white/10"
+              : "fill-muted-foreground/20 text-muted-foreground/20"
           }`}
         />
       ))}
@@ -1019,7 +1129,7 @@ export function Testimonials() {
                   </p>
                   <div className="mt-2 flex items-center gap-2">
                     <span className="font-mono text-[11px] text-muted-foreground">{t.company}</span>
-                    <span className="h-1 w-1 rounded-full bg-white/20" />
+                    <span className="h-1 w-1 rounded-full bg-border" />
                     <span className="font-mono text-[11px] text-electric/60">{t.projectType}</span>
                   </div>
                 </figcaption>

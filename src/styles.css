@@ -41,43 +41,138 @@
 :root {
   --radius: 0.75rem;
 
-  /* Zeploy Tech palette - converted to oklch */
-  --background: oklch(0.182 0.072 268);        /* #0B1535 deep navy bg */
-  --foreground: oklch(1 0 0);                  /* #FFFFFF */
-  --surface: oklch(0.235 0.082 268);           /* #182350 */
-  --surface-2: oklch(0.205 0.078 268);
-  --card: oklch(0.235 0.082 268);
-  --card-foreground: oklch(1 0 0);
-  --popover: oklch(0.235 0.082 268);
-  --popover-foreground: oklch(1 0 0);
+  /* Zeploy Tech Dark Palette (DEFAULT) */
+  --background: #0B1535;
+  --foreground: #FFFFFF;
+  --surface: #182350;
+  --surface-2: #111A3E;
+  --card: #182350;
+  --card-foreground: #FFFFFF;
+  --popover: #182350;
+  --popover-foreground: #FFFFFF;
 
-  --primary: oklch(0.62 0.21 258);             /* #3B82F6 electric */
-  --primary-foreground: oklch(1 0 0);
-  --electric: oklch(0.62 0.21 258);
-  --electric-soft: oklch(0.85 0.09 240);       /* #AFD2FA */
+  --primary: #3B82F6;
+  --primary-foreground: #FFFFFF;
+  --electric: #3B82F6;
+  --electric-soft: #AFD2FA;
 
-  --secondary: oklch(0.27 0.07 268);
-  --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(0.27 0.07 268);
-  --muted-foreground: oklch(0.78 0.025 250);   /* #CBD5E1 */
-  --text-secondary: oklch(0.85 0.09 240);
-  --accent: oklch(0.27 0.07 268);
-  --accent-foreground: oklch(1 0 0);
-  --destructive: oklch(0.62 0.22 25);
-  --destructive-foreground: oklch(1 0 0);
+  --secondary: #1F2B5B;
+  --secondary-foreground: #FFFFFF;
+  --muted: #1F2B5B;
+  --muted-foreground: #CBD5E1;
+  --text-secondary: #AFD2FA;
+  --accent: #1F2B5B;
+  --accent-foreground: #FFFFFF;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
 
-  --border: oklch(1 0 0 / 8%);
-  --input: oklch(1 0 0 / 10%);
-  --ring: oklch(0.62 0.21 258);
+  --border: rgba(255, 255, 255, 0.1);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #3B82F6;
 
-  --chart-1: oklch(0.62 0.21 258);
-  --chart-2: oklch(0.85 0.09 240);
-  --chart-3: oklch(0.45 0.15 258);
-  --chart-4: oklch(0.7 0.18 245);
-  --chart-5: oklch(0.55 0.18 268);
+  --chart-1: #3B82F6;
+  --chart-2: #AFD2FA;
+  --chart-3: #2563EB;
+  --chart-4: #60A5FA;
+  --chart-5: #1D4ED8;
+
+  --glass-bg-1: rgba(24, 35, 80, 0.75);
+  --glass-bg-2: rgba(17, 26, 62, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --heading-gradient-1: #FFFFFF;
+  --heading-gradient-2: rgba(255, 255, 255, 0.7);
+  --card-hover-bg: rgba(24, 35, 80, 0.5);
 }
 
-.dark { color-scheme: dark; }
+.dark, html.dark {
+  color-scheme: dark;
+  --background: #0B1535;
+  --foreground: #FFFFFF;
+  --surface: #182350;
+  --surface-2: #111A3E;
+  --card: #182350;
+  --card-foreground: #FFFFFF;
+  --popover: #182350;
+  --popover-foreground: #FFFFFF;
+
+  --primary: #3B82F6;
+  --primary-foreground: #FFFFFF;
+  --electric: #3B82F6;
+  --electric-soft: #AFD2FA;
+
+  --secondary: #1F2B5B;
+  --secondary-foreground: #FFFFFF;
+  --muted: #1F2B5B;
+  --muted-foreground: #CBD5E1;
+  --text-secondary: #AFD2FA;
+  --accent: #1F2B5B;
+  --accent-foreground: #FFFFFF;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #3B82F6;
+
+  --glass-bg-1: rgba(24, 35, 80, 0.75);
+  --glass-bg-2: rgba(17, 26, 62, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --heading-gradient-1: #FFFFFF;
+  --heading-gradient-2: rgba(255, 255, 255, 0.7);
+  --card-hover-bg: rgba(24, 35, 80, 0.5);
+}
+
+.light, html.light {
+  color-scheme: light;
+
+  /* Zeploy Tech Light Palette (Purpose-built) */
+  --background: #F7F9FC;
+  --foreground: #0B1535;
+  --surface: #FFFFFF;
+  --surface-2: #F1F5F9;
+  --card: #FFFFFF;
+  --card-foreground: #0B1535;
+  --popover: #FFFFFF;
+  --popover-foreground: #0B1535;
+
+  --primary: #3B82F6;
+  --primary-foreground: #FFFFFF;
+  --electric: #3B82F6;
+  --electric-soft: #2563EB;
+
+  --secondary: #F1F5F9;
+  --secondary-foreground: #0B1535;
+  --muted: #F1F5F9;
+  --muted-foreground: #475569;
+  --text-secondary: #334155;
+  --accent: #F1F5F9;
+  --accent-foreground: #0B1535;
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+
+  --border: #E2E8F0;
+  --border-subtle: #EDF2F7;
+  --border-strong: #CBD5E1;
+  --input: #E2E8F0;
+  --ring: #3B82F6;
+
+  --chart-1: #3B82F6;
+  --chart-2: #2563EB;
+  --chart-3: #1D4ED8;
+  --chart-4: #60A5FA;
+  --chart-5: #0F172A;
+
+  --glass-bg-1: rgba(255, 255, 255, 0.9);
+  --glass-bg-2: rgba(248, 250, 252, 0.85);
+  --glass-border: #E2E8F0;
+  --heading-gradient-1: #0B1535;
+  --heading-gradient-2: #334155;
+  --card-hover-bg: rgba(241, 245, 249, 0.7);
+}
 
 @layer base {
   * {
@@ -85,6 +180,7 @@
   }
   html {
     scroll-behavior: smooth;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
   html, body {
     background-color: var(--color-background);
@@ -100,6 +196,27 @@
   }
 }
 
+/* Ensure border-white utility classes adapt gracefully in light mode */
+.light .border-white\/5,
+html.light .border-white\/5 {
+  border-color: #EDF2F7 !important;
+}
+
+.light .border-white\/10,
+html.light .border-white\/10 {
+  border-color: #E2E8F0 !important;
+}
+
+.light .border-white\/20,
+html.light .border-white\/20 {
+  border-color: #CBD5E1 !important;
+}
+
+.light .bg-white\/5,
+html.light .bg-white\/5 {
+  background-color: rgba(15, 23, 42, 0.04) !important;
+}
+
 @utility grid-bg {
   background-image:
     linear-gradient(to right, color-mix(in oklab, var(--electric) 8%, transparent) 1px, transparent 1px),
@@ -109,8 +226,8 @@
 }
 
 @utility glass-card {
-  background: linear-gradient(180deg, color-mix(in oklab, var(--surface) 80%, transparent), color-mix(in oklab, var(--surface-2) 60%, transparent));
-  border: 1px solid color-mix(in oklab, white 8%, transparent);
+  background: linear-gradient(180deg, var(--glass-bg-1), var(--glass-bg-2));
+  border: 1px solid var(--glass-border);
   backdrop-filter: blur(12px);
   transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
 }
@@ -124,7 +241,7 @@
 }
 
 @utility text-gradient-soft {
-  background: linear-gradient(180deg, #ffffff 0%, color-mix(in oklab, white 70%, transparent) 100%);
+  background: linear-gradient(180deg, var(--heading-gradient-1, #ffffff) 0%, var(--heading-gradient-2, rgba(255,255,255,0.7)) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

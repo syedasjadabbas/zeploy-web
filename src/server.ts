@@ -40,12 +40,33 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
   });
 }
 
+function withEdgeCacheHeaders(response: Response, request: Request): Response {
+  if (response.status === 200 && request.method === "GET") {
+    try {
+      const url = new URL(request.url);
+      if (url.pathname === "/" || url.pathname.startsWith("/notes/")) {
+        const headers = new Headers(response.headers);
+        headers.set("cache-control", "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400");
+        return new Response(response.body, {
+          status: response.status,
+          statusText: response.statusText,
+          headers,
+        });
+      }
+    } catch {
+      return response;
+    }
+  }
+  return response;
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      const normalized = await normalizeCatastrophicSsrResponse(response);
+      return withEdgeCacheHeaders(normalized, request);
     } catch (error) {
       console.error(error);
       return new Response(renderErrorPage(), {

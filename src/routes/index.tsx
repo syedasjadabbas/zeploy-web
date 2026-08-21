@@ -9,6 +9,7 @@ import { SafeComponentGuard } from "@/components/zeploy/SafeComponentGuard";
 import {
   Services,
   FeaturedWork,
+  Industries,
   WhyChoose,
   Reliability,
   Process,
@@ -91,38 +92,53 @@ function ClientHeroScene() {
 
   useEffect(() => {
     let isMounted = true;
-    import("@/components/zeploy/HeroScene")
-      .then((m) => {
-        if (isMounted) {
-          setHeroComponent(() => m.default);
-          requestAnimationFrame(() => {
-            if (isMounted) setIsLoaded(true);
-          });
-        }
-      })
-      .catch((err) => console.error("Failed to load HeroScene:", err?.message, err));
+    const loadHero = () => {
+      import("@/components/zeploy/HeroScene")
+        .then((m) => {
+          if (isMounted) {
+            setHeroComponent(() => m.default);
+            requestAnimationFrame(() => {
+              if (isMounted) setIsLoaded(true);
+            });
+          }
+        })
+        .catch((err) => console.error("Failed to load HeroScene:", err?.message, err));
+    };
+
+    let cancelTimer: (() => void) | undefined;
+    if (typeof window !== "undefined") {
+      if ("requestIdleCallback" in window) {
+        const handle = (window as any).requestIdleCallback(() => loadHero(), { timeout: 1200 });
+        cancelTimer = () => (window as any).cancelIdleCallback(handle);
+      } else {
+        const handle = setTimeout(loadHero, 200);
+        cancelTimer = () => clearTimeout(handle);
+      }
+    }
 
     return () => {
       isMounted = false;
+      if (cancelTimer) cancelTimer();
     };
   }, []);
 
   const webglFallback = (
-    <div className="h-full w-full rounded-3xl bg-[#020817] border border-white/5 relative overflow-hidden flex items-center justify-center">
-      <div className="absolute w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-600/15 via-[#020817]/80 to-[#020817] animate-[pulse_4s_ease-in-out_infinite]" />
+    <div className="h-full w-full rounded-3xl bg-surface border border-white/10 dark:border-white/10 relative overflow-hidden flex items-center justify-center">
+      <div className="absolute w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-600/15 via-surface/80 to-surface animate-[pulse_4s_ease-in-out_infinite]" />
       <div className="absolute w-32 h-32 rounded-full bg-blue-500/10 blur-3xl animate-[pulse_3s_ease-in-out_infinite]" />
-      <div className="font-display text-5xl font-bold text-white z-10 opacity-80" style={{ textShadow: "0 0 20px rgba(59,130,246,0.5)" }}>Z</div>
+      <div className="font-display text-5xl font-bold text-foreground z-10 opacity-80" style={{ textShadow: "0 0 20px rgba(59,130,246,0.5)" }}>Z</div>
     </div>
   );
 
-  if (!HeroComponent) {
-    return <div className="h-full w-full opacity-0 pointer-events-none" />;
-  }
-
   return (
     <SafeComponentGuard name="HeroScene" fallback={webglFallback}>
-      <div className={`h-full w-full transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
-        <HeroComponent />
+      <div className="relative h-full w-full">
+        {!isLoaded && webglFallback}
+        {HeroComponent && (
+          <div className={`absolute inset-0 transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
+            <HeroComponent />
+          </div>
+        )}
       </div>
     </SafeComponentGuard>
   );
@@ -180,6 +196,9 @@ function Index() {
       </div>
       <div id="work">
         <FeaturedWork />
+      </div>
+      <div id="industries">
+        <Industries />
       </div>
       <Reliability />
       <Process />

@@ -17,18 +17,15 @@ export class SafeComponentGuard extends Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error): State {
-    console.error("[DIAGNOSTIC] [SafeComponentGuard] getDerivedStateFromError caught:", error?.message, error);
     return { hasError: true };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error(
-      `[DIAGNOSTIC] [SafeComponentGuard] Component error in ${
+      `[SafeComponentGuard] Component error in ${
         this.props.name || "optional feature"
       }:`,
       error?.message,
-      error?.stack,
-      error,
       errorInfo
     );
   }

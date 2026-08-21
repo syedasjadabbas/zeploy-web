@@ -82,8 +82,8 @@ function NotePage() {
           <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-12">
             {post.description}
           </p>
-          <div className="h-px w-full bg-white/5 mb-12" />
-          <div className="prose prose-invert prose-lg md:prose-xl max-w-none text-muted-foreground">
+          <div className="h-px w-full bg-border mb-12" />
+          <div className="prose dark:prose-invert prose-lg md:prose-xl max-w-none text-muted-foreground">
             <p>
               This is a premium detailed view for the engineering note. In a production environment, this would be populated with rich markdown or CMS content detailing the architectural decisions, code snippets, and performance metrics associated with this specific case study.
             </p>
