@@ -9,33 +9,36 @@ function CoreLogo({ hovered }: { hovered: boolean }) {
 
   const geometry = useMemo(() => {
     const shape = new THREE.Shape();
-    const w = 0.82;
-    const h = 1.0;
-    const t = 0.35;
+    const w = 0.75;
+    const h = 0.9;
+    const barH = 0.32;
+    const diagW = 0.44;
 
-    shape.moveTo(-w, h);
-    shape.lineTo(w, h);
-    shape.lineTo(w, h - t);
-    shape.lineTo(-w + t * 1.15, -h + t);
-    shape.lineTo(w, -h + t);
-    shape.lineTo(w, -h);
-    shape.lineTo(-w, -h);
-    shape.lineTo(-w, -h + t);
-    shape.lineTo(w - t * 1.15, h - t);
-    shape.lineTo(-w, h - t);
+    // Clean, non-self-intersecting 10-vertex Z polygon
+    shape.moveTo(-w, h);                        // Top-Left
+    shape.lineTo(w, h);                         // Top-Right
+    shape.lineTo(w, h - barH);                  // Top-Right Bottom
+    shape.lineTo(-w + diagW, -h + barH);        // Diagonal Inner-Bottom
+    shape.lineTo(w, -h + barH);                 // Bottom-Right Top
+    shape.lineTo(w, -h);                        // Bottom-Right Bottom
+    shape.lineTo(-w, -h);                       // Bottom-Left Bottom
+    shape.lineTo(-w, -h + barH);                // Bottom-Left Top
+    shape.lineTo(w - diagW, h - barH);          // Diagonal Inner-Top
+    shape.lineTo(-w, h - barH);                 // Top-Left Bottom
     shape.closePath();
 
     const extrudeSettings = {
-      depth: 0.35,
+      depth: 0.32,
       bevelEnabled: true,
       bevelSegments: 4,
       steps: 1,
-      bevelSize: 0.04,
-      bevelThickness: 0.04,
+      bevelSize: 0.03,
+      bevelThickness: 0.03,
     };
 
     const geom = new THREE.ExtrudeGeometry(shape, extrudeSettings);
     geom.center();
+    geom.computeVertexNormals();
     return geom;
   }, []);
 
@@ -46,15 +49,14 @@ function CoreLogo({ hovered }: { hovered: boolean }) {
   });
 
   return (
-    <group ref={zRef} position={[0, 0, 1.8]} scale={0.95}>
+    <group ref={zRef} position={[0, 0, 2.35]} scale={0.92}>
       <mesh geometry={geometry}>
         <meshStandardMaterial
-          color="#ffffff"
-          emissive="#60A5FA"
-          emissiveIntensity={hovered ? 5 : 3.0}
-          metalness={0.95}
-          roughness={0.05}
-          toneMapped={false}
+          color="#F8FAFC"
+          emissive="#3B82F6"
+          emissiveIntensity={hovered ? 1.6 : 0.75}
+          metalness={0.9}
+          roughness={0.12}
         />
       </mesh>
     </group>
@@ -62,8 +64,8 @@ function CoreLogo({ hovered }: { hovered: boolean }) {
 }
 
 // 2. Liquid AI Brain (Morphing Sphere)
-const liquidSphereArgs1 = [2, 48, 48] as const;
-const liquidSphereArgs2 = [2.05, 24, 24] as const;
+const liquidSphereArgs1 = [1.75, 48, 48] as const;
+const liquidSphereArgs2 = [1.8, 24, 24] as const;
 
 function LiquidCore({ hovered }: { hovered: boolean }) {
   const materialRef = useRef<any>(null);
