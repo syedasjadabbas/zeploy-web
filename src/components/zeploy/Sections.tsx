@@ -3,6 +3,8 @@ import { useEffect, useRef, useState, useCallback, lazy, Suspense } from "react"
 import useEmblaCarousel from "embla-carousel-react";
 import { trackGAEvent } from "../../lib/analytics";
 import { Link } from "@tanstack/react-router";
+import { CodeWindow } from "./CodeWindow";
+import { heroSnippet } from "@/data/codeSnippets";
 import {
   Activity,
   ArrowUpRight,
@@ -843,6 +845,25 @@ export function Reliability() {
                   className="flex-1 rounded-sm bg-electric/30 transition-colors hover:bg-electric"
                 />
               ))}
+            </div>
+
+            {/* Live Code Window Engine View */}
+            <div className="mt-8 border-t border-white/5 pt-8">
+              <div className="flex items-center justify-between mb-4">
+                <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                  Production Blueprint · Live Engine
+                </p>
+                <span className="hidden sm:inline-block font-mono text-xs text-electric-soft">
+                  s-maxage=3600 · zero downtime
+                </span>
+              </div>
+              <CodeWindow
+                fileName={heroSnippet.fileName}
+                language={heroSnippet.language}
+                code={heroSnippet.code}
+                status={heroSnippet.status}
+                badge={heroSnippet.badge}
+              />
             </div>
           </div>
         </motion.div>

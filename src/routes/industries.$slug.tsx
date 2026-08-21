@@ -1,5 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { industriesBySlug, industries } from "@/data/industries";
+import { industrySnippets } from "@/data/codeSnippets";
 import { DetailPageLayout } from "@/components/zeploy/DetailPageLayout";
 
 export const Route = createFileRoute("/industries/$slug")({
@@ -76,6 +77,7 @@ function IndustryDetailPage() {
       }))}
       relatedLinksTitle="Relevant Engineering Services"
       faq={industry.faq}
+      codeSnippet={industrySnippets[slug]}
     />
   );
 }

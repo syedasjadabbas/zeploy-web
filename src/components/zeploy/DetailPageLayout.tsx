@@ -17,6 +17,8 @@ import {
 import Nav from "./Nav";
 import { Footer } from "./Sections";
 import { TiltCard3D } from "./TiltCard3D";
+import { CodeWindow } from "./CodeWindow";
+import type { CodeSnippet } from "@/data/codeSnippets";
 import { trackGAEvent } from "../../lib/analytics";
 
 interface DetailPageProps {
@@ -39,6 +41,7 @@ interface DetailPageProps {
   relatedLinks?: { label: string; slug: string; type: "services" | "industries" }[];
   relatedLinksTitle?: string;
   faq: { q: string; a: string }[];
+  codeSnippet?: CodeSnippet;
 }
 
 const fadeUp = {
@@ -68,6 +71,7 @@ export function DetailPageLayout({
   relatedLinks,
   relatedLinksTitle = "Related Areas",
   faq,
+  codeSnippet,
 }: DetailPageProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -428,6 +432,35 @@ export function DetailPageLayout({
                 ))}
               </div>
             )}
+          </div>
+        </section>
+      )}
+
+      {/* --- CODE WINDOW PRODUCTION BLUEPRINT --- */}
+      {codeSnippet && (
+        <section className="relative border-t border-white/5 py-20 md:py-28 px-4 sm:px-6 md:px-12 bg-background">
+          <div className="mx-auto max-w-6xl">
+            <motion.div {...fadeUp} className="max-w-3xl mb-10">
+              <span className="font-mono text-xs uppercase tracking-[0.25em] font-medium text-electric">
+                Engineering Blueprint
+              </span>
+              <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-gradient-soft">
+                Architecture in code.
+              </h2>
+              <p className="mt-4 text-base sm:text-lg text-muted-foreground">
+                Type-safe primitives and production patterns engineered specifically for {title.toLowerCase()}.
+              </p>
+            </motion.div>
+
+            <motion.div {...fadeUp}>
+              <CodeWindow
+                fileName={codeSnippet.fileName}
+                language={codeSnippet.language}
+                code={codeSnippet.code}
+                status={codeSnippet.status}
+                badge={codeSnippet.badge}
+              />
+            </motion.div>
           </div>
         </section>
       )}

@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import Nav from '@/components/zeploy/Nav';
 import { Footer } from '@/components/zeploy/Sections';
+import { CodeWindow } from '@/components/zeploy/CodeWindow';
+import { noteSnippets } from '@/data/codeSnippets';
 import { useEffect } from 'react';
 
 const posts = [
@@ -61,6 +63,7 @@ function NotePage() {
   }, []);
 
   const post = posts.find(p => p.slug === slug) || posts[0];
+  const snippet = noteSnippets[post.slug];
 
   return (
     <main className="relative min-h-screen bg-background text-foreground selection:bg-electric/30">
@@ -83,12 +86,29 @@ function NotePage() {
             {post.description}
           </p>
           <div className="h-px w-full bg-border mb-12" />
-          <div className="prose dark:prose-invert prose-lg md:prose-xl max-w-none text-muted-foreground">
+
+          {snippet && (
+            <div className="my-10">
+              <div className="flex items-center gap-2 text-electric font-mono text-xs uppercase tracking-widest mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-electric" />
+                Production Implementation
+              </div>
+              <CodeWindow
+                fileName={snippet.fileName}
+                language={snippet.language}
+                code={snippet.code}
+                status={snippet.status}
+                badge={snippet.badge}
+              />
+            </div>
+          )}
+
+          <div className="prose dark:prose-invert prose-lg md:prose-xl max-w-none text-muted-foreground mt-12">
             <p>
-              This is a premium detailed view for the engineering note. In a production environment, this would be populated with rich markdown or CMS content detailing the architectural decisions, code snippets, and performance metrics associated with this specific case study.
+              In production environments, architectural choices dictate system resilience and iteration velocity. By codifying our infrastructure, enforcing strict boundary isolation, and automating observability, we ensure high availability under real-world loads.
             </p>
             <p>
-              Zeploy Tech engineers approach problems from first principles, ensuring every system is scalable, robust, and designed for long-term maintainability. 
+              Zeploy Tech engineers approach complex distributed systems from first principles, ensuring every solution is maintainable, cost-effective, and built for long-term operational excellence.
             </p>
           </div>
         </motion.div>
