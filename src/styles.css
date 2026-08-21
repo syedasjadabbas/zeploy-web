@@ -196,25 +196,314 @@
   }
 }
 
-/* Ensure border-white utility classes adapt gracefully in light mode */
+/* ================================================================
+   LIGHT MODE — Complete Override System
+   Covers all hardcoded dark-theme Tailwind utilities that leak.
+   Dark Mode is untouched.
+   ================================================================ */
+
+/* --- Page background transition --- */
+html, body { transition: background-color 0.25s ease, color 0.25s ease; }
+
+/* --- border-white/* utilities --- */
 .light .border-white\/5,
-html.light .border-white\/5 {
-  border-color: #EDF2F7 !important;
-}
+html.light .border-white\/5 { border-color: #E8EEF6 !important; }
 
 .light .border-white\/10,
-html.light .border-white\/10 {
-  border-color: #E2E8F0 !important;
-}
+html.light .border-white\/10 { border-color: #DDE5EF !important; }
 
 .light .border-white\/20,
-html.light .border-white\/20 {
-  border-color: #CBD5E1 !important;
+html.light .border-white\/20 { border-color: #C8D4E4 !important; }
+
+/* --- bg-white/* utilities --- */
+.light .bg-white\/5,
+html.light .bg-white\/5 { background-color: rgba(11, 21, 53, 0.04) !important; }
+
+/* --- bg-surface/* utilities (semi-transparent surfaces in dark mode become solid in light) --- */
+.light .bg-surface\/20,
+html.light .bg-surface\/20 { background-color: rgba(255, 255, 255, 0.65) !important; }
+
+.light .bg-surface\/30,
+html.light .bg-surface\/30 { background-color: rgba(255, 255, 255, 0.75) !important; }
+
+.light .bg-surface\/40,
+html.light .bg-surface\/40 { background-color: rgba(255, 255, 255, 0.85) !important; }
+
+.light .bg-surface\/50,
+html.light .bg-surface\/50 { background-color: rgba(255, 255, 255, 0.9) !important; }
+
+.light .bg-surface\/60,
+html.light .bg-surface\/60 { background-color: rgba(255, 255, 255, 0.92) !important; }
+
+.light .bg-surface\/80,
+html.light .bg-surface\/80 { background-color: rgba(255, 255, 255, 0.95) !important; }
+
+/* --- bg-background/* utilities --- */
+.light .bg-background\/50,
+html.light .bg-background\/50 { background-color: rgba(247, 249, 252, 0.8) !important; }
+
+.light .bg-background\/60,
+html.light .bg-background\/60 { background-color: rgba(247, 249, 252, 0.85) !important; }
+
+.light .bg-background\/80,
+html.light .bg-background\/80 { background-color: rgba(247, 249, 252, 0.9) !important; }
+
+.light .bg-background\/95,
+html.light .bg-background\/95 { background-color: rgba(247, 249, 252, 0.97) !important; }
+
+/* --- Carousel dot inactive state --- */
+.light .bg-white\/20,
+html.light .bg-white\/20 { background-color: #CBD5E1 !important; }
+
+.light .hover\:bg-white\/40:hover,
+html.light .hover\:bg-white\/40:hover { background-color: #94A3B8 !important; }
+
+/* --- bg-background (opaque) in sections with explicit bg-background class --- */
+/* Keep this semantic — `bg-background` already resolves to #F7F9FC via CSS var */
+
+/* --- grid separator background in Reliability --- */
+.light .bg-white\/5[class*="grid-cols"],
+html.light .bg-white\/5[class*="grid-cols"] { background-color: #E8EEF6 !important; }
+
+/* --- Reliability grid separator row color --- */
+.light .grid.grid-cols-2.gap-px,
+html.light .grid.grid-cols-2.gap-px,
+.light [class*="grid-cols"][class*="gap-px"],
+html.light [class*="grid-cols"][class*="gap-px"] {
+  background-color: #DDE5EF !important;
 }
 
-.light .bg-white\/5,
-html.light .bg-white\/5 {
-  background-color: rgba(15, 23, 42, 0.04) !important;
+/* --- text-foreground/80, text-foreground/90 --- */
+.light .text-foreground\/80,
+html.light .text-foreground\/80 { color: rgba(11, 21, 53, 0.8) !important; }
+
+.light .text-foreground\/90,
+html.light .text-foreground\/90 { color: rgba(11, 21, 53, 0.9) !important; }
+
+/* --- Blockquote founder message --- */
+.light blockquote,
+html.light blockquote { color: rgba(11, 21, 53, 0.85) !important; }
+
+/* ================================================================
+   GLASS CARD — Light Mode Override
+   Premium frosted glass with soft elevation
+   ================================================================ */
+.light .glass-card,
+html.light .glass-card {
+  background: linear-gradient(160deg, rgba(255,255,255,0.97) 0%, rgba(248,250,253,0.95) 100%) !important;
+  border-color: #DDE5EF !important;
+  box-shadow:
+    0 1px 3px rgba(11, 21, 53, 0.04),
+    0 4px 16px rgba(11, 21, 53, 0.06),
+    0 8px 32px rgba(11, 21, 53, 0.04) !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+.light .glass-card-hover:hover,
+html.light .glass-card-hover:hover {
+  border-color: rgba(59, 130, 246, 0.35) !important;
+  box-shadow:
+    0 4px 24px rgba(11, 21, 53, 0.07),
+    0 12px 40px rgba(59, 130, 246, 0.10),
+    0 0 0 1px rgba(59, 130, 246, 0.12) !important;
+  transform: translateY(-4px) !important;
+}
+
+/* ================================================================
+   FORM INPUTS — Light Mode
+   ================================================================ */
+.light input[class*="bg-background"],
+html.light input[class*="bg-background"],
+.light textarea[class*="bg-background"],
+html.light textarea[class*="bg-background"] {
+  background-color: #FFFFFF !important;
+  border-color: #DDE5EF !important;
+  color: #0B1535 !important;
+}
+
+.light input::placeholder,
+html.light input::placeholder,
+.light textarea::placeholder,
+html.light textarea::placeholder {
+  color: #94A3B8 !important;
+}
+
+.light input:focus,
+html.light input:focus,
+.light textarea:focus,
+html.light textarea:focus {
+  border-color: #3B82F6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12) !important;
+}
+
+/* ================================================================
+   NAV & HEADER — Light Mode
+   ================================================================ */
+.light header[class*="backdrop-blur"],
+html.light header[class*="backdrop-blur"] {
+  background-color: rgba(247, 249, 252, 0.92) !important;
+  border-bottom-color: #E8EEF6 !important;
+}
+
+/* ================================================================
+   PROJECT CARDS (FeaturedWork carousel) — Light Mode
+   ================================================================ */
+/* Active card shadow */
+.light [class*="shadow-\\[0_0_35px_rgba\\(59,130,246"],
+html.light [class*="shadow-\\[0_0_35px_rgba\\(59,130,246"] {
+  box-shadow: 0 4px 32px rgba(11, 21, 53, 0.10), 0 0 24px rgba(59, 130, 246, 0.08) !important;
+}
+
+/* Tech stack tags */
+.light [class*="bg-white\\/5"][class*="font-mono"],
+html.light [class*="bg-white\\/5"][class*="font-mono"] {
+  background-color: #F1F5F9 !important;
+  border-color: #DDE5EF !important;
+  color: #334155 !important;
+}
+
+/* ================================================================
+   SECTION DIVIDERS — Light Mode
+   ================================================================ */
+.light [class*="border-t"][class*="border-white\\/5"],
+html.light [class*="border-t"][class*="border-white\\/5"] {
+  border-top-color: #E8EEF6 !important;
+}
+
+/* ================================================================
+   PROCESS TIMELINE — Light Mode
+   The left/center line and step nodes
+   ================================================================ */
+.light [class*="bg-gradient-to-b"][class*="from-electric"],
+html.light [class*="bg-gradient-to-b"][class*="from-electric"] {
+  opacity: 0.7;
+}
+
+/* Step node outer ring */
+.light [class*="border-electric\\/60"][class*="bg-background"],
+html.light [class*="border-electric\\/60"][class*="bg-background"] {
+  background-color: #FFFFFF !important;
+}
+
+/* ================================================================
+   TEAM SKILLS BADGES — Light Mode
+   ================================================================ */
+.light [class*="border-white\\/5"][class*="bg-surface\\/40"],
+html.light [class*="border-white\\/5"][class*="bg-surface\\/40"] {
+  background-color: #F1F5F9 !important;
+  border-color: #DDE5EF !important;
+}
+
+/* ================================================================
+   SCROLL TO TOP BUTTON — Light Mode
+   ================================================================ */
+.light [class*="bg-surface\\/80"][class*="border-electric\\/30"],
+html.light [class*="bg-surface\\/80"][class*="border-electric\\/30"] {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 2px 16px rgba(11, 21, 53, 0.10) !important;
+}
+
+/* ================================================================
+   FAQ SECTION BACKGROUND — Light Mode
+   bg-surface/20 used on FAQ gives dark tint in light
+   ================================================================ */
+.light section[class*="bg-surface\\/20"],
+html.light section[class*="bg-surface\\/20"] {
+  background-color: rgba(241, 245, 249, 0.6) !important;
+}
+
+/* ================================================================
+   FOOTER — Light Mode
+   ================================================================ */
+.light footer,
+html.light footer {
+  background-color: #F0F4F8 !important;
+  border-top-color: #E2E8F0 !important;
+}
+
+.light footer [class*="border-b"][class*="border-white\\/5"],
+html.light footer [class*="border-b"][class*="border-white\\/5"] {
+  border-bottom-color: #E2E8F0 !important;
+}
+
+/* Social icon buttons in footer */
+.light footer a[class*="bg-surface\\/50"],
+html.light footer a[class*="bg-surface\\/50"] {
+  background-color: #FFFFFF !important;
+  border-color: #DDE5EF !important;
+  box-shadow: 0 1px 4px rgba(11, 21, 53, 0.06) !important;
+}
+
+/* ================================================================
+   THEME TOGGLE BUTTON — Light Mode
+   ================================================================ */
+.light button[class*="bg-surface\\/60"][class*="border-white\\/10"],
+html.light button[class*="bg-surface\\/60"][class*="border-white\\/10"] {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: #DDE5EF !important;
+  box-shadow: 0 1px 4px rgba(11, 21, 53, 0.06) !important;
+}
+
+/* ================================================================
+   INFRA VISUALIZATION — Light Mode
+   ================================================================ */
+.light [class*="bg-surface\\/60"][class*="border-electric\\/30"],
+html.light [class*="bg-surface\\/60"][class*="border-electric\\/30"] {
+  background-color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(11, 21, 53, 0.08) !important;
+}
+
+/* MetricChip overlay cards */
+.light [class*="glass-card"][class*="bg-surface\\/60"],
+html.light [class*="glass-card"][class*="bg-surface\\/60"] {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border-color: #DDE5EF !important;
+  box-shadow: 0 4px 16px rgba(11, 21, 53, 0.08) !important;
+}
+
+/* ================================================================
+   RELIABILITY BAR CHART — Light Mode
+   ================================================================ */
+.light [class*="bg-electric\\/30"],
+html.light [class*="bg-electric\\/30"] {
+  background-color: rgba(59, 130, 246, 0.18) !important;
+}
+
+/* ================================================================
+   HERO SECONDARY BUTTON (Start a project) — Light Mode
+   ================================================================ */
+.light a[class*="bg-surface\\/50"][class*="border-white\\/20"],
+html.light a[class*="bg-surface\\/50"][class*="border-white\\/20"] {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: #DDE5EF !important;
+  box-shadow: 0 1px 4px rgba(11, 21, 53, 0.06) !important;
+}
+
+/* ================================================================
+   HERO STATS DIVIDER — Light Mode
+   ================================================================ */
+.light [class*="border-t"][class*="border-white\\/5"][class*="grid-cols-3"],
+html.light [class*="border-t"][class*="border-white\\/5"][class*="grid-cols-3"] {
+  border-top-color: #E2E8F0 !important;
+}
+
+/* ================================================================
+   GLOW-ELECTRIC — Light Mode (tone down the glow)
+   ================================================================ */
+.light .glow-electric,
+html.light .glow-electric {
+  box-shadow:
+    0 0 0 1px rgba(59, 130, 246, 0.3),
+    0 4px 20px -4px rgba(59, 130, 246, 0.25) !important;
+}
+
+/* ================================================================
+   NAV "Start a project" pill — Light Mode
+   ================================================================ */
+.light a[class*="rounded-full"][class*="bg-surface\\/60"],
+html.light a[class*="rounded-full"][class*="bg-surface\\/60"] {
+  background-color: rgba(255,255,255,0.9) !important;
+  border-color: #DDE5EF !important;
 }
 
 @utility grid-bg {
