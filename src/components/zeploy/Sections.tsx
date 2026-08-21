@@ -127,36 +127,42 @@ export function SectionLabel({ children }: { children: React.ReactNode }) {
 /* ---------- SERVICES ---------- */
 const services = [
   {
+    slug: "web-development",
     icon: Globe2,
     title: "Web Applications",
     desc: "High-performance web platforms engineered for scale, speed, and longevity.",
     caps: ["Next.js / React", "Edge-rendered SSR", "Type-safe APIs"],
   },
   {
+    slug: "mobile-development",
     icon: Smartphone,
     title: "Mobile Apps",
     desc: "Native-grade iOS and Android products built on a unified codebase.",
     caps: ["React Native", "Offline-first", "Push & background sync"],
   },
   {
+    slug: "saas-development",
     icon: Boxes,
     title: "SaaS Development",
     desc: "Multi-tenant SaaS platforms with billing, auth, and admin out of the box.",
     caps: ["Stripe billing", "RBAC + SSO", "Usage metering"],
   },
   {
+    slug: "ai-solutions",
     icon: Brain,
     title: "AI Systems & Automation",
     desc: "LLM pipelines, retrieval systems, and intelligent workflows in production.",
     caps: ["RAG architectures", "Agent workflows", "Eval & guardrails"],
   },
   {
+    slug: "cloud-solutions",
     icon: Cloud,
     title: "Cloud Solutions",
     desc: "AWS-native infrastructure, IaC, and CI/CD for zero-downtime deployment.",
     caps: ["AWS / GCP", "Terraform", "Kubernetes"],
   },
   {
+    slug: "startup-mvp",
     icon: Rocket,
     title: "Startup MVP Development",
     desc: "Ship a defensible v1 in weeks — architected to survive product-market fit.",
@@ -187,23 +193,30 @@ export function Services() {
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.04 }}
             >
-              <TiltCard3D className="group relative bg-background p-6 sm:p-10 md:p-12 border border-white/10 rounded-2xl h-full transition-colors hover:border-electric/50 hover:bg-surface/40">
-                <div className="flex items-center justify-between">
-                  <div className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-surface text-electric transition-all group-hover:border-electric/60 group-hover:glow-electric">
-                    <s.icon className="h-5 w-5" />
+              <TiltCard3D className="group relative bg-background border border-white/10 rounded-2xl h-full transition-colors hover:border-electric/50 hover:bg-surface/40 overflow-hidden">
+                <Link
+                  to="/services/$slug"
+                  params={{ slug: s.slug }}
+                  onClick={() => trackGAEvent('service_click', { button_text: s.title, page: `/services/${s.slug}` })}
+                  className="block p-6 sm:p-10 md:p-12 h-full w-full"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-surface text-electric transition-all group-hover:border-electric/60 group-hover:glow-electric">
+                      <s.icon className="h-5 w-5" />
+                    </div>
+                    <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
                   </div>
-                  <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
-                </div>
-                <h3 className="mt-8 text-2xl font-semibold">{s.title}</h3>
-                <p className="mt-3 text-base leading-relaxed text-muted-foreground">{s.desc}</p>
-                <ul className="mt-6 space-y-1.5 font-mono text-xs text-electric-soft/80">
-                  {s.caps.map((c) => (
-                    <li key={c} className="flex items-center gap-2">
-                      <span className="h-px w-3 bg-electric/60" />
-                      {c}
-                    </li>
-                  ))}
-                </ul>
+                  <h3 className="mt-8 text-2xl font-semibold text-foreground group-hover:text-electric-soft transition-colors">{s.title}</h3>
+                  <p className="mt-3 text-base leading-relaxed text-muted-foreground">{s.desc}</p>
+                  <ul className="mt-6 space-y-1.5 font-mono text-xs text-electric-soft/80">
+                    {s.caps.map((c) => (
+                      <li key={c} className="flex items-center gap-2">
+                        <span className="h-px w-3 bg-electric/60" />
+                        {c}
+                      </li>
+                    ))}
+                  </ul>
+                </Link>
               </TiltCard3D>
             </motion.div>
           ))}
@@ -573,61 +586,73 @@ export function FeaturedWork() {
 /* ---------- INDUSTRIES WE SERVE ---------- */
 const industries = [
   {
+    slug: "startups",
     icon: Rocket,
     title: "Startups",
     desc: "Rapid MVP development, product-market fit iteration, and scalable tech foundations built to survive hypergrowth.",
   },
   {
+    slug: "ecommerce",
     icon: ShoppingBag,
     title: "E-commerce",
     desc: "Custom high-conversion storefronts, headless architectures, and integrated order-management engines.",
   },
   {
+    slug: "healthcare",
     icon: HeartPulse,
     title: "Healthcare",
     desc: "Secure, HIPAA-compliant patient management, diagnostic workflows, and encrypted medical data infrastructure.",
   },
   {
+    slug: "education",
     icon: GraduationCap,
     title: "Education",
     desc: "Interactive learning platforms, automated grading systems, and scalable student and teacher management portals.",
   },
   {
+    slug: "real-estate",
     icon: Building2,
     title: "Real Estate",
     desc: "Modern property portals, automated valuation workflows, tenant portals, and transaction management platforms.",
   },
   {
+    slug: "fintech",
     icon: Coins,
     title: "Finance & FinTech",
     desc: "Real-time ledger systems, high-volume payment routing, programmable billing, and compliant reporting tools.",
   },
   {
+    slug: "logistics",
     icon: Truck,
     title: "Logistics & Transportation",
     desc: "Real-time fleet telematics, dispatch algorithms, supply chain observability, and multi-hub routing engines.",
   },
   {
+    slug: "hospitality",
     icon: Hotel,
     title: "Hospitality",
     desc: "Direct reservation systems, guest experience apps, dynamic pricing engines, and multi-location operations.",
   },
   {
+    slug: "nonprofits",
     icon: HeartHandshake,
     title: "NGOs & Nonprofits",
     desc: "Donor engagement platforms, impact tracking dashboards, transparent fundraising, and community systems.",
   },
   {
+    slug: "saas",
     icon: Cpu,
     title: "SaaS & Technology",
     desc: "Multi-tenant cloud architectures, API-first platforms, AI workflow automation, and enterprise integrations.",
   },
   {
+    slug: "professional-services",
     icon: Briefcase,
     title: "Professional Services",
     desc: "Client collaboration portals, automated document intelligence, time & billing engines, and CRM integrations.",
   },
   {
+    slug: "retail",
     icon: Store,
     title: "Retail",
     desc: "Omnichannel inventory sync, point-of-sale integration, customer loyalty apps, and demand forecasting systems.",
@@ -657,8 +682,13 @@ export function Industries() {
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: (i % 4) * 0.04 }}
             >
-              <TiltCard3D className="group relative bg-background p-6 sm:p-7 border border-white/10 rounded-2xl h-full transition-all duration-300 hover:border-electric/50 hover:bg-surface/40 hover:shadow-[0_0_30px_rgba(59,130,246,0.12)] flex flex-col justify-between">
-                <div>
+              <TiltCard3D className="group relative bg-background border border-white/10 rounded-2xl h-full transition-all duration-300 hover:border-electric/50 hover:bg-surface/40 hover:shadow-[0_0_30px_rgba(59,130,246,0.12)] flex flex-col justify-between overflow-hidden">
+                <Link
+                  to="/industries/$slug"
+                  params={{ slug: ind.slug }}
+                  onClick={() => trackGAEvent('industry_click', { button_text: ind.title, page: `/industries/${ind.slug}` })}
+                  className="block p-6 sm:p-7 h-full w-full"
+                >
                   <div className="flex items-center justify-between">
                     <div className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-surface text-electric transition-all duration-300 group-hover:border-electric/60 group-hover:glow-electric">
                       <ind.icon className="h-5 w-5" />
@@ -667,7 +697,7 @@ export function Industries() {
                   </div>
                   <h3 className="mt-6 text-xl font-semibold text-foreground transition-colors group-hover:text-electric">{ind.title}</h3>
                   <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">{ind.desc}</p>
-                </div>
+                </Link>
               </TiltCard3D>
             </motion.div>
           ))}

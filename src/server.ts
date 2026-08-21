@@ -44,7 +44,12 @@ function withEdgeCacheHeaders(response: Response, request: Request): Response {
   if (response.status === 200 && request.method === "GET") {
     try {
       const url = new URL(request.url);
-      if (url.pathname === "/" || url.pathname.startsWith("/notes/")) {
+      if (
+        url.pathname === "/" ||
+        url.pathname.startsWith("/notes/") ||
+        url.pathname.startsWith("/services/") ||
+        url.pathname.startsWith("/industries/")
+      ) {
         const headers = new Headers(response.headers);
         headers.set("cache-control", "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400");
         return new Response(response.body, {
