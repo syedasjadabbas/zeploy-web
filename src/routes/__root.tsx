@@ -114,7 +114,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:image", content: "https://www.zeploy.tech/logo.webp" },
     ],
     links: [
-      { rel: "canonical", href: "https://www.zeploy.tech" },
       { rel: "icon", href: "/logo.webp" },
       { rel: "preload", as: "image", href: "/logo.webp" },
       { rel: "stylesheet", href: appCss },

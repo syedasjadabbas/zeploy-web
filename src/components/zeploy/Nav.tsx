@@ -79,22 +79,34 @@ export default function Nav() {
   }, [mobileOpen]);
 
   const links = [
-    { href: "#hero", label: "Home", id: "hero" },
-    { href: "#services", label: "Services", id: "services" },
-    { href: "#why-zeploy", label: "Why Zeploy", id: "why-zeploy" },
-    { href: "#work", label: "Our Work", id: "work" },
-    { href: "#team", label: "Team", id: "team" },
-    { href: "#contact", label: "Contact", id: "contact" },
+    { href: "/#hero", label: "Home", id: "hero" },
+    { href: "/#services", label: "Services", id: "services" },
+    { href: "/#why-zeploy", label: "Why Zeploy", id: "why-zeploy" },
+    { href: "/#work", label: "Our Work", id: "work" },
+    { href: "/#team", label: "Team", id: "team" },
+    { href: "/#contact", label: "Contact", id: "contact" },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
+    setMobileOpen(false);
+    if (location.pathname !== "/") {
+      navigate({ to: "/" }).then(() => {
+        setTimeout(() => {
+          const el = document.getElementById(id);
+          if (el) {
+            const y = el.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top: y, behavior: "smooth" });
+          }
+        }, 100);
+      });
+      return;
+    }
     const el = document.getElementById(id);
     if (el) {
       const y = el.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
-    setMobileOpen(false);
   };
 
   return (

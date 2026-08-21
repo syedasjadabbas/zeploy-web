@@ -36,6 +36,10 @@ export const Route = createFileRoute("/")({
         content:
           "Premium software engineering & AI studio building scalable, production-grade systems for modern businesses.",
       },
+      { property: "og:url", content: "https://www.zeploy.tech" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://www.zeploy.tech" },
     ],
   }),
   component: Index,

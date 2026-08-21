@@ -668,7 +668,7 @@ export function Reliability() {
             <span className="font-mono text-xs text-electric-soft">Last sync · just now</span>
           </div>
 
-          <div className="grid grid-cols-1 gap-px bg-white/5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
+          <div className="grid grid-cols-2 gap-px bg-white/5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
             {[
               { k: "Deployment Success", v: <AnimatedDecimalCounter from={0} to={99.7} decimals={1} suffix="%" duration={2} />, icon: Rocket },
               { k: "Infra Health", v: "Nominal", icon: Server },
@@ -735,13 +735,13 @@ export function Process() {
 
         <div className="relative mt-16">
           <div className="absolute left-3 top-0 h-full w-px bg-gradient-to-b from-electric/60 via-electric/20 to-transparent md:left-1/2" />
-          <div className="space-y-12">
+          <div className="space-y-10 sm:space-y-12">
             {process.map((step, i) => (
               <motion.div
                 key={step.k}
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: i * 0.05 }}
-                className={`relative grid gap-6 md:grid-cols-2 md:gap-16 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}
+                className={`relative grid gap-4 sm:gap-6 md:grid-cols-2 md:gap-16 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}
               >
                 <div className="relative pl-10 sm:pl-12 md:pl-0 md:text-right md:pr-12">
                   <span className="absolute left-0 top-1 h-6 w-6 rounded-full border border-electric/60 bg-background md:left-auto md:right-[-13px] md:top-2">
@@ -750,10 +750,10 @@ export function Process() {
                   <p className="font-mono text-xs uppercase tracking-widest text-electric">
                     Step {String(i + 1).padStart(2, "0")}
                   </p>
-                  <h3 className="mt-2 text-2xl font-semibold">{step.k}</h3>
+                  <h3 className="mt-2 text-xl sm:text-2xl font-semibold">{step.k}</h3>
                 </div>
                 <div className="pl-10 sm:pl-12 md:pl-12">
-                  <p className="max-w-md text-muted-foreground">{step.d}</p>
+                  <p className="max-w-md text-sm sm:text-base text-muted-foreground">{step.d}</p>
                 </div>
               </motion.div>
             ))}
@@ -832,10 +832,10 @@ export function Team() {
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.05 }}
             >
-              <TiltCard3D className="glass-card glass-card-hover relative overflow-hidden rounded-3xl p-6 sm:p-10 h-full">
+              <TiltCard3D className="glass-card glass-card-hover relative overflow-hidden rounded-3xl p-5 sm:p-10 h-full">
                 <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-electric/15 blur-[100px] transition-all duration-500 group-hover:bg-electric/25" />
                 <div className="flex flex-col gap-6">
-                  <div className="group/avatar relative aspect-square w-[65%] sm:w-[55%] mx-auto p-3 sm:p-4 rounded-2xl border border-electric/20 bg-surface/40 transition-all duration-300 hover:border-electric/50 hover:bg-surface/60">
+                  <div className="group/avatar relative aspect-square w-[55%] xs:w-[50%] sm:w-[45%] mx-auto p-3 sm:p-4 rounded-2xl border border-electric/20 bg-surface/40 transition-all duration-300 hover:border-electric/50 hover:bg-surface/60">
                     <div className="absolute inset-4 rounded-xl overflow-hidden bg-background transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]">
                       <img 
                         src={m.image} 
@@ -1267,44 +1267,44 @@ function FooterLink({ href, children, ...props }: React.AnchorHTMLAttributes<HTM
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/5 bg-background pt-20 md:pt-32 pb-12 px-4 sm:px-6 md:px-12">
+    <footer className="border-t border-white/5 bg-background pt-16 md:pt-32 pb-12 px-4 sm:px-6 md:px-12">
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-10 md:gap-16 md:grid-cols-2 lg:grid-cols-5 border-b border-white/5 pb-20">
-          <div className="lg:col-span-2">
+        <div className="grid gap-8 sm:gap-10 md:gap-16 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 border-b border-white/5 pb-14 sm:pb-20">
+          <div className="sm:col-span-2 lg:col-span-2">
             <div className="flex flex-col items-start">
-              <img src="/logo.webp" alt="Zeploy Tech" width="48" height="48" className="h-12 w-12 object-contain aspect-square mb-6" />
-              <h3 className="font-display text-2xl font-semibold tracking-widest text-foreground">
+              <img src="/logo.webp" alt="Zeploy Tech" width="48" height="48" className="h-10 w-10 sm:h-12 sm:w-12 object-contain aspect-square mb-4 sm:mb-6" />
+              <h3 className="font-display text-xl sm:text-2xl font-semibold tracking-widest text-foreground">
                 <span className="text-electric">ZEPLOY</span> TECH
               </h3>
             </div>
-            <p className="mt-6 max-w-sm text-base leading-relaxed text-muted-foreground">
+            <p className="mt-4 sm:mt-6 max-w-sm text-sm sm:text-base leading-relaxed text-muted-foreground">
               A premium software engineering and AI studio dedicated to building robust, scalable, and visually stunning digital products.
             </p>
-            <div className="mt-10">
-              <p className="font-mono text-xs uppercase tracking-widest text-electric-soft mb-4">Contact Us</p>
-              <a href="mailto:zeploytech@gmail.com" onClick={() => { trackGAEvent('email_click', { button_text: 'zeploytech@gmail.com text' }); trackGAEvent('contact_click', { button_text: 'zeploytech@gmail.com text' }); }} className="text-foreground text-lg hover:text-electric transition-colors">zeploytech@gmail.com</a>
+            <div className="mt-6 sm:mt-10">
+              <p className="font-mono text-xs uppercase tracking-widest text-electric-soft mb-3 sm:mb-4">Contact Us</p>
+              <a href="mailto:zeploytech@gmail.com" onClick={() => { trackGAEvent('email_click', { button_text: 'zeploytech@gmail.com text' }); trackGAEvent('contact_click', { button_text: 'zeploytech@gmail.com text' }); }} className="text-foreground text-sm sm:text-lg hover:text-electric transition-colors break-all">zeploytech@gmail.com</a>
             </div>
           </div>
           
           <div>
-            <h4 className="font-mono text-xs uppercase tracking-widest text-foreground mb-8">Services</h4>
-            <ul className="space-y-4 text-sm">
-              <FooterLink href="#services" onClick={() => trackGAEvent('service_click', { button_text: 'Web Applications Footer' })}>Web Applications</FooterLink>
-              <FooterLink href="#services" onClick={() => trackGAEvent('service_click', { button_text: 'Mobile Apps Footer' })}>Mobile Apps</FooterLink>
-              <FooterLink href="#services" onClick={() => trackGAEvent('service_click', { button_text: 'SaaS Development Footer' })}>SaaS Development</FooterLink>
-              <FooterLink href="#services" onClick={() => trackGAEvent('service_click', { button_text: 'AI Systems Footer' })}>AI Systems</FooterLink>
-              <FooterLink href="#services" onClick={() => trackGAEvent('service_click', { button_text: 'Cloud Solutions Footer' })}>Cloud Solutions</FooterLink>
+            <h4 className="font-mono text-xs uppercase tracking-widest text-foreground mb-5 sm:mb-8">Services</h4>
+            <ul className="space-y-3 sm:space-y-4 text-sm">
+              <FooterLink href="/#services" onClick={() => trackGAEvent('service_click', { button_text: 'Web Applications Footer' })}>Web Applications</FooterLink>
+              <FooterLink href="/#services" onClick={() => trackGAEvent('service_click', { button_text: 'Mobile Apps Footer' })}>Mobile Apps</FooterLink>
+              <FooterLink href="/#services" onClick={() => trackGAEvent('service_click', { button_text: 'SaaS Development Footer' })}>SaaS Development</FooterLink>
+              <FooterLink href="/#services" onClick={() => trackGAEvent('service_click', { button_text: 'AI Systems Footer' })}>AI Systems</FooterLink>
+              <FooterLink href="/#services" onClick={() => trackGAEvent('service_click', { button_text: 'Cloud Solutions Footer' })}>Cloud Solutions</FooterLink>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-mono text-xs uppercase tracking-widest text-foreground mb-8">Studio</h4>
-            <ul className="space-y-4 text-sm">
-              <FooterLink href="#work" onClick={() => trackGAEvent('portfolio_click', { button_text: 'Featured Work Footer' })}>Featured Work</FooterLink>
-              <FooterLink href="#team">Our Team</FooterLink>
-              <FooterLink href="#process">The Process</FooterLink>
-              <FooterLink href="#insights" onClick={() => trackGAEvent('case_study_click', { button_text: 'Engineering Notes Footer' })}>Engineering Notes</FooterLink>
-              <FooterLink href="#faq">FAQ</FooterLink>
+            <h4 className="font-mono text-xs uppercase tracking-widest text-foreground mb-5 sm:mb-8">Studio</h4>
+            <ul className="space-y-3 sm:space-y-4 text-sm">
+              <FooterLink href="/#work" onClick={() => trackGAEvent('portfolio_click', { button_text: 'Featured Work Footer' })}>Featured Work</FooterLink>
+              <FooterLink href="/#team">Our Team</FooterLink>
+              <FooterLink href="/#process">The Process</FooterLink>
+              <FooterLink href="/#insights" onClick={() => trackGAEvent('case_study_click', { button_text: 'Engineering Notes Footer' })}>Engineering Notes</FooterLink>
+              <FooterLink href="/#faq">FAQ</FooterLink>
             </ul>
           </div>
 
@@ -1351,12 +1351,12 @@ export function Footer() {
 
 export function FounderMessage() {
   return (
-    <section className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12 bg-background">
+    <section className="relative border-t border-white/5 px-4 sm:px-6 py-20 md:py-32 md:px-12 bg-background">
       <div className="mx-auto max-w-4xl text-center">
         <motion.div {...fadeUp}>
           <SectionLabel>A Word from the Founder</SectionLabel>
           <h2 className="sr-only">A Word from the Founder</h2>
-          <blockquote className="mt-12 text-2xl md:text-3xl lg:text-4xl font-medium leading-[1.4] text-foreground/90 tracking-tight">
+          <blockquote className="mt-10 sm:mt-12 text-lg sm:text-2xl md:text-3xl lg:text-4xl font-medium leading-[1.5] sm:leading-[1.4] text-foreground/90 tracking-tight">
             "At Zeploy, our goal is simple: build software that solves real business problems. We focus on scalable systems, modern technology, and long-term value for every client we work with."
           </blockquote>
           <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-12 sm:gap-24">
@@ -1416,18 +1416,18 @@ export function Faq() {
           </h2>
         </motion.div>
 
-        <div className="mt-16 space-y-4">
+        <div className="mt-12 sm:mt-16 space-y-3 sm:space-y-4">
           {faqs.map((faq, i) => (
             <motion.div key={i} {...fadeUp} transition={{ delay: i * 0.05 }} className="glass-card rounded-2xl overflow-hidden">
               <button 
                 onClick={() => setOpen(open === i ? null : i)}
-                className="w-full px-4 py-4 sm:px-6 sm:py-5 flex items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-electric rounded-xl"
+                className="w-full px-4 py-4 sm:px-6 sm:py-5 flex items-start sm:items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-electric rounded-xl gap-3"
                 aria-expanded={open === i}
                 aria-controls={`faq-answer-${i}`}
               >
-                <span className="text-lg font-medium text-foreground/90">{faq.q}</span>
-                <span className="ml-4 shrink-0 text-electric">
-                  {open === i ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
+                <span className="text-base sm:text-lg font-medium text-foreground/90 leading-snug">{faq.q}</span>
+                <span className="mt-0.5 sm:mt-0 shrink-0 text-electric">
+                  {open === i ? <Minus className="w-4 h-4 sm:w-5 sm:h-5" /> : <Plus className="w-4 h-4 sm:w-5 sm:h-5" />}
                 </span>
               </button>
               <div 
