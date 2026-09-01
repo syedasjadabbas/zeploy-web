@@ -23,8 +23,6 @@ const requiredChunks = [
   'HeroScene',
   'BackgroundScenes',
   'vendor-three',
-  'vendor-motion',
-  'vendor-icons',
   'Sections',
   'index',
   'styles'
