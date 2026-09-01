@@ -1,434 +1,695 @@
-import { useState, useRef, useEffect, useCallback, type KeyboardEvent } from "react";
+import React, { useState, useRef, useEffect, useCallback, useId } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, X, Send, Sparkles, Bot, ArrowUpRight, RotateCcw } from "lucide-react";
+import {
+  X,
+  ArrowUp,
+  RotateCcw,
+  ExternalLink,
+  MessageSquare,
+  Maximize2,
+  Minimize2,
+} from "lucide-react";
 
 interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
-  timestamp: number;
+  isError?: boolean;
 }
 
 const SUGGESTED_PROMPTS = [
   "What does Zeploy do?",
-  "What services do you offer?",
+  "Our services",
   "Show me your projects",
-  "How can I start a project?",
+  "How do I start a project?",
 ];
 
-const WELCOME_TEXT = `Hi, I'm Zee 👋
-I'm Zeploy's AI assistant. Ask me about our services, projects, process, team, or anything else about Zeploy.`;
-
+// Clean, lightweight Markdown formatter for assistant responses
 function FormattedContent({ text }: { text: string }) {
-  // Simple, safe Markdown-like renderer for paragraphs, bullet points, bold text, and inline links
-  const lines = text.split("\n");
+  const rendered = React.useMemo(() => {
+    if (!text) return null;
 
-  return (
-    <div className="space-y-1.5 text-xs sm:text-sm leading-relaxed">
-      {lines.map((line, idx) => {
-        const trimmed = line.trim();
-        if (!trimmed) {
-          return <div key={idx} className="h-1" />;
-        }
+    const lines = text.split("\n");
+    const elements: React.ReactNode[] = [];
+    let inList = false;
+    let listItems: string[] = [];
+    let listType: "ul" | "ol" = "ul";
 
-        // Bullet point detection
-        if (trimmed.startsWith("- ") || trimmed.startsWith("* ") || trimmed.startsWith("• ")) {
-          const content = trimmed.replace(/^[-*•]\s+/, "");
-          return (
-            <div key={idx} className="flex items-start gap-1.5 pl-1 text-foreground/90">
-              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-electric" />
-              <span>{renderInlineFormatting(content)}</span>
-            </div>
+    const flushList = () => {
+      if (inList && listItems.length > 0) {
+        if (listType === "ul") {
+          elements.push(
+            <ul key={`ul-${elements.length}`} className="list-disc pl-4 space-y-1 my-2 text-slate-200">
+              {listItems.map((item, idx) => (
+                <li key={idx} className="leading-relaxed">
+                  {parseInline(item)}
+                </li>
+              ))}
+            </ul>
+          );
+        } else {
+          elements.push(
+            <ol key={`ol-${elements.length}`} className="list-decimal pl-4 space-y-1 my-2 text-slate-200">
+              {listItems.map((item, idx) => (
+                <li key={idx} className="leading-relaxed">
+                  {parseInline(item)}
+                </li>
+              ))}
+            </ol>
           );
         }
+        listItems = [];
+        inList = false;
+      }
+    };
 
-        // Numbered list detection
-        const numMatch = trimmed.match(/^(\d+)\.\s+(.*)/);
-        if (numMatch) {
-          return (
-            <div key={idx} className="flex items-start gap-1.5 pl-1 text-foreground/90">
-              <span className="font-mono text-[11px] font-semibold text-electric shrink-0">
-                {numMatch[1]}.
-              </span>
-              <span>{renderInlineFormatting(numMatch[2])}</span>
-            </div>
-          );
+    const parseInline = (str: string): React.ReactNode => {
+      const parts: React.ReactNode[] = [];
+      let cursor = 0;
+      const regex = /(\*\*[^*]+\*\*|\*[^*]+\*|\[[^\]]+\]\([^)]+\)|`[^`]+`)/g;
+      let match: RegExpExecArray | null;
+
+      while ((match = regex.exec(str)) !== null) {
+        if (match.index > cursor) {
+          parts.push(str.substring(cursor, match.index));
         }
+        const token = match[0];
+        if (token.startsWith("**") && token.endsWith("**")) {
+          parts.push(
+            <strong key={match.index} className="text-white font-semibold">
+              {token.slice(2, -2)}
+            </strong>
+          );
+        } else if (token.startsWith("*") && token.endsWith("*")) {
+          parts.push(
+            <em key={match.index} className="text-slate-200 italic">
+              {token.slice(1, -1)}
+            </em>
+          );
+        } else if (token.startsWith("`") && token.endsWith("`")) {
+          parts.push(
+            <code
+              key={match.index}
+              className="bg-black/40 text-electric-soft px-1.5 py-0.5 rounded font-mono text-[11px] border border-white/5"
+            >
+              {token.slice(1, -1)}
+            </code>
+          );
+        } else if (token.startsWith("[") && token.includes("](")) {
+          const m = token.match(/\[([^\]]+)\]\(([^)]+)\)/);
+          if (m) {
+            const isExternal = m[2].startsWith("http");
+            parts.push(
+              <a
+                key={match.index}
+                href={m[2]}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+                className="text-electric hover:text-blue-300 underline underline-offset-2 transition-colors font-medium inline-flex items-center gap-0.5"
+              >
+                {m[1]}
+                {isExternal && <ExternalLink className="w-2.5 h-2.5 inline ml-0.5 opacity-70" />}
+              </a>
+            );
+          }
+        }
+        cursor = regex.lastIndex;
+      }
 
-        return (
-          <p key={idx} className="text-foreground/90">
-            {renderInlineFormatting(trimmed)}
-          </p>
+      if (cursor < str.length) {
+        parts.push(str.substring(cursor));
+      }
+
+      return parts.length > 0 ? parts : str;
+    };
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const trimmed = line.trim();
+
+      if (!trimmed) {
+        flushList();
+        continue;
+      }
+
+      // Headers (### or ##)
+      if (trimmed.startsWith("### ")) {
+        flushList();
+        elements.push(
+          <h4 key={`h-${i}`} className="font-display font-bold text-white text-sm mt-3 mb-1 tracking-tight">
+            {parseInline(trimmed.slice(4))}
+          </h4>
         );
-      })}
-    </div>
-  );
-}
+        continue;
+      }
+      if (trimmed.startsWith("## ")) {
+        flushList();
+        elements.push(
+          <h3 key={`h-${i}`} className="font-display font-bold text-white text-base mt-3.5 mb-1.5 tracking-tight">
+            {parseInline(trimmed.slice(3))}
+          </h3>
+        );
+        continue;
+      }
 
-function renderInlineFormatting(str: string): React.ReactNode[] {
-  // Split on bold (**text**)
-  const parts = str.split(/(\*\*.*?\*\*)/g);
-  return parts.map((part, i) => {
-    if (part.startsWith("**") && part.endsWith("**")) {
-      return (
-        <strong key={i} className="font-semibold text-foreground">
-          {part.slice(2, -2)}
-        </strong>
+      // Unordered list (* or -)
+      const ulMatch = trimmed.match(/^[\*\-]\s+(.+)/);
+      if (ulMatch) {
+        if (!inList || listType !== "ul") {
+          flushList();
+          inList = true;
+          listType = "ul";
+        }
+        listItems.push(ulMatch[1]);
+        continue;
+      }
+
+      // Ordered list (1., 2., etc.)
+      const olMatch = trimmed.match(/^\d+\.\s+(.+)/);
+      if (olMatch) {
+        if (!inList || listType !== "ol") {
+          flushList();
+          inList = true;
+          listType = "ol";
+        }
+        listItems.push(olMatch[1]);
+        continue;
+      }
+
+      flushList();
+      elements.push(
+        <p key={`p-${i}`} className="my-1.5 leading-relaxed text-slate-200">
+          {parseInline(trimmed)}
+        </p>
       );
     }
-    return part;
-  });
+
+    flushList();
+    return elements;
+  }, [text]);
+
+  return <div className="space-y-0.5 text-sm">{rendered}</div>;
 }
 
 export default function Zee() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isClient, setIsClient] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
+  const [isWaiting, setIsWaiting] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
+  const chatContainerRef = useRef<HTMLDivElement | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const titleId = useId();
 
-  // SSR Safe initialization
-  useEffect(() => {
-    setIsClient(true);
-    setMessages([
-      {
-        id: "welcome-msg",
-        role: "assistant",
-        content: WELCOME_TEXT,
-        timestamp: Date.now(),
-      },
-    ]);
-  }, []);
+  // Smart auto-scroll: only scrolls if user was already near bottom
+  const scrollToBottom = useCallback((force = false) => {
+    const container = chatContainerRef.current;
+    if (!container) return;
 
-  const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (force) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    const distanceFromBottom =
+      container.scrollHeight - container.scrollTop - container.clientHeight;
+    if (distanceFromBottom < 120) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
+    }
   }, []);
 
   useEffect(() => {
     if (isOpen) {
-      scrollToBottom();
-      // Focus input on desktop
+      scrollToBottom(true);
       const timer = setTimeout(() => {
         if (window.innerWidth >= 640) {
           inputRef.current?.focus();
         }
-      }, 150);
+      }, 80);
       return () => clearTimeout(timer);
     }
-  }, [isOpen, messages, scrollToBottom]);
+  }, [isOpen, scrollToBottom]);
+
+  useEffect(() => {
+    if (isOpen && (messages.length > 0 || isStreaming || isWaiting)) {
+      scrollToBottom(isWaiting);
+    }
+  }, [messages, isStreaming, isWaiting, isOpen, scrollToBottom]);
+
+  // Escape key closes window (or collapses if expanded)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        if (isExpanded) {
+          setIsExpanded(false);
+        } else {
+          setIsOpen(false);
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, isExpanded]);
 
   const handleSendMessage = async (textToSend?: string) => {
     const rawText = textToSend ?? inputValue;
     const text = rawText.trim();
-    if (!text || isLoading) return;
+    if (!text || isWaiting || isStreaming) return;
 
-    setHasInteracted(true);
     const userMsg: Message = {
       id: `user-${Date.now()}`,
       role: "user",
       content: text,
-      timestamp: Date.now(),
     };
 
-    setMessages((prev) => [...prev, userMsg]);
+    const nextMessages = [...messages, userMsg];
+    setMessages(nextMessages);
     if (!textToSend) setInputValue("");
-    setIsLoading(true);
+    setIsWaiting(true);
+    setIsStreaming(false);
+
+    const conversationHistory = nextMessages.slice(-10).map((m) => ({
+      role: m.role,
+      content: m.content,
+    }));
+
+    const assistantMsgId = `assistant-${Date.now()}`;
 
     try {
-      // Build conversation history (excluding initial welcome message for cleaner context)
-      const conversationHistory = messages
-        .filter((m) => m.id !== "welcome-msg")
-        .map((m) => ({
-          role: m.role,
-          content: m.content,
-        }));
-
-      const res = await fetch("/api/zee", {
+      const res = await fetch("/api/zee?stream=true", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Accept: "text/event-stream, application/json",
         },
         body: JSON.stringify({
           message: text,
           history: conversationHistory,
+          stream: true,
         }),
       });
 
       if (!res.ok) {
-        throw new Error(`Server returned HTTP ${res.status}`);
+        throw new Error(`HTTP ${res.status}`);
       }
 
-      const data = await res.json();
-      const replyText =
-        data?.reply ||
-        "I couldn't process that response. Please feel free to reach out to us at zeploytech@gmail.com.";
+      const contentType = res.headers.get("content-type") || "";
 
-      const assistantMsg: Message = {
-        id: `assistant-${Date.now()}`,
-        role: "assistant",
-        content: replyText,
-        timestamp: Date.now(),
-      };
+      if (contentType.includes("text/event-stream") && res.body) {
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder("utf-8");
+        let accumulated = "";
+        let buffer = "";
+        let hasStartedStreaming = false;
 
-      setMessages((prev) => [...prev, assistantMsg]);
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const parts = buffer.split("\n\n");
+          buffer = parts.pop() || "";
+
+          for (const part of parts) {
+            const trimmed = part.trim();
+            if (!trimmed.startsWith("data:")) continue;
+            const dataStr = trimmed.replace(/^data:\s*/, "");
+            if (dataStr === "[DONE]") break;
+
+            try {
+              const parsed = JSON.parse(dataStr);
+              if (parsed.delta) {
+                if (!hasStartedStreaming) {
+                  hasStartedStreaming = true;
+                  setIsWaiting(false);
+                  setIsStreaming(true);
+                  setMessages((prev) => [
+                    ...prev,
+                    {
+                      id: assistantMsgId,
+                      role: "assistant",
+                      content: parsed.delta,
+                    },
+                  ]);
+                  accumulated = parsed.delta;
+                } else {
+                  accumulated += parsed.delta;
+                  setMessages((prev) =>
+                    prev.map((m) =>
+                      m.id === assistantMsgId ? { ...m, content: accumulated } : m
+                    )
+                  );
+                }
+              } else if (parsed.error) {
+                throw new Error(parsed.error);
+              }
+            } catch {
+              // Ignore non-JSON lines
+            }
+          }
+        }
+
+        setIsWaiting(false);
+        setIsStreaming(false);
+      } else {
+        const data = await res.json();
+        const replyText =
+          data?.reply ||
+          "Zee couldn't respond right now. Please try again.";
+
+        setIsWaiting(false);
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: assistantMsgId,
+            role: "assistant",
+            content: replyText,
+          },
+        ]);
+      }
     } catch (err) {
-      console.error("Zee fetch error:", err);
+      console.error("[Zee Chat Error]:", err);
+      setIsWaiting(false);
+      setIsStreaming(false);
+
       const errorMsg: Message = {
         id: `error-${Date.now()}`,
         role: "assistant",
-        content:
-          "I ran into a temporary connection issue. You can try asking again or reach out to the Zeploy team directly at **zeploytech@gmail.com** or on WhatsApp at **+923033236878**.",
-        timestamp: Date.now(),
+        content: "Zee couldn't respond right now. Please try again.",
+        isError: true,
       };
+
       setMessages((prev) => [...prev, errorMsg]);
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
   };
 
-  const handleResetChat = () => {
-    setMessages([
-      {
-        id: "welcome-msg",
-        role: "assistant",
-        content: WELCOME_TEXT,
-        timestamp: Date.now(),
-      },
-    ]);
-    setHasInteracted(false);
+  const handleContactClick = () => {
+    setIsOpen(false);
+    setIsExpanded(false);
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = "/#contact";
+    }
   };
 
-  if (!isClient) {
-    return null;
-  }
+  const handleClearChat = () => {
+    setMessages([]);
+    setInputValue("");
+    setIsWaiting(false);
+    setIsStreaming(false);
+  };
 
   return (
-    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 font-sans">
-      {/* Floating Chat Panel */}
+    <>
+      {/* 1. FLOATING LAUNCHER (When Closed) */}
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.button
+            key="zee-launcher"
+            onClick={() => setIsOpen(true)}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.94 }}
+            aria-label="Open Zee AI Assistant"
+            className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-[60] w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-electric hover:bg-blue-600 text-white flex items-center justify-center shadow-xl shadow-blue-500/25 border border-blue-400/30 focus:outline-none focus:ring-2 focus:ring-electric focus:ring-offset-2 focus:ring-offset-[#020817] group cursor-pointer transition-all"
+          >
+            {/* Subtle glow */}
+            <span className="absolute -inset-1 rounded-full bg-electric/20 blur-sm group-hover:bg-electric/35 transition-colors" />
+
+            {/* Small green online indicator */}
+            <span className="absolute top-0 right-0 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#0B1535] shadow-sm flex items-center justify-center">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-100 animate-pulse" />
+            </span>
+
+            {/* Emblem Z icon */}
+            <span className="relative z-10 font-display font-black text-xl tracking-tight text-white select-none">
+              Z
+            </span>
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* 2. BACKDROP OVERLAY FOR EXPANDED MODE */}
+      <AnimatePresence>
+        {isOpen && isExpanded && (
+          <motion.div
+            key="zee-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsExpanded(false)}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[65] transition-opacity"
+            aria-hidden="true"
+          />
+        )}
+      </AnimatePresence>
+
+      {/* 3. CHAT WINDOW (Responsive: Collapsed Floating vs Expanded Workspace) */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.94 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.94 }}
-            transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-3 w-[calc(100vw-2rem)] sm:w-[390px] h-[520px] max-h-[calc(100vh-6.5rem)] flex flex-col rounded-2xl sm:rounded-3xl border border-white/10 bg-[#0B1535]/95 backdrop-blur-2xl shadow-[0_16px_50px_rgba(0,0,0,0.6)] overflow-hidden"
+            key="zee-panel"
             role="dialog"
-            aria-label="Zee - Zeploy AI Assistant"
+            aria-labelledby={titleId}
+            aria-modal="true"
+            initial={{ opacity: 0, y: 16, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 16, scale: 0.96 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            className={`fixed flex flex-col overflow-hidden select-text rounded-2xl border border-electric/25 bg-[#0B1535]/95 backdrop-blur-2xl shadow-2xl shadow-black/80 transition-all duration-200 ${
+              isExpanded
+                ? "inset-2 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 z-[70] w-[calc(100vw-16px)] sm:w-[min(920px,82vw)] h-[calc(100dvh-16px)] sm:h-[min(720px,84dvh)] max-h-[calc(100dvh-24px)] max-w-[calc(100vw-24px)]"
+                : "bottom-2 right-2 left-2 sm:left-auto sm:bottom-4 sm:right-4 z-[60] w-[calc(100vw-16px)] sm:w-[390px] sm:max-w-[calc(100vw-32px)] h-[calc(100dvh-16px)] sm:h-[min(540px,calc(100dvh-96px))] sm:max-h-[calc(100dvh-96px)]"
+            }`}
           >
-            {/* Header */}
-            <div className="relative flex items-center justify-between px-4 py-3.5 border-b border-white/10 bg-surface/50 backdrop-blur-md">
-              <div className="flex items-center gap-2.5">
-                {/* Zee Avatar Badge */}
-                <div className="relative grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-electric to-blue-700 text-white shadow-[0_0_15px_rgba(59,130,246,0.5)]">
-                  <span className="font-display text-base font-bold tracking-tight">Z</span>
-                  <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-[#0B1535] bg-emerald-400" />
+            {/* Top Accent Gradient Line */}
+            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-electric to-transparent shrink-0" />
+
+            {/* =================================================== */}
+            {/* HEADER (~60-64px) */}
+            {/* =================================================== */}
+            <header className="px-3.5 sm:px-4 py-2.5 sm:py-3 border-b border-white/5 flex items-center justify-between bg-[#070E28]/85 backdrop-blur-md shrink-0 gap-2">
+              <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-electric/20 border border-electric/30 flex items-center justify-center text-electric shadow-sm shrink-0">
+                  <span className="font-display font-black text-xs sm:text-sm text-white select-none">
+                    Z
+                  </span>
                 </div>
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <h3 className="font-display text-sm font-bold tracking-wide text-foreground">Zee</h3>
-                    <span className="rounded-full bg-electric/15 border border-electric/30 px-1.5 py-0.2 font-mono text-[9px] font-medium text-electric uppercase tracking-wider">
-                      AI
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-muted-foreground flex items-center gap-1">
-                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    Zeploy Tech Assistant
+                <div className="min-w-0">
+                  <h2 id={titleId} className="text-xs sm:text-sm font-display font-bold text-foreground leading-tight truncate">
+                    Zee
+                  </h2>
+                  <p className="text-[9px] sm:text-[10px] font-mono text-muted-foreground leading-tight truncate">
+                    Zeploy AI Assistant
                   </p>
                 </div>
               </div>
 
-              {/* Actions */}
-              <div className="flex items-center gap-1">
-                {hasInteracted && (
+              <div className="flex items-center gap-1.5 shrink-0">
+                {/* Small Online Badge */}
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono font-medium text-emerald-400 bg-emerald-500/10 border border-emerald-500/20">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  Online
+                </span>
+
+                {messages.length > 0 && (
                   <button
-                    type="button"
-                    onClick={handleResetChat}
-                    title="Reset conversation"
-                    aria-label="Reset conversation"
-                    className="grid h-7 w-7 place-items-center rounded-lg text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
+                    onClick={handleClearChat}
+                    title="Clear conversation"
+                    aria-label="Clear conversation"
+                    className="w-7 h-7 rounded-lg text-muted-foreground hover:text-foreground hover:bg-white/5 flex items-center justify-center transition-colors cursor-pointer"
                   >
-                    <RotateCcw className="h-3.5 w-3.5" />
+                    <RotateCcw className="w-3.5 h-3.5" />
                   </button>
                 )}
+
+                {/* Expand / Collapse Button (Desktop and Mobile) */}
                 <button
-                  type="button"
-                  onClick={() => setIsOpen(false)}
-                  title="Close chat"
-                  aria-label="Close chat"
-                  className="grid h-8 w-8 place-items-center rounded-xl text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
+                  onClick={() => setIsExpanded(!isExpanded)}
+                  title={isExpanded ? "Collapse to floating window" : "Expand to full workspace"}
+                  aria-label={isExpanded ? "Collapse chat" : "Expand chat"}
+                  className="w-7 h-7 rounded-lg text-muted-foreground hover:text-foreground hover:bg-white/5 flex items-center justify-center transition-colors cursor-pointer"
                 >
-                  <X className="h-4 w-4" />
+                  {isExpanded ? (
+                    <Minimize2 className="w-3.5 h-3.5" />
+                  ) : (
+                    <Maximize2 className="w-3.5 h-3.5" />
+                  )}
+                </button>
+
+                {/* Close Button */}
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    setIsExpanded(false);
+                  }}
+                  title="Close chat (Esc)"
+                  aria-label="Close chat"
+                  className="w-7 h-7 rounded-lg text-muted-foreground hover:text-foreground hover:bg-white/5 flex items-center justify-center transition-colors cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
                 </button>
               </div>
-            </div>
+            </header>
 
-            {/* Message Area */}
-            <div className="flex-1 overflow-y-auto p-3.5 sm:p-4 space-y-3 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-              {messages.map((msg) => {
-                const isUser = msg.role === "user";
-                return (
-                  <div
-                    key={msg.id}
-                    className={`flex items-start gap-2 ${isUser ? "justify-end" : "justify-start"}`}
-                  >
-                    {!isUser && (
-                      <div className="grid h-6 w-6 shrink-0 place-items-center rounded-lg bg-electric/20 border border-electric/30 text-electric mt-0.5">
-                        <Sparkles className="h-3 w-3" />
-                      </div>
-                    )}
-                    <div
-                      className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-xs sm:text-sm shadow-sm ${
-                        isUser
-                          ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-tr-xs"
-                          : "bg-surface/80 border border-white/10 text-foreground rounded-tl-xs backdrop-blur-md"
-                      }`}
-                    >
-                      <FormattedContent text={msg.content} />
-                    </div>
+            {/* =================================================== */}
+            {/* CHAT AREA (Scrollable, Flex-1, Min-h-0) */}
+            {/* =================================================== */}
+            <div
+              ref={chatContainerRef}
+              className={`flex-1 min-h-0 overflow-y-auto p-3.5 sm:p-4 space-y-3 overscroll-contain ${
+                isExpanded ? "max-w-4xl mx-auto w-full" : ""
+              }`}
+            >
+              {/* WELCOME SCREEN */}
+              {messages.length === 0 && (
+                <div className="py-4 px-2 flex flex-col items-center text-center">
+                  <div className="w-10 h-10 rounded-2xl bg-electric/15 border border-electric/30 flex items-center justify-center text-electric mb-2 shadow-sm">
+                    <span className="font-display font-black text-lg text-white select-none">
+                      Z
+                    </span>
                   </div>
-                );
-              })}
-
-              {/* Suggested Questions (only if user hasn't sent a message yet) */}
-              {!hasInteracted && messages.length === 1 && (
-                <div className="mt-4 pt-2 border-t border-white/5">
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-2 px-1">
-                    Suggested Questions
+                  <h3 className="font-display font-bold text-foreground text-sm sm:text-base tracking-tight">
+                    Hi, I&apos;m Zee.
+                  </h3>
+                  <p className="font-mono text-xs text-electric mt-0.5">
+                    Zeploy&apos;s AI assistant.
                   </p>
-                  <div className="grid gap-1.5">
+                  <p className="text-xs text-muted-foreground mt-1.5 max-w-[280px] leading-relaxed">
+                    Ask me about our services, projects, team, process, or how we work.
+                  </p>
+
+                  {/* Compact Suggestion Chips */}
+                  <div className={`w-full mt-4 flex flex-col gap-1.5 ${isExpanded ? "sm:grid sm:grid-cols-2 max-w-lg" : ""}`}>
                     {SUGGESTED_PROMPTS.map((prompt) => (
                       <button
                         key={prompt}
-                        type="button"
                         onClick={() => handleSendMessage(prompt)}
-                        className="group flex items-center justify-between w-full rounded-xl border border-white/5 bg-surface/40 hover:bg-surface/80 hover:border-electric/40 px-3 py-2 text-left text-xs text-foreground/85 hover:text-foreground transition-all duration-200"
+                        className="text-left text-xs text-slate-200 bg-[#0E1B42]/75 hover:bg-[#14275E] border border-electric/15 hover:border-electric/35 px-3 py-2 rounded-xl transition-all flex items-center justify-between group cursor-pointer"
                       >
-                        <span className="truncate pr-2">{prompt}</span>
-                        <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground group-hover:text-electric transition-colors shrink-0" />
+                        <span>{prompt}</span>
+                        <ArrowUp className="w-3 h-3 text-muted-foreground group-hover:text-electric transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 shrink-0 ml-2" />
                       </button>
                     ))}
                   </div>
                 </div>
               )}
 
-              {/* Loading / Typing Indicator */}
-              {isLoading && (
-                <div className="flex items-start gap-2 justify-start">
-                  <div className="grid h-6 w-6 shrink-0 place-items-center rounded-lg bg-electric/20 border border-electric/30 text-electric mt-0.5">
-                    <Sparkles className="h-3 w-3 animate-spin" style={{ animationDuration: "3s" }} />
+              {/* MESSAGES */}
+              {messages.map((msg) => (
+                <motion.div
+                  key={msg.id}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.15 }}
+                  className={`flex flex-col ${
+                    msg.role === "user" ? "items-end" : "items-start"
+                  }`}
+                >
+                  <div
+                    className={`${
+                      msg.role === "user"
+                        ? "bg-gradient-to-r from-blue-600 to-electric text-white font-medium rounded-2xl rounded-tr-xs px-3.5 py-2.5 text-sm max-w-[85%] sm:max-w-[78%] shadow-sm"
+                        : "bg-[#0E1B42]/90 border border-white/5 text-slate-100 rounded-2xl rounded-tl-xs px-3.5 py-3 text-sm leading-relaxed max-w-[88%] sm:max-w-[82%] shadow-sm"
+                    }`}
+                  >
+                    {msg.role === "user" ? (
+                      <p className="whitespace-pre-wrap">{msg.content}</p>
+                    ) : (
+                      <>
+                        <FormattedContent text={msg.content} />
+                        {msg.isError && (
+                          <div className="mt-2.5 pt-2 border-t border-white/10 flex items-center gap-2">
+                            <button
+                              onClick={() => {
+                                const lastUser = [...messages].reverse().find((m) => m.role === "user");
+                                if (lastUser) handleSendMessage(lastUser.content);
+                              }}
+                              className="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/15 text-white text-xs font-medium transition-colors cursor-pointer"
+                            >
+                              Try again
+                            </button>
+                            <button
+                              onClick={handleContactClick}
+                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-electric hover:bg-blue-600 text-white text-xs font-medium transition-colors cursor-pointer"
+                            >
+                              <MessageSquare className="w-3 h-3" />
+                              Contact Zeploy
+                            </button>
+                          </div>
+                        )}
+                      </>
+                    )}
                   </div>
-                  <div className="rounded-2xl rounded-tl-xs bg-surface/80 border border-white/10 px-4 py-2.5 backdrop-blur-md">
-                    <div className="flex items-center gap-1.5 py-1">
-                      <span className="h-1.5 w-1.5 rounded-full bg-electric animate-bounce" style={{ animationDelay: "0ms" }} />
-                      <span className="h-1.5 w-1.5 rounded-full bg-electric animate-bounce" style={{ animationDelay: "150ms" }} />
-                      <span className="h-1.5 w-1.5 rounded-full bg-electric animate-bounce" style={{ animationDelay: "300ms" }} />
-                    </div>
+                </motion.div>
+              ))}
+
+              {/* TINY TYPING INDICATOR */}
+              {isWaiting && (
+                <motion.div
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-start"
+                >
+                  <div className="bg-[#0E1B42]/90 border border-white/5 rounded-2xl rounded-tl-xs px-3 py-2 shadow-sm flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-electric animate-bounce [animation-delay:-0.3s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-electric animate-bounce [animation-delay:-0.15s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-electric animate-bounce" />
                   </div>
-                </div>
+                </motion.div>
               )}
 
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Footer */}
-            <div className="border-t border-white/10 bg-surface/30 p-2.5 sm:p-3">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleSendMessage();
-                }}
-                className="flex items-center gap-2"
-              >
-                <div className="relative flex-1">
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    placeholder="Ask Zee a question..."
-                    disabled={isLoading}
-                    maxLength={2000}
-                    className="w-full rounded-xl border border-white/10 bg-background/70 px-3.5 py-2.5 text-xs sm:text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors disabled:opacity-50"
-                  />
-                </div>
+            {/* =================================================== */}
+            {/* INPUT AREA (Fixed height, shrink-0) */}
+            {/* =================================================== */}
+            <div className="p-2.5 sm:p-3 border-t border-white/5 bg-[#070E28]/90 backdrop-blur-md shrink-0">
+              <div className={`relative flex items-center gap-2 bg-[#0A1435] border border-white/10 focus-within:border-electric/50 rounded-2xl px-3 py-1.5 transition-all shadow-inner ${isExpanded ? "max-w-4xl mx-auto" : ""}`}>
+                <textarea
+                  ref={inputRef}
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Ask Zee anything..."
+                  rows={1}
+                  disabled={isWaiting || isStreaming}
+                  aria-label="Ask Zee anything"
+                  className="bg-transparent text-foreground placeholder:text-muted-foreground/60 text-xs sm:text-sm py-1 outline-none w-full resize-none max-h-20 min-h-[28px] sm:min-h-[30px] leading-snug font-sans disabled:opacity-50"
+                  style={{ height: "auto" }}
+                />
                 <button
-                  type="submit"
-                  disabled={!inputValue.trim() || isLoading}
+                  onClick={() => handleSendMessage()}
+                  disabled={!inputValue.trim() || isWaiting || isStreaming}
                   aria-label="Send message"
-                  className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-electric text-white transition-all hover:bg-blue-600 hover:scale-105 active:scale-95 disabled:opacity-40 disabled:hover:scale-100 disabled:hover:bg-electric shadow-[0_0_12px_rgba(59,130,246,0.3)]"
+                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center shrink-0 transition-all cursor-pointer ${
+                    inputValue.trim() && !isWaiting && !isStreaming
+                      ? "bg-electric hover:bg-blue-600 text-white shadow-md shadow-blue-500/25 scale-100"
+                      : "bg-white/5 text-muted-foreground/40 cursor-not-allowed"
+                  }`}
                 >
-                  <Send className="h-4 w-4" />
+                  <ArrowUp className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
-              </form>
-              <p className="mt-1.5 text-center text-[10px] text-muted-foreground/60 font-mono tracking-tight">
-                Zeploy AI Studio • Lahore, Pakistan
-              </p>
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Floating Launcher Button */}
-      <motion.button
-        type="button"
-        onClick={() => setIsOpen((prev) => !prev)}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        aria-label={isOpen ? "Close Zee assistant" : "Open Zee assistant"}
-        className="group relative flex items-center gap-2.5 rounded-full border border-electric/30 bg-[#0B1535]/90 px-4 py-3 text-foreground shadow-[0_0_25px_rgba(59,130,246,0.3)] backdrop-blur-xl transition-all duration-300 hover:border-electric hover:shadow-[0_0_35px_rgba(59,130,246,0.5)]"
-      >
-        <div className="relative grid h-7 w-7 place-items-center rounded-full bg-electric text-white">
-          <AnimatePresence mode="wait">
-            {isOpen ? (
-              <motion.div
-                key="close"
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
-                transition={{ duration: 0.15 }}
-              >
-                <X className="h-4 w-4" />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="open"
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.5, opacity: 0 }}
-                transition={{ duration: 0.15 }}
-                className="font-display font-bold text-sm tracking-tight"
-              >
-                Z
-              </motion.div>
-            )}
-          </AnimatePresence>
-          {!isOpen && (
-            <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-          )}
-        </div>
-
-        <div className="flex flex-col items-start pr-1">
-          <span className="font-display text-xs font-bold leading-none tracking-wide text-foreground">
-            {isOpen ? "Close" : "Chat with Zee"}
-          </span>
-          <span className="font-mono text-[9px] uppercase tracking-widest text-electric">
-            AI Assistant
-          </span>
-        </div>
-      </motion.button>
-    </div>
+    </>
   );
 }

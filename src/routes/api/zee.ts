@@ -1,4 +1,4 @@
-import { generateZeeReply } from "@/lib/server/zee.server";
+import { generateZeeReply, streamZeeReply } from "@/lib/server/zee.server";
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -8,6 +8,7 @@ interface ChatMessage {
 interface ZeeRequestBody {
   message?: string;
   history?: ChatMessage[];
+  stream?: boolean;
 }
 
 type APIHandler = ({ request }: { request: Request }) => Promise<Response> | Response;
@@ -34,9 +35,9 @@ export async function handleZeeApiRequest(request: Request): Promise<Response> {
     return new Response(null, {
       status: 204,
       headers: {
-        "access-control-allow-origin": "*",
-        "access-control-allow-methods": "POST, OPTIONS",
-        "access-control-allow-headers": "Content-Type",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Accept",
       },
     });
   }
@@ -47,12 +48,18 @@ export async function handleZeeApiRequest(request: Request): Promise<Response> {
       {
         status: 405,
         headers: {
-          "content-type": "application/json",
-          allow: "POST, OPTIONS",
+          "Content-Type": "application/json",
+          Allow: "POST, OPTIONS",
         },
       }
     );
   }
+
+  const url = new URL(request.url);
+  const acceptHeader = request.headers.get("accept") || "";
+  const wantsStream =
+    url.searchParams.get("stream") === "true" ||
+    acceptHeader.includes("text/event-stream");
 
   try {
     let body: ZeeRequestBody;
@@ -65,7 +72,7 @@ export async function handleZeeApiRequest(request: Request): Promise<Response> {
         JSON.stringify({ error: "Malformed JSON payload in request body." }),
         {
           status: 400,
-          headers: { "content-type": "application/json" },
+          headers: { "Content-Type": "application/json" },
         }
       );
     }
@@ -76,7 +83,7 @@ export async function handleZeeApiRequest(request: Request): Promise<Response> {
         JSON.stringify({ error: "The 'message' field is required and cannot be empty." }),
         {
           status: 400,
-          headers: { "content-type": "application/json" },
+          headers: { "Content-Type": "application/json" },
         }
       );
     }
@@ -88,7 +95,7 @@ export async function handleZeeApiRequest(request: Request): Promise<Response> {
         }),
         {
           status: 400,
-          headers: { "content-type": "application/json" },
+          headers: { "Content-Type": "application/json" },
         }
       );
     }
@@ -105,21 +112,98 @@ export async function handleZeeApiRequest(request: Request): Promise<Response> {
           .slice(-14)
       : [];
 
+    const isStreamingRequest = wantsStream || body.stream === true;
+
     console.log(
-      `[/api/zee] Received request: "${message.slice(0, 50)}${message.length > 50 ? "..." : ""}" (History turns: ${history.length})`
+      `[/api/zee] Received request (streaming: ${isStreamingRequest}): "${message.slice(0, 40)}..." (History turns: ${history.length})`
     );
 
-    const reply = await generateZeeReply(message, history);
+    if (isStreamingRequest) {
+      try {
+        const stream = await streamZeeReply(message, history);
+        const encoder = new TextEncoder();
 
+        const readable = new ReadableStream({
+          async start(controller) {
+            // Immediate flush comment to establish SSE connection and achieve instant TTFB
+            controller.enqueue(encoder.encode(": connected\n\n"));
+            try {
+              for await (const chunk of stream) {
+                const text = chunk.text;
+                if (text) {
+                  controller.enqueue(
+                    encoder.encode(`data: ${JSON.stringify({ delta: text })}\n\n`)
+                  );
+                }
+              }
+              controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+              controller.close();
+            } catch (streamError: any) {
+              console.error("[/api/zee] Stream iteration error:", streamError?.message || streamError);
+              controller.enqueue(
+                encoder.encode(
+                  `data: ${JSON.stringify({
+                    error: "A temporary error occurred while generating the response stream.",
+                  })}\n\n`
+                )
+              );
+              controller.close();
+            }
+          },
+        });
+
+        return new Response(readable, {
+          status: 200,
+          headers: {
+            "Content-Type": "text/event-stream; charset=utf-8",
+            "Cache-Control": "no-cache, no-transform",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+          },
+        });
+      } catch (err: any) {
+        if (err?.message === "OFFLINE_MODE") {
+          const offlineMsg =
+            "Zee is currently operating in offline mode (API key is not configured in this environment). Please reach out directly to the Zeploy engineering team at **zeploytech@gmail.com** or via WhatsApp at **+923033236878**.";
+          const encoder = new TextEncoder();
+          const readable = new ReadableStream({
+            start(controller) {
+              controller.enqueue(
+                encoder.encode(`data: ${JSON.stringify({ delta: offlineMsg })}\n\n`)
+              );
+              controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+              controller.close();
+            },
+          });
+          return new Response(readable, {
+            status: 200,
+            headers: {
+              "Content-Type": "text/event-stream; charset=utf-8",
+              "Cache-Control": "no-cache, no-transform",
+            },
+          });
+        }
+
+        console.error("[/api/zee] Failed to initiate stream, falling back to unary:", err?.message || err);
+        const reply = await generateZeeReply(message, history);
+        return new Response(JSON.stringify({ reply }), {
+          status: 200,
+          headers: { "Content-Type": "application/json; charset=utf-8" },
+        });
+      }
+    }
+
+    // Non-streaming response
+    const reply = await generateZeeReply(message, history);
     return new Response(JSON.stringify({ reply }), {
       status: 200,
       headers: {
-        "content-type": "application/json; charset=utf-8",
-        "cache-control": "no-store, no-cache, must-revalidate",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "no-store, no-cache, must-revalidate",
       },
     });
-  } catch (error) {
-    console.error("[/api/zee] Unhandled exception in route handler:", error);
+  } catch (error: any) {
+    console.error("[/api/zee] Unhandled exception in route handler:", error?.message || error);
     return new Response(
       JSON.stringify({
         reply:
@@ -128,8 +212,8 @@ export async function handleZeeApiRequest(request: Request): Promise<Response> {
       {
         status: 200,
         headers: {
-          "content-type": "application/json; charset=utf-8",
-          "cache-control": "no-store, no-cache, must-revalidate",
+          "Content-Type": "application/json; charset=utf-8",
+          "Cache-Control": "no-store, no-cache, must-revalidate",
         },
       }
     );
