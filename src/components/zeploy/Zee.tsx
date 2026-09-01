@@ -39,7 +39,7 @@ function FormattedContent({ text }: { text: string }) {
       if (inList && listItems.length > 0) {
         if (listType === "ul") {
           elements.push(
-            <ul key={`ul-${elements.length}`} className="list-disc pl-4 space-y-1 my-2 text-slate-200">
+            <ul key={`ul-${elements.length}`} className="list-disc pl-4 space-y-1 my-2 text-foreground/90">
               {listItems.map((item, idx) => (
                 <li key={idx} className="leading-relaxed">
                   {parseInline(item)}
@@ -49,7 +49,7 @@ function FormattedContent({ text }: { text: string }) {
           );
         } else {
           elements.push(
-            <ol key={`ol-${elements.length}`} className="list-decimal pl-4 space-y-1 my-2 text-slate-200">
+            <ol key={`ol-${elements.length}`} className="list-decimal pl-4 space-y-1 my-2 text-foreground/90">
               {listItems.map((item, idx) => (
                 <li key={idx} className="leading-relaxed">
                   {parseInline(item)}
@@ -76,13 +76,13 @@ function FormattedContent({ text }: { text: string }) {
         const token = match[0];
         if (token.startsWith("**") && token.endsWith("**")) {
           parts.push(
-            <strong key={match.index} className="text-white font-semibold">
+            <strong key={match.index} className="text-foreground font-semibold">
               {token.slice(2, -2)}
             </strong>
           );
         } else if (token.startsWith("*") && token.endsWith("*")) {
           parts.push(
-            <em key={match.index} className="text-slate-200 italic">
+            <em key={match.index} className="text-foreground/80 italic">
               {token.slice(1, -1)}
             </em>
           );
@@ -90,7 +90,7 @@ function FormattedContent({ text }: { text: string }) {
           parts.push(
             <code
               key={match.index}
-              className="bg-black/40 text-electric-soft px-1.5 py-0.5 rounded font-mono text-[11px] border border-white/5"
+              className="bg-muted/80 text-electric px-1.5 py-0.5 rounded font-mono text-[11px] border border-border"
             >
               {token.slice(1, -1)}
             </code>
@@ -105,7 +105,7 @@ function FormattedContent({ text }: { text: string }) {
                 href={m[2]}
                 target={isExternal ? "_blank" : undefined}
                 rel={isExternal ? "noopener noreferrer" : undefined}
-                className="text-electric hover:text-blue-300 underline underline-offset-2 transition-colors font-medium inline-flex items-center gap-0.5"
+                className="text-electric hover:text-blue-500 underline underline-offset-2 transition-colors font-medium inline-flex items-center gap-0.5"
               >
                 {m[1]}
                 {isExternal && <ExternalLink className="w-2.5 h-2.5 inline ml-0.5 opacity-70" />}
@@ -136,7 +136,7 @@ function FormattedContent({ text }: { text: string }) {
       if (trimmed.startsWith("### ")) {
         flushList();
         elements.push(
-          <h4 key={`h-${i}`} className="font-display font-bold text-white text-sm mt-3 mb-1 tracking-tight">
+          <h4 key={`h-${i}`} className="font-display font-bold text-foreground text-sm mt-3 mb-1 tracking-tight">
             {parseInline(trimmed.slice(4))}
           </h4>
         );
@@ -145,7 +145,7 @@ function FormattedContent({ text }: { text: string }) {
       if (trimmed.startsWith("## ")) {
         flushList();
         elements.push(
-          <h3 key={`h-${i}`} className="font-display font-bold text-white text-base mt-3.5 mb-1.5 tracking-tight">
+          <h3 key={`h-${i}`} className="font-display font-bold text-foreground text-base mt-3.5 mb-1.5 tracking-tight">
             {parseInline(trimmed.slice(3))}
           </h3>
         );
@@ -425,20 +425,23 @@ export default function Zee() {
             whileHover={{ scale: 1.06 }}
             whileTap={{ scale: 0.94 }}
             aria-label="Open Zee AI Assistant"
-            className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-[60] w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-electric hover:bg-blue-600 text-white flex items-center justify-center shadow-xl shadow-blue-500/25 border border-blue-400/30 focus:outline-none focus:ring-2 focus:ring-electric focus:ring-offset-2 focus:ring-offset-[#020817] group cursor-pointer transition-all"
+            className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-[60] w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-electric hover:bg-blue-600 text-white flex items-center justify-center shadow-xl shadow-blue-500/25 border border-blue-400/30 focus:outline-none focus:ring-2 focus:ring-electric focus:ring-offset-2 focus:ring-offset-background group cursor-pointer transition-all"
           >
             {/* Subtle glow */}
             <span className="absolute -inset-1 rounded-full bg-electric/20 blur-sm group-hover:bg-electric/35 transition-colors" />
 
             {/* Small green online indicator */}
-            <span className="absolute top-0 right-0 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#0B1535] shadow-sm flex items-center justify-center">
+            <span className="absolute top-0 right-0 w-3 h-3 rounded-full bg-emerald-400 border-2 border-background shadow-sm flex items-center justify-center">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-100 animate-pulse" />
             </span>
 
-            {/* Emblem Z icon */}
-            <span className="relative z-10 font-display font-black text-xl tracking-tight text-white select-none">
-              Z
-            </span>
+            {/* Emblem Zee Avatar */}
+            <img
+              src="/zee-avatar.webp"
+              alt="Zee AI Assistant"
+              className="relative z-10 w-7 h-7 sm:w-8 sm:h-8 object-contain drop-shadow-md select-none pointer-events-none"
+              draggable={false}
+            />
           </motion.button>
         )}
       </AnimatePresence>
@@ -470,7 +473,7 @@ export default function Zee() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.96 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
-            className={`fixed flex flex-col overflow-hidden select-text rounded-2xl border border-electric/25 bg-[#0B1535]/95 backdrop-blur-2xl shadow-2xl shadow-black/80 transition-all duration-200 ${
+            className={`fixed flex flex-col overflow-hidden select-text rounded-2xl border border-electric/25 bg-background/95 backdrop-blur-2xl shadow-2xl shadow-black/60 transition-all duration-200 ${
               isExpanded
                 ? "inset-2 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 z-[70] w-[calc(100vw-16px)] sm:w-[min(920px,82vw)] h-[calc(100dvh-16px)] sm:h-[min(720px,84dvh)] max-h-[calc(100dvh-24px)] max-w-[calc(100vw-24px)]"
                 : "bottom-2 right-2 left-2 sm:left-auto sm:bottom-4 sm:right-4 z-[60] w-[calc(100vw-16px)] sm:w-[390px] sm:max-w-[calc(100vw-32px)] h-[calc(100dvh-16px)] sm:h-[min(540px,calc(100dvh-96px))] sm:max-h-[calc(100dvh-96px)]"
@@ -482,12 +485,15 @@ export default function Zee() {
             {/* =================================================== */}
             {/* HEADER (~60-64px) */}
             {/* =================================================== */}
-            <header className="px-3.5 sm:px-4 py-2.5 sm:py-3 border-b border-white/5 flex items-center justify-between bg-[#070E28]/85 backdrop-blur-md shrink-0 gap-2">
+            <header className="px-3.5 sm:px-4 py-2.5 sm:py-3 border-b border-border flex items-center justify-between bg-surface/85 backdrop-blur-md shrink-0 gap-2">
               <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-electric/20 border border-electric/30 flex items-center justify-center text-electric shadow-sm shrink-0">
-                  <span className="font-display font-black text-xs sm:text-sm text-white select-none">
-                    Z
-                  </span>
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-electric/15 border border-electric/25 flex items-center justify-center shadow-sm shrink-0 overflow-hidden p-1">
+                  <img
+                    src="/zee-avatar.webp"
+                    alt="Zee Avatar"
+                    className="w-full h-full object-contain select-none pointer-events-none"
+                    draggable={false}
+                  />
                 </div>
                 <div className="min-w-0">
                   <h2 id={titleId} className="text-xs sm:text-sm font-display font-bold text-foreground leading-tight truncate">
@@ -558,15 +564,18 @@ export default function Zee() {
               {/* WELCOME SCREEN */}
               {messages.length === 0 && (
                 <div className="py-4 px-2 flex flex-col items-center text-center">
-                  <div className="w-10 h-10 rounded-2xl bg-electric/15 border border-electric/30 flex items-center justify-center text-electric mb-2 shadow-sm">
-                    <span className="font-display font-black text-lg text-white select-none">
-                      Z
-                    </span>
+                  <div className="w-10 h-10 rounded-2xl bg-electric/15 border border-electric/25 flex items-center justify-center mb-2 shadow-sm overflow-hidden p-1.5">
+                    <img
+                      src="/zee-avatar.webp"
+                      alt="Zee Avatar"
+                      className="w-full h-full object-contain select-none pointer-events-none"
+                      draggable={false}
+                    />
                   </div>
                   <h3 className="font-display font-bold text-foreground text-sm sm:text-base tracking-tight">
                     Hi, I&apos;m Zee.
                   </h3>
-                  <p className="font-mono text-xs text-electric mt-0.5">
+                  <p className="font-mono text-xs text-electric mt-0.5 font-medium">
                     Zeploy&apos;s AI assistant.
                   </p>
                   <p className="text-xs text-muted-foreground mt-1.5 max-w-[280px] leading-relaxed">
@@ -579,7 +588,7 @@ export default function Zee() {
                       <button
                         key={prompt}
                         onClick={() => handleSendMessage(prompt)}
-                        className="text-left text-xs text-slate-200 bg-[#0E1B42]/75 hover:bg-[#14275E] border border-electric/15 hover:border-electric/35 px-3 py-2 rounded-xl transition-all flex items-center justify-between group cursor-pointer"
+                        className="text-left text-xs text-foreground/90 bg-surface hover:bg-muted/70 border border-border hover:border-electric/40 px-3 py-2 rounded-xl transition-all flex items-center justify-between group cursor-pointer shadow-xs"
                       >
                         <span>{prompt}</span>
                         <ArrowUp className="w-3 h-3 text-muted-foreground group-hover:text-electric transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 shrink-0 ml-2" />
@@ -604,7 +613,7 @@ export default function Zee() {
                     className={`${
                       msg.role === "user"
                         ? "bg-gradient-to-r from-blue-600 to-electric text-white font-medium rounded-2xl rounded-tr-xs px-3.5 py-2.5 text-sm max-w-[85%] sm:max-w-[78%] shadow-sm"
-                        : "bg-[#0E1B42]/90 border border-white/5 text-slate-100 rounded-2xl rounded-tl-xs px-3.5 py-3 text-sm leading-relaxed max-w-[88%] sm:max-w-[82%] shadow-sm"
+                        : "bg-surface/90 border border-border text-foreground rounded-2xl rounded-tl-xs px-3.5 py-3 text-sm leading-relaxed max-w-[88%] sm:max-w-[82%] shadow-xs"
                     }`}
                   >
                     {msg.role === "user" ? (
@@ -613,13 +622,13 @@ export default function Zee() {
                       <>
                         <FormattedContent text={msg.content} />
                         {msg.isError && (
-                          <div className="mt-2.5 pt-2 border-t border-white/10 flex items-center gap-2">
+                          <div className="mt-2.5 pt-2 border-t border-border flex items-center gap-2">
                             <button
                               onClick={() => {
                                 const lastUser = [...messages].reverse().find((m) => m.role === "user");
                                 if (lastUser) handleSendMessage(lastUser.content);
                               }}
-                              className="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/15 text-white text-xs font-medium transition-colors cursor-pointer"
+                              className="px-2.5 py-1 rounded-lg bg-muted hover:bg-muted/80 text-foreground text-xs font-medium transition-colors cursor-pointer"
                             >
                               Try again
                             </button>
@@ -645,7 +654,7 @@ export default function Zee() {
                   animate={{ opacity: 1, y: 0 }}
                   className="flex items-start"
                 >
-                  <div className="bg-[#0E1B42]/90 border border-white/5 rounded-2xl rounded-tl-xs px-3 py-2 shadow-sm flex items-center gap-1.5">
+                  <div className="bg-surface/90 border border-border rounded-2xl rounded-tl-xs px-3 py-2 shadow-xs flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-electric animate-bounce [animation-delay:-0.3s]" />
                     <span className="w-1.5 h-1.5 rounded-full bg-electric animate-bounce [animation-delay:-0.15s]" />
                     <span className="w-1.5 h-1.5 rounded-full bg-electric animate-bounce" />
@@ -659,8 +668,8 @@ export default function Zee() {
             {/* =================================================== */}
             {/* INPUT AREA (Fixed height, shrink-0) */}
             {/* =================================================== */}
-            <div className="p-2.5 sm:p-3 border-t border-white/5 bg-[#070E28]/90 backdrop-blur-md shrink-0">
-              <div className={`relative flex items-center gap-2 bg-[#0A1435] border border-white/10 focus-within:border-electric/50 rounded-2xl px-3 py-1.5 transition-all shadow-inner ${isExpanded ? "max-w-4xl mx-auto" : ""}`}>
+            <div className="p-2.5 sm:p-3 border-t border-border bg-surface/90 backdrop-blur-md shrink-0">
+              <div className={`relative flex items-center gap-2 bg-background/90 border border-border focus-within:border-electric/50 rounded-2xl px-3 py-1.5 transition-all shadow-xs ${isExpanded ? "max-w-4xl mx-auto" : ""}`}>
                 <textarea
                   ref={inputRef}
                   value={inputValue}
@@ -680,7 +689,7 @@ export default function Zee() {
                   className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center shrink-0 transition-all cursor-pointer ${
                     inputValue.trim() && !isWaiting && !isStreaming
                       ? "bg-electric hover:bg-blue-600 text-white shadow-md shadow-blue-500/25 scale-100"
-                      : "bg-white/5 text-muted-foreground/40 cursor-not-allowed"
+                      : "bg-muted text-muted-foreground/40 cursor-not-allowed"
                   }`}
                 >
                   <ArrowUp className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
