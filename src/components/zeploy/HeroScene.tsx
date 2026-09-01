@@ -205,7 +205,22 @@ function ResponsiveScene({ hovered }: { hovered: boolean }) {
   );
 }
 
-const HeroScene = () => {
+function FirstFrameNotifier({ onReady }: { onReady?: () => void }) {
+  const fired = useRef(false);
+  useFrame(() => {
+    if (!fired.current) {
+      fired.current = true;
+      onReady?.();
+    }
+  });
+  return null;
+}
+
+interface HeroSceneProps {
+  onReady?: () => void;
+}
+
+const HeroScene = ({ onReady }: HeroSceneProps) => {
   const [hovered, setHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -235,6 +250,7 @@ const HeroScene = () => {
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       >
         <Suspense fallback={null}>
+          <FirstFrameNotifier onReady={onReady} />
           <ambientLight intensity={0.8} />
           <directionalLight position={[10, 10, 5]} intensity={3} color="#ffffff" />
           <pointLight position={[0, 0, 8]} intensity={6} color="#60A5FA" />
@@ -257,3 +273,4 @@ const HeroScene = () => {
 };
 
 export default memo(HeroScene);
+

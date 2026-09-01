@@ -86,39 +86,38 @@ function AnimatedCounter({ from, to, duration, suffix = "" }: { from: number; to
   );
 }
 
+// Eagerly initiate HeroScene bundle download as soon as index.tsx script loads on the client
+let heroSceneModulePromise: Promise<{ default: React.ComponentType<{ onReady?: () => void }> }> | null = null;
+function getHeroScenePromise() {
+  if (!heroSceneModulePromise && typeof window !== "undefined") {
+    heroSceneModulePromise = import("@/components/zeploy/HeroScene");
+  }
+  return heroSceneModulePromise;
+}
+
+if (typeof window !== "undefined") {
+  getHeroScenePromise();
+}
+
 function ClientHeroScene() {
-  const [HeroComponent, setHeroComponent] = useState<React.ComponentType | null>(null);
+  const [HeroComponent, setHeroComponent] = useState<React.ComponentType<{ onReady?: () => void }> | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
-    const loadHero = () => {
-      import("@/components/zeploy/HeroScene")
+    const promise = getHeroScenePromise();
+    if (promise) {
+      promise
         .then((m) => {
           if (isMounted) {
             setHeroComponent(() => m.default);
-            requestAnimationFrame(() => {
-              if (isMounted) setIsLoaded(true);
-            });
           }
         })
         .catch((err) => console.error("Failed to load HeroScene:", err?.message, err));
-    };
-
-    let cancelTimer: (() => void) | undefined;
-    if (typeof window !== "undefined") {
-      if ("requestIdleCallback" in window) {
-        const handle = (window as any).requestIdleCallback(() => loadHero(), { timeout: 1200 });
-        cancelTimer = () => (window as any).cancelIdleCallback(handle);
-      } else {
-        const handle = setTimeout(loadHero, 200);
-        cancelTimer = () => clearTimeout(handle);
-      }
     }
 
     return () => {
       isMounted = false;
-      if (cancelTimer) cancelTimer();
     };
   }, []);
 
@@ -135,8 +134,8 @@ function ClientHeroScene() {
       <div className="relative h-full w-full">
         {!isLoaded && webglFallback}
         {HeroComponent && (
-          <div className={`absolute inset-0 transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
-            <HeroComponent />
+          <div className={`absolute inset-0 transition-opacity duration-500 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
+            <HeroComponent onReady={() => setIsLoaded(true)} />
           </div>
         )}
       </div>
