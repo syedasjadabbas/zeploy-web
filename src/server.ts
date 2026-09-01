@@ -2,6 +2,7 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
+import { handleZeeApiRequest } from "./routes/api/zee";
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
@@ -68,12 +69,17 @@ function withEdgeCacheHeaders(response: Response, request: Request): Response {
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      const url = new URL(request.url);
+      if (url.pathname === "/api/zee") {
+        return await handleZeeApiRequest(request);
+      }
+
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       const normalized = await normalizeCatastrophicSsrResponse(response);
       return withEdgeCacheHeaders(normalized, request);
     } catch (error) {
-      console.error(error);
+      console.error("[Server Fetch Error]:", error);
       return new Response(renderErrorPage(), {
         status: 500,
         headers: {

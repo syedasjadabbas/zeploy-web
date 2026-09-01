@@ -13,6 +13,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import Analytics from "../components/zeploy/Analytics";
+import Zee from "../components/zeploy/Zee";
 import { SafeComponentGuard } from "../components/zeploy/SafeComponentGuard";
 
 
@@ -192,6 +193,9 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <SafeComponentGuard name="Analytics">
         <Analytics />
+      </SafeComponentGuard>
+      <SafeComponentGuard name="Zee">
+        <Zee />
       </SafeComponentGuard>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
