@@ -187,8 +187,11 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
+    overflow-x: clip;
+    width: 100%;
+    min-height: 100%;
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);

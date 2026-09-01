@@ -192,10 +192,10 @@ export default function Nav() {
       {/* Mobile Menu */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          mobileOpen ? "max-h-[min(500px,calc(100vh-5rem))] opacity-100 bg-background/95 backdrop-blur-xl" : "max-h-0 opacity-0"
+          mobileOpen ? "max-h-[min(500px,calc(100dvh-4.5rem))] opacity-100 bg-background/95 backdrop-blur-xl" : "max-h-0 opacity-0"
         }`}
       >
-        <nav className="mx-auto max-w-7xl border-t border-border px-6 py-4 overflow-y-auto max-h-[calc(100vh-5rem)]">
+        <nav className="mx-auto max-w-7xl border-t border-border px-6 py-4 overflow-y-auto max-h-[calc(100dvh-4.5rem)] overscroll-contain">
           <div className="flex flex-col gap-1">
             {links.map((l) => (
               <a

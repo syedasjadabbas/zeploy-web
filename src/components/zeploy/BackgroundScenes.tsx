@@ -16,6 +16,8 @@ function useIsMobile() {
 
 function useIsVisible(ref: React.RefObject<HTMLDivElement | null>) {
   const [isVisible, setIsVisible] = useState(true);
+  const [isTabActive, setIsTabActive] = useState(true);
+
   useEffect(() => {
     const el = ref.current;
     if (!el || typeof window === "undefined" || !("IntersectionObserver" in window)) return;
@@ -26,9 +28,19 @@ function useIsVisible(ref: React.RefObject<HTMLDivElement | null>) {
       { threshold: 0, rootMargin: "200px 0px" }
     );
     observer.observe(el);
-    return () => observer.disconnect();
+
+    const handleVisibilityChange = () => {
+      setIsTabActive(document.visibilityState === "visible");
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, [ref]);
-  return isVisible;
+
+  return isVisible && isTabActive;
 }
 
 // Generate random points in a sphere for the network nodes

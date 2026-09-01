@@ -12,7 +12,7 @@ export default function Analytics() {
     if (typeof window === 'undefined') return;
 
     // Check if tracking scripts were already loaded
-    if (window.gtag || window.clarity) return;
+    if (typeof window.gtag === 'function' || typeof window.clarity === 'function') return;
     let loaded = false;
 
     const loadAnalytics = () => {
@@ -26,9 +26,8 @@ export default function Analytics() {
       document.head.appendChild(gaScript);
 
       window.dataLayer = window.dataLayer || [];
-      window.gtag = function gtag() {
-        // eslint-disable-next-line prefer-rest-params
-        window.dataLayer.push(arguments);
+      window.gtag = function gtag(...args: unknown[]) {
+        window.dataLayer.push(args);
       };
 
       window.gtag('js', new Date());
@@ -37,33 +36,32 @@ export default function Analytics() {
       });
 
       // 2. Microsoft Clarity Setup
-      (function(c, l, a, r, i, t, y) {
-        c[a] = c[a] || function() {
-          // eslint-disable-next-line prefer-rest-params
-          (c[a].q = c[a].q || []).push(arguments);
-        };
-        t = l.createElement(r);
-        t.async = true;
-        t.src = "https://www.clarity.ms/tag/" + i;
-        y = l.getElementsByTagName(r)[0];
-        if (y && y.parentNode) {
-          y.parentNode.insertBefore(t, y);
-        } else {
-          l.head.appendChild(t);
-        }
-      })(window, document, "clarity", "script", CLARITY_PROJECT_ID);
+      const clarityScript = document.createElement('script');
+      clarityScript.async = true;
+      clarityScript.src = `https://www.clarity.ms/tag/${CLARITY_PROJECT_ID}`;
+      window.clarity = window.clarity || function(...args: unknown[]) {
+        ((window.clarity as any).q = (window.clarity as any).q || []).push(args);
+      };
+      const firstScript = document.getElementsByTagName('script')[0];
+      if (firstScript && firstScript.parentNode) {
+        firstScript.parentNode.insertBefore(clarityScript, firstScript);
+      } else {
+        document.head.appendChild(clarityScript);
+      }
     };
 
     let cancelTimer: (() => void) | undefined;
 
-    if (typeof window !== 'undefined') {
-      if ('requestIdleCallback' in window) {
-        const handle = window.requestIdleCallback(() => loadAnalytics(), { timeout: 3000 });
-        cancelTimer = () => window.cancelIdleCallback(handle);
-      } else {
-        const handle = setTimeout(() => loadAnalytics(), 2000);
-        cancelTimer = () => clearTimeout(handle);
-      }
+    if ('requestIdleCallback' in window) {
+      const handle = (window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback(() => loadAnalytics(), { timeout: 3000 });
+      cancelTimer = () => {
+        if ('cancelIdleCallback' in window) {
+          (window as Window & { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(handle);
+        }
+      };
+    } else {
+      const handle = setTimeout(() => loadAnalytics(), 2000);
+      cancelTimer = () => clearTimeout(handle);
     }
 
     return () => {
@@ -75,21 +73,21 @@ export default function Analytics() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    if (window.gtag) {
-      const search = (location as any).searchStr ?? window.location.search ?? '';
+    if (typeof window.gtag === 'function') {
+      const search = (location as { searchStr?: string }).searchStr ?? window.location.search ?? '';
       window.gtag('config', GA_MEASUREMENT_ID, {
         page_path: location.pathname + search,
       });
     }
-  }, [location.pathname, (location as any).searchStr]);
+  }, [location.pathname, (location as { searchStr?: string }).searchStr]);
 
   return null;
 }
 
 declare global {
   interface Window {
-    dataLayer: any[];
-    gtag: (...args: any[]) => void;
-    clarity: (...args: any[]) => void;
+    dataLayer: unknown[];
+    gtag: (...args: unknown[]) => void;
+    clarity: (...args: unknown[]) => void;
   }
 }

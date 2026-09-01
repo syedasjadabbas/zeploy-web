@@ -241,7 +241,7 @@ function Hero() {
             initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.05 }}
-            className="mt-4 font-display text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[clamp(3.75rem,5vw,4.5rem)] font-semibold leading-[1.05] sm:leading-[1.02] tracking-tight"
+            className="mt-4 font-display text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[clamp(3.75rem,5vw,4.5rem)] font-semibold leading-[1.05] sm:leading-[1.02] tracking-tight break-words"
           >
             <span className="text-gradient-soft">We build software</span>
             <br />
@@ -289,7 +289,7 @@ function Hero() {
             initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.35 }}
-            className="mt-16 grid max-w-lg grid-cols-3 gap-3 border-t border-white/5 pt-8 sm:gap-6"
+            className="mt-12 sm:mt-16 grid max-w-lg grid-cols-3 gap-2 sm:gap-6 border-t border-white/5 pt-6 sm:pt-8"
           >
             <div>
               <AnimatedCounter from={0} to={50} duration={1.5} suffix="+" />
@@ -313,7 +313,7 @@ function Hero() {
         </div>
 
         {/* Three.js scene */}
-        <div className="relative h-[320px] w-full sm:h-[420px] md:h-[520px] lg:h-[640px]">
+        <div className="relative h-[300px] w-full xs:h-[340px] sm:h-[420px] md:h-[520px] lg:h-[640px]">
           <div className="absolute inset-0">
             <ClientHeroScene />
           </div>

@@ -564,16 +564,29 @@ export function DetailPageLayout({
             </h3>
             <div className="flex flex-wrap gap-3">
               {relatedLinks.map((link) => (
-                <Link
-                  key={link.slug}
-                  to={`/${link.type}/$slug` as any}
-                  params={{ slug: link.slug }}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/10 bg-surface/40 hover:border-electric/50 hover:text-electric text-sm font-medium transition-colors"
-                >
-                  <Layers className="w-4 h-4 text-electric" />
-                  {link.label}
-                  <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground" />
-                </Link>
+                link.type === "services" ? (
+                  <Link
+                    key={link.slug}
+                    to="/services/$slug"
+                    params={{ slug: link.slug }}
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/10 bg-surface/40 hover:border-electric/50 hover:text-electric text-sm font-medium transition-colors"
+                  >
+                    <Layers className="w-4 h-4 text-electric" />
+                    {link.label}
+                    <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground" />
+                  </Link>
+                ) : (
+                  <Link
+                    key={link.slug}
+                    to="/industries/$slug"
+                    params={{ slug: link.slug }}
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/10 bg-surface/40 hover:border-electric/50 hover:text-electric text-sm font-medium transition-colors"
+                  >
+                    <Layers className="w-4 h-4 text-electric" />
+                    {link.label}
+                    <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground" />
+                  </Link>
+                )
               ))}
             </div>
           </div>

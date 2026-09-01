@@ -446,8 +446,11 @@ export function FeaturedWork() {
                   key={p.name} 
                   className="flex-[0_0_88vw] sm:flex-[0_0_80vw] md:flex-[0_0_680px] lg:flex-[0_0_740px] xl:flex-[0_0_760px] max-w-[760px] min-w-0 px-2 sm:px-3 py-2 sm:py-3"
                   onClick={() => {
-                    if (!isActive && emblaApi && emblaApi.clickAllowed()) {
-                      scrollToSlide(idx);
+                    if (!isActive && emblaApi) {
+                      const canClick = typeof (emblaApi as any).clickAllowed === 'function' ? (emblaApi as any).clickAllowed() : true;
+                      if (canClick) {
+                        scrollToSlide(idx);
+                      }
                     }
                   }}
                 >
