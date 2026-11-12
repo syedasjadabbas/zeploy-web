@@ -46,7 +46,63 @@ import {
   ArrowLeft,
   ArrowRight
 } from "lucide-react";
+import { SafeComponentGuard } from "./SafeComponentGuard";
 import { TiltCard3D } from "./TiltCard3D";
+
+function DesktopOnly3D({ load }: { load: () => Promise<{ default: React.ComponentType }> }) {
+  const [Comp, setComp] = useState<React.ComponentType | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const loadRef = useRef(load);
+  loadRef.current = load;
+
+  useEffect(() => {
+    const width = typeof window !== "undefined" ? window.innerWidth : 0;
+    if (typeof window === "undefined" || width < 768) {
+      return;
+    }
+    const el = containerRef.current;
+    if (!el || !("IntersectionObserver" in window)) {
+      loadRef.current()
+        .then((m) => {
+          setComp(() => m.default);
+        })
+        .catch((err) => console.error("Desktop3D load error:", err?.message, err));
+      return;
+    }
+
+    let isMounted = true;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          loadRef.current()
+            .then((m) => {
+              if (isMounted) setComp(() => m.default);
+            })
+            .catch((err) => console.error("Desktop3D load error:", err?.message, err));
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px 0px" }
+    );
+
+    observer.observe(el);
+    return () => {
+      isMounted = false;
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <div ref={containerRef} className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+      {Comp && (
+        <SafeComponentGuard name="Desktop3D">
+          <Comp />
+        </SafeComponentGuard>
+      )}
+    </div>
+  );
+}
+
 import imgAsjad from "@/assets/images/asjad.webp";
 import imgAsad from "@/assets/images/asad.webp";
 import imgAhsan from "@/assets/images/ahsan.webp";
