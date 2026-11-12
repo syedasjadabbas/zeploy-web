@@ -52,8 +52,8 @@ function CoreLogo({ hovered }: { hovered: boolean }) {
     <group ref={zRef} position={[0, 0, 2.35]} scale={0.92}>
       <mesh geometry={geometry}>
         <meshStandardMaterial
-          color="#F8FAFC"
-          emissive="#3B82F6"
+          color="#F4F6FA"
+          emissive="#2F66F0"
           emissiveIntensity={hovered ? 1.6 : 0.75}
           metalness={0.9}
           roughness={0.12}
@@ -87,8 +87,8 @@ function LiquidCore({ hovered }: { hovered: boolean }) {
       <Sphere args={[1.75, 48, 48]}>
         <MeshDistortMaterial
           ref={materialRef}
-          color="#020817"
-          emissive="#1d4ed8"
+          color="#0A1220"
+          emissive="#111B2E"
           emissiveIntensity={0.2}
           metalness={0.8}
           roughness={0.2}
@@ -103,7 +103,7 @@ function LiquidCore({ hovered }: { hovered: boolean }) {
       <Sphere args={[1.8, 24, 24]}>
         <MeshDistortMaterial
           ref={wireframeRef}
-          color="#3B82F6"
+          color="#2F66F0"
           wireframe
           distort={0.3}
           speed={1.5}
@@ -131,13 +131,13 @@ function EnergyRings({ hovered }: { hovered: boolean }) {
   return (
     <group ref={groupRef}>
       <Torus args={[3, 0.02, 16, 100]} rotation={[Math.PI / 2, 0, 0]}>
-        <meshBasicMaterial color="#3B82F6" transparent opacity={hovered ? 0.6 : 0.2} />
+        <meshBasicMaterial color="#2F66F0" transparent opacity={hovered ? 0.6 : 0.2} />
       </Torus>
       <Torus args={[3.2, 0.01, 16, 100]} rotation={[0, Math.PI / 3, 0]}>
-        <meshBasicMaterial color="#60A5FA" transparent opacity={hovered ? 0.4 : 0.1} />
+        <meshBasicMaterial color="#8FB3FF" transparent opacity={hovered ? 0.4 : 0.1} />
       </Torus>
       <Torus args={[3.5, 0.015, 16, 100]} rotation={[0, 0, Math.PI / 4]}>
-        <meshBasicMaterial color="#AFD2FA" transparent opacity={hovered ? 0.2 : 0.05} />
+        <meshBasicMaterial color="#F4F6FA" transparent opacity={hovered ? 0.2 : 0.05} />
       </Torus>
     </group>
   );
@@ -172,7 +172,7 @@ function Particles({ hovered }: { hovered: boolean }) {
 
   return (
     <points ref={ref} geometry={geom}>
-      <pointsMaterial color="#60A5FA" size={0.03} transparent opacity={0.6} blending={THREE.AdditiveBlending} depthWrite={false} />
+      <pointsMaterial color="#2F66F0" size={0.03} transparent opacity={0.5} blending={THREE.AdditiveBlending} depthWrite={false} />
     </points>
   );
 }
@@ -220,6 +220,10 @@ const HeroScene = ({ onReady }: HeroSceneProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    onReady?.();
+  }, [onReady]);
+
+  useEffect(() => {
     const el = containerRef.current;
     if (!el || typeof window === "undefined" || !("IntersectionObserver" in window)) return;
 
@@ -227,7 +231,7 @@ const HeroScene = ({ onReady }: HeroSceneProps) => {
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0, rootMargin: "200px 0px" }
+      { threshold: 0, rootMargin: "300px 0px" }
     );
 
     observer.observe(el);
@@ -246,7 +250,7 @@ const HeroScene = ({ onReady }: HeroSceneProps) => {
   const shouldRender = isVisible && isTabActive;
 
   return (
-    <div ref={containerRef} className="h-full w-full contain-strict">
+    <div ref={containerRef} className="relative h-full w-full">
       <Canvas
         camera={{ position: [0, 0, 9], fov: 45 }}
         dpr={[1, 1.5]}
@@ -258,8 +262,8 @@ const HeroScene = ({ onReady }: HeroSceneProps) => {
           <FirstFrameNotifier onReady={onReady} />
           <ambientLight intensity={0.8} />
           <directionalLight position={[10, 10, 5]} intensity={3} color="#ffffff" />
-          <pointLight position={[0, 0, 8]} intensity={6} color="#60A5FA" />
-          <pointLight position={[-10, -10, -5]} intensity={2} color="#3B82F6" />
+          <pointLight position={[0, 0, 8]} intensity={3} color="#2F66F0" />
+          <pointLight position={[-10, -10, -5]} intensity={1.5} color="#16233A" />
           
           {/* Interaction Mesh */}
           <mesh 

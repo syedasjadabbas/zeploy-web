@@ -19,17 +19,17 @@ import { SafeComponentGuard } from "../components/zeploy/SafeComponentGuard";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-screen items-center justify-center bg-bg px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
+        <h1 className="text-7xl font-semibold text-text-heading">404</h1>
+        <h2 className="mt-4 text-xl font-semibold text-text-heading">Page not found</h2>
+        <p className="mt-2 text-sm text-text-muted">
           The page you're looking for doesn't exist or has been moved.
         </p>
         <div className="mt-6">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex items-center justify-center rounded-[8px] bg-primary px-4 py-2 text-sm font-medium text-on-primary transition-colors hover:bg-primary-hover"
           >
             Go home
           </Link>
@@ -47,12 +47,12 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-screen items-center justify-center bg-bg px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
+        <h1 className="text-xl font-semibold tracking-tight text-text-heading">
           This page didn't load
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
+        <p className="mt-2 text-sm text-text-muted">
           Something went wrong on our end. You can try refreshing or head back home.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
@@ -61,13 +61,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex items-center justify-center rounded-[8px] bg-primary px-4 py-2 text-sm font-medium text-on-primary transition-colors hover:bg-primary-hover"
           >
             Try again
           </button>
           <a
             href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+            className="inline-flex items-center justify-center rounded-[8px] border border-border-strong bg-transparent px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-hover"
           >
             Go home
           </a>
@@ -94,7 +94,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Zeploy Tech, software engineering, AI studio, web applications, mobile apps, SaaS development, cloud infrastructure, AI automation, React, Next.js, full-stack",
       },
       { name: "author", content: "Zeploy Tech" },
-      { name: "theme-color", content: "#020817" },
+      { name: "theme-color", content: "#0A0A0A" },
       { property: "og:title", content: "Zeploy Tech | Premium Software Engineering & AI Studio" },
       { property: "og:site_name", content: "Zeploy Tech" },
       { property: "og:url", content: "https://www.zeploy.tech" },
@@ -104,7 +104,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Premium software engineering & AI studio building scalable, production-grade systems for modern businesses.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://www.zeploy.tech/logo.webp" },
+      { property: "og:image", content: "https://www.zeploy.tech/logo-full.webp" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Zeploy Tech | Premium Software Engineering & AI Studio" },
       {
@@ -112,24 +112,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Premium software engineering & AI studio building scalable, production-grade systems for modern businesses.",
       },
-      { name: "twitter:image", content: "https://www.zeploy.tech/logo.webp" },
+      { name: "twitter:image", content: "https://www.zeploy.tech/logo-full.webp" },
     ],
     links: [
       { rel: "icon", href: "/logo.webp" },
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       { rel: "preload", as: "image", href: "/logo.webp" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "preload",
-        as: "font",
-        type: "font/woff2",
-        href: "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4Cw.woff2",
-        crossOrigin: "anonymous",
-      },
       { rel: "stylesheet", href: appCss },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
       },
     ],
   }),
@@ -158,7 +152,7 @@ function RootShell({ children }: { children: ReactNode }) {
               "@type": "ProfessionalService",
               name: "Zeploy Tech",
               url: "https://www.zeploy.tech",
-              logo: "https://www.zeploy.tech/logo.webp",
+              logo: "https://www.zeploy.tech/logo-full.webp",
               description:
                 "A premium software engineering and AI studio dedicated to building robust, scalable, and visually stunning digital products.",
               priceRange: "$$",

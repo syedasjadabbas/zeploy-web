@@ -118,10 +118,10 @@ const fadeUp = {
 export function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div className="inline-flex flex-col items-center gap-3">
-      <span className="font-mono text-sm uppercase tracking-[0.25em] font-medium text-electric">
+      <span className="text-[14px] sm:text-[15px] font-medium tracking-normal text-accent-text">
         {children}
       </span>
-      <span className="h-px w-8 bg-electric/60" />
+      <span className="h-px w-8 bg-primary/60" />
     </div>
   );
 }
@@ -174,15 +174,15 @@ const services = [
 
 export function Services() {
   return (
-    <section id="services" className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12">
+    <section id="services" className="relative border-t border-border px-4 sm:px-6 py-24 md:py-32 md:px-12">
       <DesktopOnly3D load={() => import("./BackgroundScenes").then(m => ({ default: m.DataStreams }))} />
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Services</SectionLabel>
-          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-semibold tracking-[-0.022em] leading-[1.08] sm:leading-[1.05] text-text-heading md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Engineering across the full product surface.
           </h2>
-          <p className="mt-6 text-base sm:text-lg text-muted-foreground">
+          <p className="mt-6 text-base sm:text-lg text-text-muted">
             From the first commit to the millionth request — we design, build, and operate systems
             that scale with your business.
           </p>
@@ -195,7 +195,7 @@ export function Services() {
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.04 }}
             >
-              <TiltCard3D className="group relative bg-background border border-white/10 rounded-2xl h-full transition-colors hover:border-electric/50 hover:bg-surface/40 overflow-hidden">
+              <TiltCard3D className="group relative bg-surface border border-border rounded-2xl h-full shadow-[0_1px_2px_rgba(0,0,0,0.3)] transition-colors hover:border-border-strong hover:bg-surface-hover overflow-hidden">
                 <Link
                   to="/services/$slug"
                   params={{ slug: s.slug }}
@@ -203,17 +203,17 @@ export function Services() {
                   className="block p-6 sm:p-10 md:p-12 h-full w-full"
                 >
                   <div className="flex items-center justify-between">
-                    <div className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-surface text-electric transition-all group-hover:border-electric/60 group-hover:glow-electric">
+                    <div className="grid h-11 w-11 place-items-center rounded-[8px] border border-highlight-border bg-highlight-bg text-accent-text transition-colors group-hover:border-primary group-hover:bg-primary group-hover:text-on-primary">
                       <s.icon className="h-5 w-5" />
                     </div>
-                    <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
+                    <ArrowUpRight className="h-5 w-5 text-text-subtle transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-text" />
                   </div>
-                  <h3 className="mt-8 text-2xl font-semibold text-foreground group-hover:text-electric-soft transition-colors">{s.title}</h3>
-                  <p className="mt-3 text-base leading-relaxed text-muted-foreground">{s.desc}</p>
-                  <ul className="mt-6 space-y-1.5 font-mono text-xs text-electric-soft/80">
+                  <h3 className="mt-8 text-2xl font-semibold text-text-heading group-hover:text-accent-text transition-colors">{s.title}</h3>
+                  <p className="mt-3 text-base leading-relaxed text-text-muted">{s.desc}</p>
+                  <ul className="mt-6 space-y-1.5 font-mono text-xs text-text-subtle">
                     {s.caps.map((c) => (
                       <li key={c} className="flex items-center gap-2">
-                        <span className="h-px w-3 bg-electric/60" />
+                        <span className="h-px w-3 bg-primary/60" />
                         {c}
                       </li>
                     ))}
@@ -420,11 +420,11 @@ export function FeaturedWork() {
   }, [emblaApi]);
 
   return (
-    <section className="relative border-t border-white/5 py-10 md:py-14 lg:py-16 bg-background overflow-hidden">
+    <section className="relative border-t border-border py-10 md:py-14 lg:py-16 bg-bg overflow-hidden">
       <div className="w-full relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center px-4 sm:px-6 md:px-12 mb-6 md:mb-8">
           <SectionLabel>Featured Projects</SectionLabel>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight leading-[1.1] text-gradient-soft sm:text-4xl lg:text-[clamp(2.25rem,3vw,3rem)]">
+          <h2 className="mt-4 text-3xl font-semibold tracking-[-0.022em] leading-[1.1] text-text-heading sm:text-4xl lg:text-[clamp(2.25rem,3vw,3rem)]">
             Representative product concepts demonstrating Zeploy's engineering capabilities.
           </h2>
         </motion.div>
@@ -457,8 +457,8 @@ export function FeaturedWork() {
                   <div
                     className={`group/card glass-card overflow-hidden rounded-2xl sm:rounded-3xl w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
                       isActive 
-                        ? "opacity-100 scale-100 blur-0 shadow-[0_0_35px_rgba(59,130,246,0.12)] border-white/10 hover:shadow-[0_0_45px_rgba(59,130,246,0.22)] hover:-translate-y-0.5 hover:border-electric/40"
-                        : "opacity-40 scale-[0.93] md:scale-[0.95] blur-[1.5px] cursor-pointer select-none border-white/5 shadow-none hover:opacity-75 hover:scale-[0.96]"
+                        ? "opacity-100 scale-100 border-border-strong hover:border-highlight-border"
+                        : "opacity-50 scale-[0.95] cursor-pointer select-none border-border shadow-none hover:opacity-80 hover:scale-[0.96]"
                     }`}
                   >
                     <div className="grid lg:grid-cols-2 gap-0">
@@ -466,23 +466,23 @@ export function FeaturedWork() {
                       <div className="p-4 sm:p-5 md:p-6 lg:p-7 flex flex-col justify-between select-none">
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="h-2 w-2 rounded-full bg-electric animate-pulse" />
-                            <p className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-electric">
+                            <span className="h-2 w-2 rounded-full bg-primary" />
+                            <p className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-accent-text">
                               {p.kind}
                             </p>
                           </div>
-                          <h3 className="mt-2 text-2xl font-semibold sm:text-3xl lg:text-3xl tracking-tight">{p.name}</h3>
+                          <h3 className="mt-2 text-2xl font-semibold sm:text-3xl lg:text-3xl tracking-[-0.022em] text-text-heading">{p.name}</h3>
 
-                          <p className="mt-2 text-xs sm:text-sm leading-relaxed text-muted-foreground">
+                          <p className="mt-2 text-xs sm:text-sm leading-relaxed text-text-muted">
                             {p.desc}
                           </p>
 
                           <div className="mt-4">
-                            <p className="font-mono text-[10px] uppercase tracking-widest text-electric-soft mb-1.5">Key Features</p>
+                            <p className="font-mono text-[10px] uppercase tracking-widest text-text-subtle mb-1.5">Key Features</p>
                             <ul className="grid sm:grid-cols-2 gap-2">
                               {p.features.map(f => (
-                                <li key={f} className="flex items-center gap-2 text-xs text-foreground/90">
-                                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/80 shrink-0" />
+                                <li key={f} className="flex items-center gap-2 text-xs text-text">
+                                  <span className="h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
                                   {f}
                                 </li>
                               ))}
@@ -490,11 +490,11 @@ export function FeaturedWork() {
                           </div>
 
                           <div className="mt-3">
-                            <p className="font-mono text-[10px] uppercase tracking-widest text-emerald-400/80 mb-1.5">Outcomes & Metrics</p>
+                            <p className="font-mono text-[10px] uppercase tracking-widest text-text-subtle mb-1.5">Outcomes & Metrics</p>
                             <ul className="space-y-1">
                               {p.outcomes?.map(o => (
-                                <li key={o} className="flex items-start gap-2 text-xs text-foreground/90 leading-tight">
-                                  <span className="mt-0.5 text-emerald-400 font-bold shrink-0">✓</span>
+                                <li key={o} className="flex items-start gap-2 text-xs text-text leading-tight">
+                                  <span className="mt-0.5 text-accent-text font-bold shrink-0">✓</span>
                                   {o}
                                 </li>
                               ))}
@@ -502,13 +502,13 @@ export function FeaturedWork() {
                           </div>
                         </div>
 
-                        <div className="mt-4 pt-3.5 border-t border-white/5">
-                          <p className="font-mono text-[10px] uppercase tracking-widest text-electric-soft mb-1.5">Technology Stack</p>
+                        <div className="mt-4 pt-3.5 border-t border-border">
+                          <p className="font-mono text-[10px] uppercase tracking-widest text-text-subtle mb-1.5">Technology Stack</p>
                           <div className="flex flex-wrap gap-1.5">
                             {p.tech.map((t) => (
                               <span
                                 key={t}
-                                className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] sm:text-[11px] text-foreground transition-colors hover:border-electric/50"
+                                className="rounded-md border border-highlight-border bg-highlight-bg px-2 py-0.5 font-mono text-[10px] sm:text-[11px] text-text transition-colors hover:border-primary"
                               >
                                 {t}
                               </span>
@@ -518,17 +518,17 @@ export function FeaturedWork() {
                       </div>
 
                       {/* Right Side: Mockup Image */}
-                      <div className="relative border-white/5 bg-surface/30 overflow-hidden flex items-center justify-center p-4 sm:p-5 lg:p-6 lg:border-l select-none">
-                        <div className="w-full relative border border-white/10 bg-background/50 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:scale-[1.01]">
+                      <div className="relative border-border bg-bg overflow-hidden flex items-center justify-center p-4 sm:p-5 lg:p-6 lg:border-l select-none">
+                        <div className="w-full relative border border-border bg-surface rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.3)] transition-transform duration-500 group-hover:scale-[1.01]">
                           {/* Browser-style titlebar */}
-                          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-background/60 border-b border-white/5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-red-500/80" />
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500/80" />
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/80" />
-                            <span className="ml-2 font-mono text-[8px] text-muted-foreground uppercase tracking-widest bg-white/5 px-1.5 py-0.5 rounded-md">zeploy.live</span>
+                          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-surface border-b border-border">
+                            <span className="w-1.5 h-1.5 rounded-full bg-border-strong" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-border-strong" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-border-strong" />
+                            <span className="ml-2 font-mono text-[8px] text-text-subtle uppercase tracking-widest bg-highlight-bg border border-highlight-border px-1.5 py-0.5 rounded-md">zeploy.live</span>
                           </div>
                           {/* Image Area */}
-                          <div className="relative aspect-[16/10] w-full overflow-hidden bg-background select-none">
+                          <div className="relative aspect-[16/10] w-full overflow-hidden bg-bg select-none">
                             <img 
                               src={p.image}
                               srcSet={`/projects/mobile/${p.image.split('/').pop()} 600w, ${p.image} 1024w`}
@@ -556,7 +556,7 @@ export function FeaturedWork() {
         <div className="mt-8 flex items-center justify-center gap-3 sm:gap-6 px-4 md:px-12">
           <button
             onClick={prevSlide}
-            className="p-3.5 rounded-full border border-white/10 bg-surface/60 text-foreground transition-all hover:bg-electric hover:text-white hover:scale-110 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] focus:outline-none focus:ring-2 focus:ring-electric"
+            className="p-3.5 rounded-full border border-border-strong bg-surface text-text transition-colors hover:bg-surface-hover focus:outline-none focus:ring-2 focus:ring-primary"
             aria-label="Previous Project"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -568,8 +568,8 @@ export function FeaturedWork() {
                 onClick={() => scrollToSlide(idx)}
                 className={`h-2 rounded-full transition-all duration-500 ${
                   activeIndex === idx 
-                    ? "w-8 bg-electric shadow-[0_0_10px_rgba(59,130,246,0.8)]" 
-                    : "w-2 bg-white/20 hover:bg-white/40"
+                    ? "w-8 bg-primary" 
+                    : "w-2 bg-border-strong hover:bg-text-subtle"
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
@@ -577,7 +577,7 @@ export function FeaturedWork() {
           </div>
           <button
             onClick={nextSlide}
-            className="p-3.5 rounded-full border border-white/10 bg-surface/60 text-foreground transition-all hover:bg-electric hover:text-white hover:scale-110 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] focus:outline-none focus:ring-2 focus:ring-electric"
+            className="p-3.5 rounded-full border border-border-strong bg-surface text-text transition-colors hover:bg-surface-hover focus:outline-none focus:ring-2 focus:ring-primary"
             aria-label="Next Project"
           >
             <ArrowRight className="w-5 h-5" />
@@ -666,16 +666,16 @@ const industries = [
 
 export function Industries() {
   return (
-    <section id="industries" className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12">
+    <section id="industries" className="relative border-t border-border px-4 sm:px-6 py-24 md:py-32 md:px-12">
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Industries</SectionLabel>
-          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-semibold tracking-[-0.022em] leading-[1.08] sm:leading-[1.05] text-text-heading md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Industries We Serve.
             <br />
-            <span className="text-muted-foreground font-medium">Different markets. Same standard of work.</span>
+            <span className="text-text-muted font-medium">Different markets. Same standard of work.</span>
           </h2>
-          <p className="mt-6 text-base sm:text-lg text-muted-foreground">
+          <p className="mt-6 text-base sm:text-lg text-text-muted">
             From startups and growing businesses to established organizations, we build software around the needs of your industry, users, and operations.
           </p>
         </motion.div>
@@ -687,7 +687,7 @@ export function Industries() {
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: (i % 4) * 0.04 }}
             >
-              <TiltCard3D className="group relative bg-background border border-white/10 rounded-2xl h-full transition-all duration-300 hover:border-electric/50 hover:bg-surface/40 hover:shadow-[0_0_30px_rgba(59,130,246,0.12)] flex flex-col justify-between overflow-hidden">
+              <TiltCard3D className="group relative bg-surface border border-border rounded-2xl h-full shadow-[0_1px_2px_rgba(0,0,0,0.3)] transition-colors duration-200 hover:border-border-strong hover:bg-surface-hover flex flex-col justify-between overflow-hidden">
                 <Link
                   to="/industries/$slug"
                   params={{ slug: ind.slug }}
@@ -695,13 +695,13 @@ export function Industries() {
                   className="block p-6 sm:p-7 h-full w-full"
                 >
                   <div className="flex items-center justify-between">
-                    <div className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-surface text-electric transition-all duration-300 group-hover:border-electric/60 group-hover:glow-electric">
+                    <div className="grid h-11 w-11 place-items-center rounded-[8px] border border-highlight-border bg-highlight-bg text-accent-text transition-colors duration-200 group-hover:border-primary group-hover:bg-primary group-hover:text-on-primary">
                       <ind.icon className="h-5 w-5" />
                     </div>
-                    <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
+                    <ArrowUpRight className="h-5 w-5 text-text-subtle transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-text" />
                   </div>
-                  <h3 className="mt-6 text-xl font-semibold text-foreground transition-colors group-hover:text-electric">{ind.title}</h3>
-                  <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">{ind.desc}</p>
+                  <h3 className="mt-6 text-xl font-semibold text-text-heading transition-colors group-hover:text-accent-text">{ind.title}</h3>
+                  <p className="mt-2.5 text-sm leading-relaxed text-text-muted">{ind.desc}</p>
                 </Link>
               </TiltCard3D>
             </motion.div>
@@ -724,12 +724,12 @@ const reasons = [
 
 export function WhyChoose() {
   return (
-    <section className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12">
+    <section className="relative border-t border-border px-4 sm:px-6 py-24 md:py-32 md:px-12">
       <DesktopOnly3D load={() => import("./BackgroundScenes").then(m => ({ default: m.NetworkNodes }))} />
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Why Zeploy</SectionLabel>
-          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)] font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)] font-semibold tracking-[-0.022em] leading-[1.08] sm:leading-[1.05] text-text-heading">
             Why high-growth teams partner with us.
           </h2>
         </motion.div>
@@ -743,16 +743,15 @@ export function WhyChoose() {
                 transition={{ ...fadeUp.transition, delay: i * 0.04 }}
               >
                 <TiltCard3D className="glass-card glass-card-hover group relative overflow-hidden rounded-3xl p-6 sm:p-8 h-full">
-                  <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-electric/10 blur-3xl opacity-0 transition-opacity group-hover:opacity-100" />
-                  <r.icon className="h-8 w-8 text-electric" />
-                  <h3 className="mt-6 text-xl font-semibold">{r.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{r.desc}</p>
+                  <r.icon className="h-8 w-8 text-accent-text" />
+                  <h3 className="mt-6 text-xl font-semibold text-text-heading">{r.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-text-muted">{r.desc}</p>
                 </TiltCard3D>
               </motion.div>
             ))}
           </div>
 
-          <div className="relative w-full min-h-[600px] h-full rounded-3xl border border-white/10 bg-surface/20 overflow-hidden hidden lg:block">
+          <div className="relative w-full min-h-[600px] h-full rounded-3xl border border-border bg-surface overflow-hidden hidden lg:block">
             <DesktopOnly3D load={() => import("./InfraVisualization").then(m => ({ default: m.InfraVisualization }))} />
           </div>
         </div>
@@ -787,11 +786,11 @@ export function AnimatedDecimalCounter({ from, to, duration, prefix = "", suffix
 export function Reliability() {
   const bars = Array.from({ length: 40 }, () => 0.6 + Math.random() * 0.4);
   return (
-    <section id="reliability" className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12">
+    <section id="reliability" className="relative border-t border-border px-4 sm:px-6 py-24 md:py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Reliability</SectionLabel>
-          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-semibold tracking-[-0.022em] leading-[1.08] sm:leading-[1.05] text-text-heading md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Operations you can monitor in real time.
           </h2>
         </motion.div>
@@ -800,20 +799,20 @@ export function Reliability() {
           {...fadeUp}
           className="glass-card mt-12 overflow-hidden rounded-3xl"
         >
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/5 px-4 py-3 sm:px-6 sm:py-4 md:px-8">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3 sm:px-6 sm:py-4 md:px-8">
             <div className="flex items-center gap-3">
               <span className="relative h-2 w-2">
-                <span className="absolute inset-0 rounded-full bg-emerald-400" />
-                <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400/70" />
+                <span className="absolute inset-0 rounded-full bg-primary" />
+                <span className="absolute inset-0 animate-ping rounded-full bg-primary/70" />
               </span>
-              <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              <span className="font-mono text-xs uppercase tracking-widest text-text-subtle">
                 ops.zeploy.live — all systems operational
               </span>
             </div>
-            <span className="font-mono text-xs text-electric-soft">Last sync · just now</span>
+            <span className="font-mono text-xs text-accent-text">Last sync · just now</span>
           </div>
 
-          <div className="grid grid-cols-2 gap-px bg-white/5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
+          <div className="grid grid-cols-2 gap-px bg-border sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
             {[
               { k: "Deployment Success", v: <AnimatedDecimalCounter from={0} to={99.7} decimals={1} suffix="%" duration={2} />, icon: Rocket },
               { k: "Infra Health", v: "Nominal", icon: Server },
@@ -821,22 +820,22 @@ export function Reliability() {
               { k: "Response Time", v: <AnimatedDecimalCounter from={0} to={2} decimals={0} prefix="< " suffix="h" duration={2} />, icon: Zap },
               { k: "Uptime (90d)", v: <AnimatedDecimalCounter from={0} to={99.99} decimals={2} suffix="%" duration={2} />, icon: ShieldCheck },
             ].map((m) => (
-              <div key={m.k} className="bg-background p-4 sm:p-6">
-                <m.icon className="h-4 w-4 text-electric" />
-                <p className="mt-4 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+              <div key={m.k} className="bg-surface p-4 sm:p-6">
+                <m.icon className="h-4 w-4 text-accent-text" />
+                <p className="mt-4 font-mono text-[11px] uppercase tracking-widest text-text-subtle">
                   {m.k}
                 </p>
-                <p className="mt-1 text-2xl font-semibold">{m.v}</p>
+                <p className="mt-1 text-2xl font-semibold text-text-heading">{m.v}</p>
               </div>
             ))}
           </div>
 
           <div className="p-6 md:p-8">
             <div className="flex items-center justify-between">
-              <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              <p className="font-mono text-xs uppercase tracking-widest text-text-subtle">
                 Request throughput · 24h
               </p>
-              <p className="flex items-center gap-2 font-mono text-xs text-electric-soft">
+              <p className="flex items-center gap-2 font-mono text-xs text-accent-text">
                 <LineChart className="h-3.5 w-3.5" /> +18.2%
               </p>
             </div>
@@ -845,18 +844,18 @@ export function Reliability() {
                 <div
                   key={i}
                   style={{ height: `${b * 100}%` }}
-                  className="flex-1 rounded-sm bg-electric/30 transition-colors hover:bg-electric"
+                  className="flex-1 rounded-sm bg-primary/30 transition-colors hover:bg-primary"
                 />
               ))}
             </div>
 
             {/* Live Code Window Engine View */}
-            <div className="mt-8 border-t border-white/5 pt-8">
+            <div className="mt-8 border-t border-border pt-8">
               <div className="flex items-center justify-between mb-4">
-                <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                <p className="font-mono text-xs uppercase tracking-widest text-text-subtle">
                   Production Blueprint · Live Engine
                 </p>
-                <span className="hidden sm:inline-block font-mono text-xs text-electric-soft">
+                <span className="hidden sm:inline-block font-mono text-xs text-accent-text">
                   s-maxage=3600 · zero downtime
                 </span>
               </div>
@@ -887,18 +886,18 @@ const process = [
 
 export function Process() {
   return (
-    <section id="process" className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12 overflow-hidden">
+    <section id="process" className="relative border-t border-border px-4 sm:px-6 py-24 md:py-32 md:px-12 overflow-hidden">
       <DesktopOnly3D load={() => import("./BackgroundScenes").then(m => ({ default: m.BlueprintGrid }))} />
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Process</SectionLabel>
-          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-semibold tracking-[-0.022em] leading-[1.08] sm:leading-[1.05] text-text-heading md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             From signed contract to shipped system.
           </h2>
         </motion.div>
 
         <div className="relative mt-16">
-          <div className="absolute left-3 top-0 h-full w-px bg-gradient-to-b from-electric/60 via-electric/20 to-transparent md:left-1/2" />
+          <div className="absolute left-3 top-0 h-full w-px bg-border-strong md:left-1/2" />
           <div className="space-y-10 sm:space-y-12">
             {process.map((step, i) => (
               <motion.div
@@ -908,16 +907,16 @@ export function Process() {
                 className={`relative grid gap-4 sm:gap-6 md:grid-cols-2 md:gap-16 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}
               >
                 <div className="relative pl-10 sm:pl-12 md:pl-0 md:text-right md:pr-12">
-                  <span className="absolute left-0 top-1 h-6 w-6 rounded-full border border-electric/60 bg-background md:left-auto md:right-[-13px] md:top-2">
-                    <span className="absolute inset-1.5 rounded-full bg-electric" />
+                  <span className="absolute left-0 top-1 h-6 w-6 rounded-full border border-primary bg-bg md:left-auto md:right-[-13px] md:top-2">
+                    <span className="absolute inset-1.5 rounded-full bg-primary" />
                   </span>
-                  <p className="font-mono text-xs uppercase tracking-widest text-electric">
+                  <p className="font-mono text-xs uppercase tracking-widest text-accent-text">
                     Step {String(i + 1).padStart(2, "0")}
                   </p>
-                  <h3 className="mt-2 text-xl sm:text-2xl font-semibold">{step.k}</h3>
+                  <h3 className="mt-2 text-xl sm:text-2xl font-semibold text-text-heading">{step.k}</h3>
                 </div>
                 <div className="pl-10 sm:pl-12 md:pl-12">
-                  <p className="max-w-md text-sm sm:text-base text-muted-foreground">{step.d}</p>
+                  <p className="max-w-md text-sm sm:text-base text-text-muted">{step.d}</p>
                 </div>
               </motion.div>
             ))}
@@ -980,11 +979,11 @@ const team = [
 
 export function Team() {
   return (
-    <section className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12">
+    <section className="relative border-t border-border px-4 sm:px-6 py-24 md:py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Leadership</SectionLabel>
-          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-semibold tracking-[-0.022em] leading-[1.08] sm:leading-[1.05] text-text-heading md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Engineering leadership.
           </h2>
         </motion.div>
@@ -997,10 +996,9 @@ export function Team() {
               transition={{ ...fadeUp.transition, delay: i * 0.05 }}
             >
               <TiltCard3D className="glass-card glass-card-hover relative overflow-hidden rounded-3xl p-5 sm:p-10 h-full">
-                <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-electric/15 blur-[100px] transition-all duration-500 group-hover:bg-electric/25" />
                 <div className="flex flex-col gap-6">
-                  <div className="group/avatar relative aspect-square w-[55%] xs:w-[50%] sm:w-[45%] mx-auto p-3 sm:p-4 rounded-2xl border border-electric/20 bg-surface/40 transition-all duration-300 hover:border-electric/50 hover:bg-surface/60">
-                    <div className="absolute inset-4 rounded-xl overflow-hidden bg-background transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]">
+                  <div className="group/avatar relative aspect-square w-[55%] xs:w-[50%] sm:w-[45%] mx-auto p-3 sm:p-4 rounded-2xl border border-border bg-bg transition-colors duration-200 hover:border-border-strong">
+                    <div className="absolute inset-4 rounded-xl overflow-hidden bg-bg transition-transform duration-700 ease-out group-hover/avatar:scale-[1.03]">
                       <img 
                         src={m.image} 
                         alt={m.name} 
@@ -1014,24 +1012,24 @@ export function Team() {
                     </div>
                   </div>
                   <div className="min-w-0 px-2 transition-transform duration-300 group-hover:translate-x-1 text-center mt-2">
-                    <h3 className="text-2xl font-semibold">{m.name}</h3>
-                    <p className="mt-2 font-mono text-xs uppercase tracking-widest text-electric-soft">
+                    <h3 className="text-2xl font-semibold text-text-heading">{m.name}</h3>
+                    <p className="mt-2 font-mono text-xs uppercase tracking-widest text-accent-text">
                       {m.role}
                     </p>
                 {m.socials && (
                   <div className="mt-4 flex justify-center gap-3">
                     {m.socials.linkedin && (
-                      <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: `${m.name} LinkedIn` })} aria-label={`${m.name} LinkedIn`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
+                      <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: `${m.name} LinkedIn` })} aria-label={`${m.name} LinkedIn`} className="text-text-subtle hover:text-accent-text transition-colors p-1.5 rounded-[8px] hover:bg-surface-hover">
                         <Linkedin className="w-4 h-4" />
                       </a>
                     )}
                     {m.socials.github && (
-                      <a href={m.socials.github} target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('contact_click', { button_text: `${m.name} GitHub` })} aria-label={`${m.name} GitHub`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
+                      <a href={m.socials.github} target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('contact_click', { button_text: `${m.name} GitHub` })} aria-label={`${m.name} GitHub`} className="text-text-subtle hover:text-accent-text transition-colors p-1.5 rounded-[8px] hover:bg-surface-hover">
                         <Github className="w-4 h-4" />
                       </a>
                     )}
                     {(m.socials as any).portfolio && (
-                      <a href={(m.socials as any).portfolio} target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('portfolio_click', { button_text: `${m.name} Portfolio Website` })} aria-label={`${m.name} Portfolio`} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface/50">
+                      <a href={(m.socials as any).portfolio} target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('portfolio_click', { button_text: `${m.name} Portfolio Website` })} aria-label={`${m.name} Portfolio`} className="text-text-subtle hover:text-accent-text transition-colors p-1.5 rounded-[8px] hover:bg-surface-hover">
                         <Globe2 className="w-4 h-4" />
                       </a>
                     )}
@@ -1043,9 +1041,9 @@ export function Team() {
                   {m.skills.map((s) => (
                     <div
                       key={s}
-                      className="flex items-center gap-2 rounded-md border border-white/5 bg-surface/40 px-3 py-2 text-xs text-muted-foreground"
+                      className="flex items-center gap-2 rounded-md border border-highlight-border bg-highlight-bg px-3 py-2 text-xs text-text-muted"
                     >
-                      <span className="h-1 w-1 rounded-full bg-electric" />
+                      <span className="h-1 w-1 rounded-full bg-primary" />
                       {s}
                     </div>
                   ))}
@@ -1127,8 +1125,8 @@ function StarRating({ rating }: { rating: number }) {
           key={i}
           className={`h-4 w-4 ${
             i < rating
-              ? "fill-amber-400 text-amber-400"
-              : "fill-muted-foreground/20 text-muted-foreground/20"
+              ? "fill-primary text-primary"
+              : "fill-border-strong text-border-strong"
           }`}
         />
       ))}
@@ -1138,11 +1136,11 @@ function StarRating({ rating }: { rating: number }) {
 
 export function Testimonials() {
   return (
-    <section id="reviews" className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12">
+    <section id="reviews" className="relative border-t border-border px-4 sm:px-6 py-24 md:py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Testimonials</SectionLabel>
-          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-semibold tracking-[-0.022em] leading-[1.08] sm:leading-[1.05] text-text-heading md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Trusted by teams shipping at scale.
           </h2>
         </motion.div>
@@ -1152,15 +1150,15 @@ export function Testimonials() {
           {...fadeUp}
           className="mt-10 flex flex-col items-center gap-3"
         >
-          <div className="inline-flex items-center gap-3 rounded-full border border-amber-400/20 bg-amber-400/5 px-6 py-3 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-3 rounded-full border border-highlight-border bg-highlight-bg px-6 py-3">
             <div className="flex items-center gap-0.5">
               {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="h-5 w-5 fill-amber-400 text-amber-400" />
+                <Star key={i} className="h-5 w-5 fill-primary text-primary" />
               ))}
             </div>
-            <span className="font-display text-lg font-semibold text-foreground">5.0<span className="text-muted-foreground font-normal">/5</span></span>
+            <span className="font-display text-lg font-semibold text-text-heading">5.0<span className="text-text-muted font-normal">/5</span></span>
           </div>
-          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-xs uppercase tracking-widest text-text-subtle">
             Based on {testimonials.length} client reviews
           </p>
         </motion.div>
@@ -1174,17 +1172,17 @@ export function Testimonials() {
             >
               <TiltCard3D className="glass-card glass-card-hover rounded-3xl p-6 sm:p-8 md:p-10 flex flex-col h-full">
                 <StarRating rating={t.rating} />
-                <blockquote className="mt-5 flex-1 text-base leading-relaxed text-foreground/90">
+                <blockquote className="mt-5 flex-1 text-base leading-relaxed text-text">
                   "{t.q}"
                 </blockquote>
-                <figcaption className="mt-6 border-t border-white/5 pt-5">
-                  <p className="font-mono text-xs uppercase tracking-widest text-electric-soft">
+                <figcaption className="mt-6 border-t border-border pt-5">
+                  <p className="font-mono text-xs uppercase tracking-widest text-accent-text">
                     {t.a}
                   </p>
                   <div className="mt-2 flex items-center gap-2">
-                    <span className="font-mono text-[11px] text-muted-foreground">{t.company}</span>
-                    <span className="h-1 w-1 rounded-full bg-border" />
-                    <span className="font-mono text-[11px] text-electric/60">{t.projectType}</span>
+                    <span className="font-mono text-[11px] text-text-subtle">{t.company}</span>
+                    <span className="h-1 w-1 rounded-full bg-border-strong" />
+                    <span className="font-mono text-[11px] text-text-subtle">{t.projectType}</span>
                   </div>
                 </figcaption>
               </TiltCard3D>
@@ -1223,11 +1221,11 @@ const posts = [
 
 export function Blog() {
   return (
-    <section id="insights" className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12">
+    <section id="insights" className="relative border-t border-border px-4 sm:px-6 py-24 md:py-32 md:px-12">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Engineering Notes</SectionLabel>
-          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-semibold tracking-[-0.022em] leading-[1.08] sm:leading-[1.05] text-text-heading md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Field notes from production systems.
           </h2>
         </motion.div>
@@ -1239,7 +1237,7 @@ export function Blog() {
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: i * 0.05 }}
             >
-              <TiltCard3D className="group bg-background border border-white/10 hover:border-electric/40 rounded-2xl overflow-hidden h-full">
+              <TiltCard3D className="group bg-surface border border-border hover:bg-surface-hover hover:border-border-strong rounded-2xl shadow-[0_1px_2px_rgba(0,0,0,0.3)] transition-colors overflow-hidden h-full">
                 <Link
                   to="/notes/$slug"
                   params={{ slug: p.slug }}
@@ -1247,15 +1245,15 @@ export function Blog() {
                   className="block p-6 sm:p-10 md:p-12 h-full w-full"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[11px] uppercase tracking-widest text-electric">
+                    <span className="font-mono text-[11px] uppercase tracking-widest text-accent-text">
                       {p.category}
                     </span>
-                    <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-electric" />
+                    <ArrowUpRight className="h-5 w-5 text-text-subtle transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-text" />
                   </div>
-                  <h3 className="mt-12 text-2xl font-semibold leading-snug text-foreground group-hover:text-electric-soft">
+                  <h3 className="mt-12 text-2xl font-semibold leading-snug text-text-heading group-hover:text-accent-text transition-colors">
                     {p.title}
                   </h3>
-                  <p className="mt-6 font-mono text-xs text-muted-foreground">{p.description}</p>
+                  <p className="mt-6 font-mono text-xs text-text-muted">{p.description}</p>
                 </Link>
               </TiltCard3D>
             </motion.div>
@@ -1316,40 +1314,40 @@ export function ProjectInquiry() {
   };
 
   return (
-    <section className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12 overflow-hidden bg-background">
+    <section className="relative border-t border-border px-4 sm:px-6 py-24 md:py-32 md:px-12 overflow-hidden bg-bg">
       <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-12 lg:gap-24">
         <motion.div {...fadeUp}>
           <SectionLabel>Project Inquiry</SectionLabel>
-          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] sm:leading-[1.05] text-gradient-soft md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-semibold tracking-[-0.022em] leading-[1.08] sm:leading-[1.05] text-text-heading md:text-6xl lg:text-[clamp(3.5rem,4.5vw,4.5rem)]">
             Let's architect your next platform.
           </h2>
-          <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+          <p className="mt-6 text-lg text-text-muted leading-relaxed">
             Fill out the details of your project. Whether you have a complete technical specification or just a feature list, we'll review it and get back to you with an architecture proposal and timeline within 24 hours.
           </p>
           
-          <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 border-b border-white/5 pb-10">
-            <div className="flex items-center gap-2 text-sm font-medium text-foreground/80"><span className="text-emerald-400">✓</span> Response within 24 Hours</div>
-            <div className="flex items-center gap-2 text-sm font-medium text-foreground/80"><span className="text-emerald-400">✓</span> Free Project Consultation</div>
-            <div className="flex items-center gap-2 text-sm font-medium text-foreground/80"><span className="text-emerald-400">✓</span> Transparent Communication</div>
+          <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 border-b border-border pb-10">
+            <div className="flex items-center gap-2 text-sm font-medium text-text"><span className="text-accent-text">✓</span> Response within 24 Hours</div>
+            <div className="flex items-center gap-2 text-sm font-medium text-text"><span className="text-accent-text">✓</span> Free Project Consultation</div>
+            <div className="flex items-center gap-2 text-sm font-medium text-text"><span className="text-accent-text">✓</span> Transparent Communication</div>
           </div>
 
           <div className="mt-10 space-y-6">
             <div className="flex items-start gap-4">
-              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-electric/40 bg-surface text-electric">
+              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-[8px] border border-highlight-border bg-highlight-bg text-accent-text">
                 <Brain className="h-5 w-5" />
               </div>
               <div>
-                <h4 className="text-lg font-medium text-foreground">Technical Discovery</h4>
-                <p className="mt-1 text-sm text-muted-foreground">We dive deep into your architecture requirements.</p>
+                <h4 className="text-lg font-medium text-text-heading">Technical Discovery</h4>
+                <p className="mt-1 text-sm text-text-muted">We dive deep into your architecture requirements.</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
-              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-electric/40 bg-surface text-electric">
+              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-[8px] border border-highlight-border bg-highlight-bg text-accent-text">
                 <Zap className="h-5 w-5" />
               </div>
               <div>
-                <h4 className="text-lg font-medium text-foreground">Rapid Prototyping</h4>
-                <p className="mt-1 text-sm text-muted-foreground">Clear milestones, wireframes, and scalable design.</p>
+                <h4 className="text-lg font-medium text-text-heading">Rapid Prototyping</h4>
+                <p className="mt-1 text-sm text-text-muted">Clear milestones, wireframes, and scalable design.</p>
               </div>
             </div>
           </div>
@@ -1359,57 +1357,57 @@ export function ProjectInquiry() {
           <form className="grid gap-6" onSubmit={handleSubmit}>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label htmlFor="form-name" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Full Name</label>
-                <input id="form-name" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} type="text" placeholder="Full Name" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-base md:text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+                <label htmlFor="form-name" className="text-xs font-mono uppercase tracking-widest text-text-subtle">Full Name</label>
+                <input id="form-name" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} type="text" placeholder="Full Name" className="w-full rounded-[8px] border border-border-strong bg-surface px-4 py-3 text-base md:text-sm text-text placeholder:text-text-subtle focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors" />
               </div>
               <div className="space-y-2">
-                <label htmlFor="form-email" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Email</label>
-                <input id="form-email" required value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} type="email" placeholder="Email Address" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-base md:text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+                <label htmlFor="form-email" className="text-xs font-mono uppercase tracking-widest text-text-subtle">Email</label>
+                <input id="form-email" required value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} type="email" placeholder="Email Address" className="w-full rounded-[8px] border border-border-strong bg-surface px-4 py-3 text-base md:text-sm text-text placeholder:text-text-subtle focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors" />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="form-company" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Company</label>
-              <input id="form-company" value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} type="text" placeholder="Company Name" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-base md:text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+              <label htmlFor="form-company" className="text-xs font-mono uppercase tracking-widest text-text-subtle">Company</label>
+              <input id="form-company" value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} type="text" placeholder="Company Name" className="w-full rounded-[8px] border border-border-strong bg-surface px-4 py-3 text-base md:text-sm text-text placeholder:text-text-subtle focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors" />
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label htmlFor="form-budget" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Estimated Budget</label>
-                <input id="form-budget" value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})} type="text" placeholder="Estimated Budget" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-base md:text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+                <label htmlFor="form-budget" className="text-xs font-mono uppercase tracking-widest text-text-subtle">Estimated Budget</label>
+                <input id="form-budget" value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})} type="text" placeholder="Estimated Budget" className="w-full rounded-[8px] border border-border-strong bg-surface px-4 py-3 text-base md:text-sm text-text placeholder:text-text-subtle focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors" />
               </div>
               <div className="space-y-2">
-                <label htmlFor="form-type" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Project Type</label>
-                <input id="form-type" value={formData.type} onChange={(e) => setFormData({...formData, type: e.target.value})} type="text" placeholder="Project Type" className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-base md:text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors" />
+                <label htmlFor="form-type" className="text-xs font-mono uppercase tracking-widest text-text-subtle">Project Type</label>
+                <input id="form-type" value={formData.type} onChange={(e) => setFormData({...formData, type: e.target.value})} type="text" placeholder="Project Type" className="w-full rounded-[8px] border border-border-strong bg-surface px-4 py-3 text-base md:text-sm text-text placeholder:text-text-subtle focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors" />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="form-message" className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Project Description</label>
-              <textarea id="form-message" required value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} rows={4} placeholder="Describe your project..." className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-base md:text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric transition-colors resize-none" />
+              <label htmlFor="form-message" className="text-xs font-mono uppercase tracking-widest text-text-subtle">Project Description</label>
+              <textarea id="form-message" required value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} rows={4} placeholder="Describe your project..." className="w-full rounded-[8px] border border-border-strong bg-surface px-4 py-3 text-base md:text-sm text-text placeholder:text-text-subtle focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors resize-none" />
             </div>
 
             {status === "success" && (
-              <div className="text-emerald-400 text-sm font-medium">Your inquiry has been sent successfully. We will be in touch shortly!</div>
+              <div className="text-accent-text text-sm font-medium">Your inquiry has been sent successfully. We will be in touch shortly!</div>
             )}
             {status === "error" && (
-              <div className="text-red-400 text-sm font-medium">Failed to send inquiry. Please try again later.</div>
+              <div className="text-destructive text-sm font-medium">Failed to send inquiry. Please try again later.</div>
             )}
 
-            <button type="submit" disabled={status === "loading"} className="mt-4 w-full rounded-xl bg-electric px-6 py-4 text-sm font-semibold text-primary-foreground transition-all hover:glow-electric hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100">
+            <button type="submit" disabled={status === "loading"} className="mt-4 w-full rounded-[8px] bg-primary px-6 py-4 text-sm font-semibold text-on-primary shadow-[0_1px_2px_rgba(0,0,0,0.3)] transition-colors hover:bg-primary-hover disabled:opacity-50">
               {status === "loading" ? "Sending..." : "Submit Request"}
             </button>
 
             <div className="relative flex items-center justify-center my-1">
-              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/10" /></div>
-              <div className="relative flex justify-center text-[10px] uppercase tracking-widest bg-background/50 backdrop-blur-md px-3 text-muted-foreground font-mono">Or</div>
+              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border" /></div>
+              <div className="relative flex justify-center text-[10px] uppercase tracking-widest bg-surface px-3 text-text-subtle font-mono">Or</div>
             </div>
 
             <a href="https://wa.me/923033236878" target="_blank" rel="noopener noreferrer" onClick={() => {
               trackGAEvent('whatsapp_click', { button_text: 'Chat on WhatsApp' });
               trackGAEvent('book_call_click', { button_text: 'Chat on WhatsApp' });
-            }} className="w-full rounded-xl border border-[#25D366]/20 bg-[#25D366]/10 px-6 py-4 text-sm font-semibold text-[#25D366] transition-all flex items-center justify-center gap-2 hover:bg-[#25D366]/20 hover:border-[#25D366]/50">
-              <MessageCircle className="w-5 h-5" />
+            }} className="w-full rounded-[8px] border border-border-strong bg-transparent px-6 py-4 text-sm font-semibold text-text transition-colors flex items-center justify-center gap-2 hover:bg-surface-hover">
+              <MessageCircle className="w-5 h-5 text-accent-text" />
               Chat on WhatsApp
             </a>
           </form>
@@ -1422,7 +1420,7 @@ export function ProjectInquiry() {
 function FooterLink({ href, children, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
   return (
     <li>
-      <a href={href} className="text-muted-foreground hover:text-electric transition-colors" {...props}>
+      <a href={href} className="text-text-muted hover:text-white transition-colors" {...props}>
         {children}
       </a>
     </li>
@@ -1431,27 +1429,27 @@ function FooterLink({ href, children, ...props }: React.AnchorHTMLAttributes<HTM
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/5 bg-background pt-16 md:pt-32 pb-12 px-4 sm:px-6 md:px-12">
+    <footer className="border-t border-border bg-bg pt-16 md:pt-32 pb-12 px-4 sm:px-6 md:px-12">
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-8 sm:gap-10 md:gap-16 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 border-b border-white/5 pb-14 sm:pb-20">
+        <div className="grid gap-8 sm:gap-10 md:gap-16 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 border-b border-border pb-14 sm:pb-20">
           <div className="sm:col-span-2 lg:col-span-2">
             <div className="flex flex-col items-start">
               <img src="/logo.webp" alt="Zeploy Tech" width="48" height="48" className="h-10 w-10 sm:h-12 sm:w-12 object-contain aspect-square mb-4 sm:mb-6" />
-              <h3 className="font-display text-xl sm:text-2xl font-semibold tracking-widest text-foreground">
-                <span className="text-electric">ZEPLOY</span> TECH
+              <h3 className="font-display text-xl sm:text-2xl font-semibold tracking-widest text-text-heading">
+                <span className="text-accent-text">ZEPLOY</span> TECH
               </h3>
             </div>
-            <p className="mt-4 sm:mt-6 max-w-sm text-sm sm:text-base leading-relaxed text-muted-foreground">
+            <p className="mt-4 sm:mt-6 max-w-sm text-sm sm:text-base leading-relaxed text-text-muted">
               A premium software engineering and AI studio dedicated to building robust, scalable, and visually stunning digital products.
             </p>
             <div className="mt-6 sm:mt-10">
-              <p className="font-mono text-xs uppercase tracking-widest text-electric-soft mb-3 sm:mb-4">Contact Us</p>
-              <a href="mailto:zeploytech@gmail.com" onClick={() => { trackGAEvent('email_click', { button_text: 'zeploytech@gmail.com text' }); trackGAEvent('contact_click', { button_text: 'zeploytech@gmail.com text' }); }} className="text-foreground text-sm sm:text-lg hover:text-electric transition-colors break-all">zeploytech@gmail.com</a>
+              <p className="font-mono text-xs uppercase tracking-widest text-text-subtle mb-3 sm:mb-4">Contact Us</p>
+              <a href="mailto:zeploytech@gmail.com" onClick={() => { trackGAEvent('email_click', { button_text: 'zeploytech@gmail.com text' }); trackGAEvent('contact_click', { button_text: 'zeploytech@gmail.com text' }); }} className="text-accent-text text-sm sm:text-lg hover:text-[#B9D0FF] transition-colors break-all">zeploytech@gmail.com</a>
             </div>
           </div>
           
           <div>
-            <h4 className="font-mono text-xs uppercase tracking-widest text-foreground mb-5 sm:mb-8">Services</h4>
+            <h4 className="font-mono text-xs uppercase tracking-widest text-text-heading mb-5 sm:mb-8">Services</h4>
             <ul className="space-y-3 sm:space-y-4 text-sm">
               <FooterLink href="/#services" onClick={() => trackGAEvent('service_click', { button_text: 'Web Applications Footer' })}>Web Applications</FooterLink>
               <FooterLink href="/#services" onClick={() => trackGAEvent('service_click', { button_text: 'Mobile Apps Footer' })}>Mobile Apps</FooterLink>
@@ -1462,7 +1460,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-mono text-xs uppercase tracking-widest text-foreground mb-5 sm:mb-8">Studio</h4>
+            <h4 className="font-mono text-xs uppercase tracking-widest text-text-heading mb-5 sm:mb-8">Studio</h4>
             <ul className="space-y-3 sm:space-y-4 text-sm">
               <FooterLink href="/#work" onClick={() => trackGAEvent('portfolio_click', { button_text: 'Featured Work Footer' })}>Featured Work</FooterLink>
               <FooterLink href="/#team">Our Team</FooterLink>
@@ -1473,39 +1471,39 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-mono text-xs uppercase tracking-widest text-foreground mb-8">Socials</h4>
+            <h4 className="font-mono text-xs uppercase tracking-widest text-text-heading mb-8">Socials</h4>
             <div className="flex flex-wrap gap-4 text-sm">
-              <a href="https://www.linkedin.com/company/zeploy-tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: 'LinkedIn Footer' })} aria-label="Zeploy Tech LinkedIn" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+              <a href="https://www.linkedin.com/company/zeploy-tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: 'LinkedIn Footer' })} aria-label="Zeploy Tech LinkedIn" className="p-3 rounded-[8px] bg-surface border border-border-strong text-text transition-colors hover:bg-surface-hover hover:text-white">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="https://www.instagram.com/zeploy.tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('instagram_click', { button_text: 'Instagram Footer' })} aria-label="Zeploy Tech Instagram" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+              <a href="https://www.instagram.com/zeploy.tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('instagram_click', { button_text: 'Instagram Footer' })} aria-label="Zeploy Tech Instagram" className="p-3 rounded-[8px] bg-surface border border-border-strong text-text transition-colors hover:bg-surface-hover hover:text-white">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('facebook_click', { button_text: 'Facebook Footer' })} aria-label="Zeploy Tech Facebook" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+              <a href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('facebook_click', { button_text: 'Facebook Footer' })} aria-label="Zeploy Tech Facebook" className="p-3 rounded-[8px] bg-surface border border-border-strong text-text transition-colors hover:bg-surface-hover hover:text-white">
                 <Facebook className="w-5 h-5" />
               </a>
               <a href="https://wa.me/923033236878" target="_blank" rel="noopener noreferrer" onClick={() => {
                 trackGAEvent('whatsapp_click', { button_text: 'WhatsApp Footer' });
                 trackGAEvent('book_call_click', { button_text: 'WhatsApp Footer' });
-              }} aria-label="Zeploy Tech WhatsApp" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-[#25D366]/20 text-[#25D366] transition-all hover:bg-[#25D366]/20 hover:border-[#25D366]/50 hover:scale-110 hover:shadow-[0_0_15px_rgba(37,211,102,0.3)]">
+              }} aria-label="Zeploy Tech WhatsApp" className="p-3 rounded-[8px] bg-surface border border-border-strong text-text transition-colors hover:bg-surface-hover hover:text-white">
                 <MessageCircle className="w-5 h-5" />
               </a>
-              <a href="mailto:zeploytech@gmail.com" onClick={() => { trackGAEvent('email_click', { button_text: 'Email Icon Footer' }); trackGAEvent('contact_click', { button_text: 'Email Icon Footer' }); }} aria-label="Zeploy Tech Email" className="p-3 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-foreground transition-all hover:bg-electric hover:border-electric hover:scale-110 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+              <a href="mailto:zeploytech@gmail.com" onClick={() => { trackGAEvent('email_click', { button_text: 'Email Icon Footer' }); trackGAEvent('contact_click', { button_text: 'Email Icon Footer' }); }} aria-label="Zeploy Tech Email" className="p-3 rounded-[8px] bg-surface border border-border-strong text-text transition-colors hover:bg-surface-hover hover:text-white">
                 <Mail className="w-5 h-5" />
               </a>
             </div>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-6 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+        <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-6 font-mono text-[11px] uppercase tracking-[0.2em] text-text-subtle">
           <p className="text-center md:text-left">© {new Date().getFullYear()} Zeploy Tech. All rights reserved.</p>
           <div className="flex flex-col items-center md:items-end gap-2 text-center md:text-right">
-            <div className="flex items-center gap-3 text-electric-soft">
-              <span className="h-1.5 w-1.5 rounded-full bg-electric animate-pulse" />
+            <div className="flex items-center gap-3 text-accent-text">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
               We Deploy Your Vision.
             </div>
-            <span className="text-muted-foreground">50+ PROJECTS • 30+ CLIENTS • RESPONSE WITHIN 24 HOURS</span>
-            <span className="text-electric-soft">Pakistan • Serving Clients Worldwide</span>
+            <span className="text-text-subtle">50+ PROJECTS • 30+ CLIENTS • RESPONSE WITHIN 24 HOURS</span>
+            <span className="text-accent-text">Pakistan • Serving Clients Worldwide</span>
           </div>
         </div>
       </div>
@@ -1515,39 +1513,39 @@ export function Footer() {
 
 export function FounderMessage() {
   return (
-    <section className="relative border-t border-white/5 px-4 sm:px-6 py-20 md:py-32 md:px-12 bg-background">
+    <section className="relative border-t border-border px-4 sm:px-6 py-20 md:py-32 md:px-12 bg-bg">
       <div className="mx-auto max-w-4xl text-center">
         <motion.div {...fadeUp}>
           <SectionLabel>A Word from the Founder</SectionLabel>
           <h2 className="sr-only">A Word from the Founder</h2>
-          <blockquote className="mt-10 sm:mt-12 text-lg sm:text-2xl md:text-3xl lg:text-4xl font-medium leading-[1.5] sm:leading-[1.4] text-foreground/90 tracking-tight">
+          <blockquote className="mt-10 sm:mt-12 text-lg sm:text-2xl md:text-3xl lg:text-4xl font-medium leading-[1.5] sm:leading-[1.4] text-text tracking-tight">
             "At Zeploy, our goal is simple: build software that solves real business problems. We focus on scalable systems, modern technology, and long-term value for every client we work with."
           </blockquote>
           <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-12 sm:gap-24">
             <div className="flex flex-col items-center justify-center gap-4">
-              <div className="h-20 w-20 overflow-hidden rounded-full border border-electric/30 bg-surface">
+              <div className="h-20 w-20 overflow-hidden rounded-full border border-border-strong bg-surface">
                 <img src={imgAsjad} alt="Syed Asjad Abbas" loading="lazy" decoding="async" width="400" height="400" className="h-full w-full object-cover object-top" />
               </div>
               <div>
-                <div className="text-lg font-semibold text-foreground">Syed Asjad Abbas</div>
-                <div className="font-mono text-xs uppercase tracking-widest text-electric mt-1">CEO & Founder</div>
+                <div className="text-lg font-semibold text-text-heading">Syed Asjad Abbas</div>
+                <div className="font-mono text-xs uppercase tracking-widest text-accent-text mt-1">CEO & Founder</div>
                 <div className="flex justify-center gap-3 mt-4">
-                  <a href="https://www.linkedin.com/in/syed-asjad-abbas/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: 'Syed Asjad Abbas LinkedIn' })} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Linkedin className="w-4 h-4" /></a>
-                  <a href="https://github.com/syedasjadabbas" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('contact_click', { button_text: 'Syed Asjad Abbas GitHub' })} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Github className="w-4 h-4" /></a>
+                  <a href="https://www.linkedin.com/in/syed-asjad-abbas/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: 'Syed Asjad Abbas LinkedIn' })} className="text-text-subtle hover:text-accent-text transition-colors p-1.5 rounded-[8px] hover:bg-surface-hover"><Linkedin className="w-4 h-4" /></a>
+                  <a href="https://github.com/syedasjadabbas" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('contact_click', { button_text: 'Syed Asjad Abbas GitHub' })} className="text-text-subtle hover:text-accent-text transition-colors p-1.5 rounded-[8px] hover:bg-surface-hover"><Github className="w-4 h-4" /></a>
                 </div>
               </div>
             </div>
 
             <div className="flex flex-col items-center justify-center gap-4">
-              <div className="h-20 w-20 overflow-hidden rounded-full border border-electric/30 bg-surface">
+              <div className="h-20 w-20 overflow-hidden rounded-full border border-border-strong bg-surface">
                 <img src={imgAsad} alt="Rana Asad Ur Rehman" loading="lazy" decoding="async" width="400" height="400" className="h-full w-full object-cover object-top" />
               </div>
               <div>
-                <div className="text-lg font-semibold text-foreground">Rana Asad Ur Rehman</div>
-                <div className="font-mono text-xs uppercase tracking-widest text-electric mt-1">Co-Founder</div>
+                <div className="text-lg font-semibold text-text-heading">Rana Asad Ur Rehman</div>
+                <div className="font-mono text-xs uppercase tracking-widest text-accent-text mt-1">Co-Founder</div>
                 <div className="flex justify-center gap-3 mt-4">
-                  <a href="https://www.linkedin.com/in/rana-asad-ur-rahman-0a2457339/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: 'Rana Asad Ur Rehman LinkedIn' })} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Linkedin className="w-4 h-4" /></a>
-                  <a href="https://github.com/asad-rana306" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('contact_click', { button_text: 'Rana Asad Ur Rehman GitHub' })} className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Github className="w-4 h-4" /></a>
+                  <a href="https://www.linkedin.com/in/rana-asad-ur-rahman-0a2457339/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: 'Rana Asad Ur Rehman LinkedIn' })} className="text-text-subtle hover:text-accent-text transition-colors p-1.5 rounded-[8px] hover:bg-surface-hover"><Linkedin className="w-4 h-4" /></a>
+                  <a href="https://github.com/asad-rana306" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('contact_click', { button_text: 'Rana Asad Ur Rehman GitHub' })} className="text-text-subtle hover:text-accent-text transition-colors p-1.5 rounded-[8px] hover:bg-surface-hover"><Github className="w-4 h-4" /></a>
                 </div>
               </div>
             </div>
@@ -1571,11 +1569,11 @@ export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="relative border-t border-white/5 px-4 sm:px-6 py-24 md:py-32 md:px-12 bg-surface/20">
+    <section id="faq" className="relative border-t border-border px-4 sm:px-6 py-24 md:py-32 md:px-12 bg-bg">
       <div className="mx-auto max-w-4xl">
         <motion.div {...fadeUp} className="text-center">
           <SectionLabel>FAQ</SectionLabel>
-          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight md:text-5xl lg:text-6xl text-gradient-soft">
+          <h2 className="mt-6 text-3xl xs:text-4xl sm:text-5xl font-semibold tracking-[-0.022em] md:text-5xl lg:text-6xl text-text-heading">
             Frequently Asked Questions
           </h2>
         </motion.div>
@@ -1585,18 +1583,18 @@ export function Faq() {
             <motion.div key={i} {...fadeUp} transition={{ delay: i * 0.05 }} className="glass-card rounded-2xl overflow-hidden">
               <button 
                 onClick={() => setOpen(open === i ? null : i)}
-                className="w-full px-4 py-4 sm:px-6 sm:py-5 flex items-start sm:items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-electric rounded-xl gap-3"
+                className="w-full px-4 py-4 sm:px-6 sm:py-5 flex items-start sm:items-center justify-between text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl gap-3"
                 aria-expanded={open === i}
                 aria-controls={`faq-answer-${i}`}
               >
-                <span className="text-base sm:text-lg font-medium text-foreground/90 leading-snug">{faq.q}</span>
-                <span className="mt-0.5 sm:mt-0 shrink-0 text-electric">
+                <span className="text-base sm:text-lg font-medium text-text-heading leading-snug">{faq.q}</span>
+                <span className="mt-0.5 sm:mt-0 shrink-0 text-accent-text">
                   {open === i ? <Minus className="w-4 h-4 sm:w-5 sm:h-5" /> : <Plus className="w-4 h-4 sm:w-5 sm:h-5" />}
                 </span>
               </button>
               <div 
                 id={`faq-answer-${i}`}
-                className="px-6 text-muted-foreground leading-relaxed transition-all duration-300 ease-in-out overflow-hidden"
+                className="px-6 text-text-muted leading-relaxed transition-all duration-300 ease-in-out overflow-hidden"
                 style={{ maxHeight: open === i ? '500px' : '0', paddingBottom: open === i ? '1.25rem' : '0', opacity: open === i ? 1 : 0 }}
               >
                 {faq.a}

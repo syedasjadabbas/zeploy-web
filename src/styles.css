@@ -9,13 +9,28 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text-heading: var(--text-heading);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-subtle: var(--text-subtle);
+  --color-nav-link: var(--nav-link);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+  --color-accent-text: var(--accent-text);
+  --color-highlight-bg: var(--highlight-bg);
+  --color-highlight-border: var(--highlight-border);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -25,153 +40,191 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-electric: var(--electric);
   --color-electric-soft: var(--electric-soft);
   --color-text-secondary: var(--text-secondary);
-  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 }
 
 :root {
   --radius: 0.75rem;
 
-  /* Zeploy Tech Dark Palette (DEFAULT) */
-  --background: #0B1535;
-  --foreground: #FFFFFF;
-  --surface: #182350;
-  --surface-2: #111A3E;
-  --card: #182350;
-  --card-foreground: #FFFFFF;
-  --popover: #182350;
-  --popover-foreground: #FFFFFF;
+  /* Zeploy Tech Dark Palette (DEFAULT) — Navy Theme */
+  --bg:               #0A1220;
+  --surface:          #111B2E;
+  --surface-hover:    #16233A;
+  --border:           #1E2A40;
+  --border-strong:    #33425E;
+  --text-heading:     #F4F6FA;
+  --text:             #E8EDF5;
+  --text-muted:       #A7B2C3;
+  --text-subtle:      #8A96A8;
+  --nav-link:         #C9D2E0;
+  --primary:          #2F66F0;
+  --primary-hover:    #2554CC;
+  --on-primary:       #FFFFFF;
+  --accent-text:      #8FB3FF;
+  --highlight-bg:     #14223F;
+  --highlight-border: #2F4E8C;
 
-  --primary: #3B82F6;
-  --primary-foreground: #FFFFFF;
-  --electric: #3B82F6;
-  --electric-soft: #AFD2FA;
+  /* Semantic aliases mapped to tokens */
+  --background: var(--bg);
+  --foreground: var(--text);
+  --surface-2: var(--surface-hover);
+  --card: var(--surface);
+  --card-foreground: var(--text);
+  --popover: var(--surface);
+  --popover-foreground: var(--text);
 
-  --secondary: #1F2B5B;
-  --secondary-foreground: #FFFFFF;
-  --muted: #1F2B5B;
-  --muted-foreground: #CBD5E1;
-  --text-secondary: #AFD2FA;
-  --accent: #1F2B5B;
-  --accent-foreground: #FFFFFF;
+  --primary-foreground: var(--on-primary);
+  --electric: var(--primary);
+  --electric-soft: var(--accent-text);
+
+  --secondary: var(--surface);
+  --secondary-foreground: var(--text);
+  --muted: var(--surface);
+  --muted-foreground: var(--text-muted);
+  --text-secondary: var(--text-muted);
+  --accent: var(--surface-hover);
+  --accent-foreground: var(--text);
   --destructive: #EF4444;
   --destructive-foreground: #FFFFFF;
 
-  --border: rgba(255, 255, 255, 0.1);
-  --border-subtle: rgba(255, 255, 255, 0.05);
-  --border-strong: rgba(255, 255, 255, 0.2);
-  --input: rgba(255, 255, 255, 0.1);
-  --ring: #3B82F6;
+  --border-subtle: var(--border);
+  --input: var(--border-strong);
+  --ring: var(--primary);
 
-  --chart-1: #3B82F6;
-  --chart-2: #AFD2FA;
-  --chart-3: #2563EB;
-  --chart-4: #60A5FA;
-  --chart-5: #1D4ED8;
+  --chart-1: var(--primary);
+  --chart-2: var(--accent-text);
+  --chart-3: var(--text-muted);
+  --chart-4: var(--text-subtle);
+  --chart-5: var(--text);
 
-  --glass-bg-1: rgba(24, 35, 80, 0.75);
-  --glass-bg-2: rgba(17, 26, 62, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --heading-gradient-1: #FFFFFF;
-  --heading-gradient-2: rgba(255, 255, 255, 0.7);
-  --card-hover-bg: rgba(24, 35, 80, 0.5);
+  --glass-bg-1: var(--surface);
+  --glass-bg-2: var(--surface);
+  --glass-border: var(--border);
+  --heading-gradient-1: var(--text-heading);
+  --heading-gradient-2: var(--text-heading);
+  --card-hover-bg: var(--surface-hover);
 }
 
 .dark, html.dark {
   color-scheme: dark;
-  --background: #0B1535;
-  --foreground: #FFFFFF;
-  --surface: #182350;
-  --surface-2: #111A3E;
-  --card: #182350;
-  --card-foreground: #FFFFFF;
-  --popover: #182350;
-  --popover-foreground: #FFFFFF;
+  --bg:               #0A1220;
+  --surface:          #111B2E;
+  --surface-hover:    #16233A;
+  --border:           #1E2A40;
+  --border-strong:    #33425E;
+  --text-heading:     #F4F6FA;
+  --text:             #E8EDF5;
+  --text-muted:       #A7B2C3;
+  --text-subtle:      #8A96A8;
+  --nav-link:         #C9D2E0;
+  --primary:          #2F66F0;
+  --primary-hover:    #2554CC;
+  --on-primary:       #FFFFFF;
+  --accent-text:      #8FB3FF;
+  --highlight-bg:     #14223F;
+  --highlight-border: #2F4E8C;
 
-  --primary: #3B82F6;
-  --primary-foreground: #FFFFFF;
-  --electric: #3B82F6;
-  --electric-soft: #AFD2FA;
+  --background: var(--bg);
+  --foreground: var(--text);
+  --surface-2: var(--surface-hover);
+  --card: var(--surface);
+  --card-foreground: var(--text);
+  --popover: var(--surface);
+  --popover-foreground: var(--text);
 
-  --secondary: #1F2B5B;
-  --secondary-foreground: #FFFFFF;
-  --muted: #1F2B5B;
-  --muted-foreground: #CBD5E1;
-  --text-secondary: #AFD2FA;
-  --accent: #1F2B5B;
-  --accent-foreground: #FFFFFF;
+  --primary-foreground: var(--on-primary);
+  --electric: var(--primary);
+  --electric-soft: var(--accent-text);
+
+  --secondary: var(--surface);
+  --secondary-foreground: var(--text);
+  --muted: var(--surface);
+  --muted-foreground: var(--text-muted);
+  --text-secondary: var(--text-muted);
+  --accent: var(--surface-hover);
+  --accent-foreground: var(--text);
   --destructive: #EF4444;
   --destructive-foreground: #FFFFFF;
 
-  --border: rgba(255, 255, 255, 0.1);
-  --border-subtle: rgba(255, 255, 255, 0.05);
-  --border-strong: rgba(255, 255, 255, 0.2);
-  --input: rgba(255, 255, 255, 0.1);
-  --ring: #3B82F6;
+  --border-subtle: var(--border);
+  --input: var(--border-strong);
+  --ring: var(--primary);
 
-  --glass-bg-1: rgba(24, 35, 80, 0.75);
-  --glass-bg-2: rgba(17, 26, 62, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --heading-gradient-1: #FFFFFF;
-  --heading-gradient-2: rgba(255, 255, 255, 0.7);
-  --card-hover-bg: rgba(24, 35, 80, 0.5);
+  --glass-bg-1: var(--surface);
+  --glass-bg-2: var(--surface);
+  --glass-border: var(--border);
+  --heading-gradient-1: var(--text-heading);
+  --heading-gradient-2: var(--text-heading);
+  --card-hover-bg: var(--surface-hover);
 }
 
 .light, html.light {
   color-scheme: light;
 
-  /* Zeploy Tech Light Palette (Bespoke High-End Agency Theme) */
+  /* Zeploy Tech Light Palette (Preserved; mapped to new token names so toggle continues working) */
   --background: #F8FAFC;
-  --foreground: #0B1535;
+  --foreground: #0A0A0A;
   --surface: #FFFFFF;
-  --surface-2: #F1F5F9;
+  --surface-2: #F1F1EF;
   --card: #FFFFFF;
-  --card-foreground: #0B1535;
+  --card-foreground: #0A0A0A;
   --popover: #FFFFFF;
-  --popover-foreground: #0B1535;
+  --popover-foreground: #0A0A0A;
 
-  --primary: #2563EB;
+  --primary: #2F66F0;
   --primary-foreground: #FFFFFF;
-  --electric: #2563EB;
-  --electric-soft: #1D4ED8;
+  --electric: #2F66F0;
+  --electric-soft: #2554CC;
 
-  --secondary: #F1F5F9;
-  --secondary-foreground: #0B1535;
-  --muted: #F1F5F9;
-  --muted-foreground: #64748B;
-  --text-secondary: #334155;
-  --accent: #EFF6FF;
-  --accent-foreground: #1D4ED8;
+  --secondary: #F1F1EF;
+  --secondary-foreground: #0A0A0A;
+  --muted: #F1F1EF;
+  --muted-foreground: #6F6F6F;
+  --text-secondary: #4A4A4A;
+  --accent: #F4F6E6;
+  --accent-foreground: #0A0A0A;
   --destructive: #DC2626;
   --destructive-foreground: #FFFFFF;
 
-  --border: #E2E8F0;
-  --border-subtle: #F1F5F9;
-  --border-strong: #CBD5E1;
-  --input: #E2E8F0;
-  --ring: #2563EB;
+  --border: #E2E2DE;
+  --border-subtle: #EFEFEA;
+  --border-strong: #CBCBC6;
+  --input: #E2E2DE;
+  --ring: #2F66F0;
 
-  --chart-1: #2563EB;
-  --chart-2: #3B82F6;
-  --chart-3: #1D4ED8;
-  --chart-4: #60A5FA;
-  --chart-5: #0F172A;
+  --bg: var(--background);
+  --surface-hover: var(--surface-2);
+  --text-heading: var(--foreground);
+  --text: var(--foreground);
+  --text-muted: var(--text-secondary);
+  --text-subtle: var(--muted-foreground);
+  --nav-link: var(--text-secondary);
+  --primary-hover: #2554CC;
+  --on-primary: #FFFFFF;
+  --accent-text: #2F66F0;
+  --highlight-bg: #EEF4FF;
+  --highlight-border: #B9D0FF;
+
+  --chart-1: #2F66F0;
+  --chart-2: #8FB3FF;
+  --chart-3: #1A1A1A;
+  --chart-4: #6F6F6F;
+  --chart-5: #A1A1A1;
 
   --glass-bg-1: rgba(255, 255, 255, 0.95);
-  --glass-bg-2: rgba(248, 250, 252, 0.90);
-  --glass-border: rgba(226, 232, 240, 0.9);
-  --heading-gradient-1: #0B1535;
-  --heading-gradient-2: #334155;
-  --card-hover-bg: rgba(241, 245, 249, 0.85);
+  --glass-bg-2: rgba(245, 243, 237, 0.90);
+  --glass-border: rgba(226, 226, 222, 0.9);
+  --heading-gradient-1: #0A0A0A;
+  --heading-gradient-2: #4A4A4A;
+  --card-hover-bg: rgba(241, 241, 239, 0.85);
 }
 
 @layer base {
@@ -183,9 +236,11 @@
     transition: background-color 0.25s ease, color 0.25s ease;
   }
   html, body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--color-bg);
+    color: var(--color-text);
     font-family: var(--font-sans);
+    font-weight: 400;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -193,9 +248,17 @@
     width: 100%;
     min-height: 100%;
   }
-  h1, h2, h3, h4 {
+  h1, h2, h3 {
     font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    color: var(--color-text-heading);
+  }
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
     letter-spacing: -0.02em;
+    color: var(--color-text-heading);
   }
 }
 
@@ -210,10 +273,7 @@ html, body { transition: background-color 0.25s ease, color 0.25s ease; }
 
 html.light body {
   background-color: #F8FAFC;
-  background-image:
-    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.035) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(175, 210, 250, 0.045) 0px, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(59, 130, 246, 0.02) 0px, transparent 50%);
+  background-image: none;
 }
 
 /* --- border-white/* utilities --- */
@@ -231,42 +291,34 @@ html.light .border-white\/20 { border-color: #C8D4E4 !important; }
 
 /* --- bg-white/* utilities --- */
 .light .bg-white\/5,
-html.light .bg-white\/5 { background-color: rgba(11, 21, 53, 0.04) !important; }
+html.light .bg-white\/5 { background-color: rgba(10, 10, 10, 0.04) !important; }
 
 .light .bg-white\/10,
-html.light .bg-white\/10 { background-color: rgba(11, 21, 53, 0.07) !important; }
+html.light .bg-white\/10 { background-color: rgba(10, 10, 10, 0.07) !important; }
 
-/* --- bg-surface/* utilities (semi-transparent surfaces in dark mode become solid in light) --- */
+/* --- bg-surface/* utilities --- */
 .light .bg-surface\/20,
-html.light .bg-surface\/20 { background-color: rgba(255, 255, 255, 0.75) !important; }
-
+html.light .bg-surface\/20,
 .light .bg-surface\/30,
-html.light .bg-surface\/30 { background-color: rgba(255, 255, 255, 0.85) !important; }
-
+html.light .bg-surface\/30,
 .light .bg-surface\/40,
-html.light .bg-surface\/40 { background-color: rgba(255, 255, 255, 0.90) !important; }
-
+html.light .bg-surface\/40,
 .light .bg-surface\/50,
-html.light .bg-surface\/50 { background-color: rgba(255, 255, 255, 0.94) !important; }
-
+html.light .bg-surface\/50,
 .light .bg-surface\/60,
-html.light .bg-surface\/60 { background-color: rgba(255, 255, 255, 0.96) !important; }
-
+html.light .bg-surface\/60,
 .light .bg-surface\/80,
-html.light .bg-surface\/80 { background-color: rgba(255, 255, 255, 0.98) !important; }
+html.light .bg-surface\/80 { background-color: #FFFFFF !important; }
 
 /* --- bg-background/* utilities --- */
 .light .bg-background\/50,
-html.light .bg-background\/50 { background-color: rgba(248, 250, 252, 0.8) !important; }
-
+html.light .bg-background\/50,
 .light .bg-background\/60,
-html.light .bg-background\/60 { background-color: rgba(248, 250, 252, 0.85) !important; }
-
+html.light .bg-background\/60,
 .light .bg-background\/80,
-html.light .bg-background\/80 { background-color: rgba(248, 250, 252, 0.92) !important; }
-
+html.light .bg-background\/80,
 .light .bg-background\/95,
-html.light .bg-background\/95 { background-color: rgba(248, 250, 252, 0.98) !important; }
+html.light .bg-background\/95 { background-color: #F8FAFC !important; }
 
 /* --- Carousel dot inactive state --- */
 .light .bg-white\/20,
@@ -288,39 +340,30 @@ html.light [class*="grid-cols"][class*="gap-px"] {
 
 /* --- text-foreground/80, text-foreground/90 --- */
 .light .text-foreground\/80,
-html.light .text-foreground\/80 { color: rgba(11, 21, 53, 0.8) !important; }
+html.light .text-foreground\/80 { color: rgba(10, 10, 10, 0.8) !important; }
 
 .light .text-foreground\/90,
-html.light .text-foreground\/90 { color: rgba(11, 21, 53, 0.9) !important; }
+html.light .text-foreground\/90 { color: rgba(10, 10, 10, 0.9) !important; }
 
 /* --- Blockquote founder message --- */
 .light blockquote,
-html.light blockquote { color: rgba(11, 21, 53, 0.88) !important; }
+html.light blockquote { color: rgba(10, 10, 10, 0.88) !important; }
 
 /* ================================================================
    GLASS CARD — Light Mode Override
-   Multi-layered Apple/Linear frosted glass with soft elevation
    ================================================================ */
 .light .glass-card,
 html.light .glass-card {
-  background: linear-gradient(175deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%) !important;
+  background-color: #FFFFFF !important;
   border-color: #E2E8F0 !important;
-  box-shadow:
-    0 1px 3px rgba(15, 23, 42, 0.04),
-    0 6px 20px -2px rgba(15, 23, 42, 0.05),
-    0 0 0 1px rgba(226, 232, 240, 0.7) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
 }
 
 .light .glass-card-hover:hover,
 html.light .glass-card-hover:hover {
-  border-color: rgba(37, 99, 235, 0.35) !important;
-  box-shadow:
-    0 4px 20px rgba(15, 23, 42, 0.06),
-    0 16px 40px -8px rgba(37, 99, 235, 0.12),
-    0 0 0 1px rgba(37, 99, 235, 0.15) !important;
-  transform: translateY(-4px) !important;
+  background-color: #F1F1EF !important;
+  border-color: #CBD5E1 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
 }
 
 /* ================================================================
@@ -328,10 +371,8 @@ html.light .glass-card-hover:hover {
    ================================================================ */
 .light .text-gradient-soft,
 html.light .text-gradient-soft {
-  background: linear-gradient(180deg, #0B1535 0%, #334155 100%) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  color: transparent !important;
+  background: none !important;
+  color: #0A0A0A !important;
 }
 
 /* ================================================================
@@ -343,8 +384,8 @@ html.light input[class*="bg-background"],
 html.light textarea[class*="bg-background"] {
   background-color: #FFFFFF !important;
   border-color: #CBD5E1 !important;
-  color: #0B1535 !important;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03) !important;
+  color: #0A0A0A !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
 }
 
 .light input::placeholder,
@@ -358,84 +399,8 @@ html.light textarea::placeholder {
 html.light input:focus,
 .light textarea:focus,
 html.light textarea:focus {
-  border-color: #2563EB !important;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
-}
-
-/* ================================================================
-   NAV & HEADER — Light Mode
-   ================================================================ */
-.light header[class*="backdrop-blur"],
-html.light header[class*="backdrop-blur"] {
-  background-color: rgba(248, 250, 252, 0.92) !important;
-  border-bottom-color: #E2E8F0 !important;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
-}
-
-/* ================================================================
-   PROJECT CARDS (FeaturedWork carousel) — Light Mode
-   ================================================================ */
-.light [class*="shadow-\\[0_0_35px_rgba\\(59,130,246"],
-html.light [class*="shadow-\\[0_0_35px_rgba\\(59,130,246"] {
-  box-shadow: 0 4px 32px rgba(15, 23, 42, 0.08), 0 0 24px rgba(37, 99, 235, 0.08) !important;
-}
-
-/* Tech stack tags */
-.light [class*="bg-white\\/5"][class*="font-mono"],
-html.light [class*="bg-white\\/5"][class*="font-mono"] {
-  background-color: #F1F5F9 !important;
-  border-color: #E2E8F0 !important;
-  color: #334155 !important;
-}
-
-/* ================================================================
-   SECTION DIVIDERS — Light Mode
-   ================================================================ */
-.light [class*="border-t"][class*="border-white\\/5"],
-html.light [class*="border-t"][class*="border-white\\/5"] {
-  border-top-color: #E8EEF6 !important;
-}
-
-/* ================================================================
-   PROCESS TIMELINE — Light Mode
-   ================================================================ */
-.light [class*="bg-gradient-to-b"][class*="from-electric"],
-html.light [class*="bg-gradient-to-b"][class*="from-electric"] {
-  opacity: 0.7;
-}
-
-.light [class*="border-electric\\/60"][class*="bg-background"],
-html.light [class*="border-electric\\/60"][class*="bg-background"] {
-  background-color: #FFFFFF !important;
-}
-
-/* ================================================================
-   TEAM SKILLS BADGES — Light Mode
-   ================================================================ */
-.light [class*="border-white\\/5"][class*="bg-surface\\/40"],
-html.light [class*="border-white\\/5"][class*="bg-surface\\/40"] {
-  background-color: #F1F5F9 !important;
-  border-color: #E2E8F0 !important;
-  color: #334155 !important;
-}
-
-/* ================================================================
-   SCROLL TO TOP BUTTON — Light Mode
-   ================================================================ */
-.light [class*="bg-surface\\/80"][class*="border-electric\\/30"],
-html.light [class*="bg-surface\\/80"][class*="border-electric\\/30"] {
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  border-color: #CBD5E1 !important;
-  box-shadow: 0 2px 16px rgba(15, 23, 42, 0.08) !important;
-  color: #0B1535 !important;
-}
-
-/* ================================================================
-   FAQ SECTION BACKGROUND — Light Mode
-   ================================================================ */
-.light section[class*="bg-surface\\/20"],
-html.light section[class*="bg-surface\\/20"] {
-  background-color: rgba(241, 245, 249, 0.6) !important;
+  border-color: #2F66F0 !important;
+  box-shadow: 0 0 0 2px rgba(47, 102, 240, 0.25) !important;
 }
 
 /* ================================================================
@@ -447,236 +412,42 @@ html.light footer {
   border-top-color: #E2E8F0 !important;
 }
 
-.light footer [class*="border-b"][class*="border-white\\/5"],
-html.light footer [class*="border-b"][class*="border-white\\/5"] {
-  border-bottom-color: #E2E8F0 !important;
-}
-
-.light footer a[class*="bg-surface\\/50"],
-html.light footer a[class*="bg-surface\\/50"] {
-  background-color: #FFFFFF !important;
-  border-color: #E2E8F0 !important;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
-}
-
 /* ================================================================
-   THEME TOGGLE BUTTON — Light Mode
+   ZEE AI ASSISTANT — Light Mode Adaptation
    ================================================================ */
-.light button[class*="bg-surface\\/60"][class*="border-white\\/10"],
-html.light button[class*="bg-surface\\/60"][class*="border-white\\/10"] {
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  border-color: #CBD5E1 !important;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
-  color: #0B1535 !important;
-}
-
-/* ================================================================
-   INFRA VISUALIZATION — Light Mode
-   ================================================================ */
-.light [class*="bg-surface\\/60"][class*="border-electric\\/30"],
-html.light [class*="bg-surface\\/60"][class*="border-electric\\/30"] {
-  background-color: #FFFFFF !important;
-  border-color: #E2E8F0 !important;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
-}
-
-.light [class*="glass-card"][class*="bg-surface\\/60"],
-html.light [class*="glass-card"][class*="bg-surface\\/60"] {
-  background-color: rgba(255, 255, 255, 0.96) !important;
-  border-color: #E2E8F0 !important;
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06) !important;
-}
-
-/* ================================================================
-   RELIABILITY BAR CHART — Light Mode
-   ================================================================ */
-.light [class*="bg-electric\\/30"],
-html.light [class*="bg-electric\\/30"] {
-  background-color: rgba(37, 99, 235, 0.15) !important;
-}
-
-/* ================================================================
-   HERO SECONDARY BUTTON & STATS — Light Mode
-   ================================================================ */
-.light a[class*="bg-surface\\/50"][class*="border-white\\/20"],
-html.light a[class*="bg-surface\\/50"][class*="border-white\\/20"] {
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  border-color: #CBD5E1 !important;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
-  color: #0B1535 !important;
-}
-
-.light [class*="border-t"][class*="border-white\\/5"][class*="grid-cols-3"],
-html.light [class*="border-t"][class*="border-white\\/5"][class*="grid-cols-3"] {
-  border-top-color: #E2E8F0 !important;
-}
-
-/* ================================================================
-   GLOW-ELECTRIC — Light Mode (Calibrated crisp ambient blue)
-   ================================================================ */
-.light .glow-electric,
-html.light .glow-electric {
-  box-shadow:
-    0 0 0 1px rgba(37, 99, 235, 0.3),
-    0 4px 20px -4px rgba(37, 99, 235, 0.2) !important;
-}
-
-/* ================================================================
-   NAV "Start a project" pill — Light Mode
-   ================================================================ */
-.light a[class*="rounded-full"][class*="bg-surface\\/60"],
-html.light a[class*="rounded-full"][class*="bg-surface\\/60"] {
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  border-color: #CBD5E1 !important;
-  color: #0B1535 !important;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
-}
-
-/* ================================================================
-   ZEE AI ASSISTANT — Comprehensive Light Mode Adaptation
-   ================================================================ */
-/* Dialog Shell */
 .light [role="dialog"][aria-labelledby*="zee"],
 html.light [role="dialog"][aria-labelledby*="zee"] {
-  background-color: rgba(255, 255, 255, 0.97) !important;
-  border-color: #E2E8F0 !important;
-  box-shadow:
-    0 20px 60px -15px rgba(15, 23, 42, 0.15),
-    0 0 0 1px rgba(15, 23, 42, 0.05) !important;
-}
-
-/* Header */
-.light [role="dialog"][aria-labelledby*="zee"] header,
-html.light [role="dialog"][aria-labelledby*="zee"] header {
-  background-color: rgba(248, 250, 252, 0.95) !important;
-  border-bottom-color: #E2E8F0 !important;
-}
-
-.light [role="dialog"][aria-labelledby*="zee"] header h2,
-html.light [role="dialog"][aria-labelledby*="zee"] header h2 {
-  color: #0B1535 !important;
-}
-
-.light [role="dialog"][aria-labelledby*="zee"] header p,
-html.light [role="dialog"][aria-labelledby*="zee"] header p {
-  color: #64748B !important;
-}
-
-.light [role="dialog"][aria-labelledby*="zee"] header button,
-html.light [role="dialog"][aria-labelledby*="zee"] header button {
-  color: #64748B !important;
-}
-
-.light [role="dialog"][aria-labelledby*="zee"] header button:hover,
-html.light [role="dialog"][aria-labelledby*="zee"] header button:hover {
-  color: #0B1535 !important;
-  background-color: #E2E8F0 !important;
-}
-
-/* Suggestion Chips */
-.light [role="dialog"][aria-labelledby*="zee"] button[class*="rounded-xl"][class*="text-left"],
-html.light [role="dialog"][aria-labelledby*="zee"] button[class*="rounded-xl"][class*="text-left"] {
   background-color: #FFFFFF !important;
   border-color: #E2E8F0 !important;
-  color: #334155 !important;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
-}
-
-.light [role="dialog"][aria-labelledby*="zee"] button[class*="rounded-xl"][class*="text-left"]:hover,
-html.light [role="dialog"][aria-labelledby*="zee"] button[class*="rounded-xl"][class*="text-left"]:hover {
-  background-color: #EFF6FF !important;
-  border-color: #93C5FD !important;
-  color: #1D4ED8 !important;
-}
-
-/* Assistant Message Bubble */
-.light [role="dialog"][aria-labelledby*="zee"] [class*="rounded-tl-xs"],
-html.light [role="dialog"][aria-labelledby*="zee"] [class*="rounded-tl-xs"] {
-  background-color: #F8FAFC !important;
-  border-color: #E2E8F0 !important;
-  color: #1E293B !important;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03) !important;
-}
-
-.light [role="dialog"][aria-labelledby*="zee"] [class*="rounded-tl-xs"] strong,
-html.light [role="dialog"][aria-labelledby*="zee"] [class*="rounded-tl-xs"] strong,
-.light [role="dialog"][aria-labelledby*="zee"] [class*="rounded-tl-xs"] h4,
-html.light [role="dialog"][aria-labelledby*="zee"] [class*="rounded-tl-xs"] h4 {
-  color: #0B1535 !important;
-}
-
-.light [role="dialog"][aria-labelledby*="zee"] [class*="rounded-tl-xs"] code,
-html.light [role="dialog"][aria-labelledby*="zee"] [class*="rounded-tl-xs"] code {
-  background-color: #F1F5F9 !important;
-  border-color: #E2E8F0 !important;
-  color: #1D4ED8 !important;
-}
-
-.light [role="dialog"][aria-labelledby*="zee"] [class*="rounded-tl-xs"] ul,
-html.light [role="dialog"][aria-labelledby*="zee"] [class*="rounded-tl-xs"] ol,
-.light [role="dialog"][aria-labelledby*="zee"] [class*="rounded-tl-xs"] li,
-html.light [role="dialog"][aria-labelledby*="zee"] [class*="rounded-tl-xs"] li {
-  color: #334155 !important;
-}
-
-/* Chat Input Footer */
-.light [role="dialog"][aria-labelledby*="zee"] > div:last-child,
-html.light [role="dialog"][aria-labelledby*="zee"] > div:last-child {
-  background-color: rgba(248, 250, 252, 0.95) !important;
-  border-top-color: #E2E8F0 !important;
-}
-
-.light [role="dialog"][aria-labelledby*="zee"] div[class*="bg-\\[\\#0A1435\\]"],
-html.light [role="dialog"][aria-labelledby*="zee"] div[class*="bg-\\[\\#0A1435\\]"] {
-  background-color: #FFFFFF !important;
-  border-color: #CBD5E1 !important;
-  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.03) !important;
-}
-
-.light [role="dialog"][aria-labelledby*="zee"] textarea,
-html.light [role="dialog"][aria-labelledby*="zee"] textarea {
-  color: #0B1535 !important;
-}
-
-.light [role="dialog"][aria-labelledby*="zee"] textarea::placeholder,
-html.light [role="dialog"][aria-labelledby*="zee"] textarea::placeholder {
-  color: #94A3B8 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
 }
 
 @utility grid-bg {
-  background-image:
-    linear-gradient(to right, color-mix(in oklab, var(--electric) 8%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklab, var(--electric) 8%, transparent) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  background: none;
 }
 
 @utility glass-card {
-  background: linear-gradient(180deg, var(--glass-bg-1), var(--glass-bg-2));
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(12px);
-  transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
+
 @utility glass-card-hover {
-  will-change: transform, box-shadow;
   &:hover {
-    border-color: color-mix(in oklab, var(--electric) 60%, transparent);
-    box-shadow: 0 30px 80px -20px color-mix(in oklab, var(--electric) 40%, transparent);
-    transform: translateY(-4px);
+    background-color: var(--surface-hover);
+    border-color: var(--border-strong);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   }
 }
 
 @utility text-gradient-soft {
-  background: linear-gradient(180deg, var(--heading-gradient-1, #ffffff) 0%, var(--heading-gradient-2, rgba(255,255,255,0.7)) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--text-heading);
+  background: none;
 }
 
 @utility glow-electric {
-  box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--electric) 50%, transparent),
-    0 10px 40px -10px color-mix(in oklab, var(--electric) 60%, transparent);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 @utility dot-pulse {
@@ -685,7 +456,7 @@ html.light [role="dialog"][aria-labelledby*="zee"] textarea::placeholder {
     position: absolute;
     inset: 0;
     border-radius: 9999px;
-    background: var(--electric);
+    background: var(--primary);
     animation: ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
 }
@@ -703,20 +474,9 @@ html.light [role="dialog"][aria-labelledby*="zee"] textarea::placeholder {
   75%, 100% { transform: scale(2.2); opacity: 0; }
 }
 
-@keyframes scan {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
-}
 @utility scanline {
   position: relative;
   overflow: hidden;
-  &::after {
-    content: "";
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg, transparent, color-mix(in oklab, var(--electric) 25%, transparent), transparent);
-    animation: scan 3.5s linear infinite;
-    pointer-events: none;
-  }
 }
 
 /* Respect reduced motion preference */

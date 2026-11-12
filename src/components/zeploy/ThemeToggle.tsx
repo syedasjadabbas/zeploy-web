@@ -44,7 +44,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
     <button
       type="button"
       onClick={toggleTheme}
-      className={`relative flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-white/10 dark:border-white/10 bg-surface/60 text-foreground transition-all duration-200 hover:border-electric/50 hover:text-electric focus:outline-none focus:ring-2 focus:ring-electric/50 shrink-0 ${className}`}
+      className={`relative flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-[8px] border border-border-strong bg-surface text-text transition-colors duration-200 hover:bg-surface-hover focus:outline-none focus:ring-2 focus:ring-primary shrink-0 ${className}`}
       aria-label={mounted ? (theme === "dark" ? "Switch to light mode" : "Switch to dark mode") : "Toggle theme"}
       title={mounted ? (theme === "dark" ? "Switch to light mode" : "Switch to dark mode") : "Toggle theme"}
     >
@@ -56,7 +56,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
             animate={{ opacity: 1, rotate: 0, scale: 1 }}
             exit={{ opacity: 0, rotate: 45, scale: 0.8 }}
             transition={{ duration: 0.15 }}
-            className="flex items-center justify-center text-electric-soft"
+            className="flex items-center justify-center text-accent-text"
           >
             <Moon className="h-4 w-4" />
           </motion.div>
@@ -67,7 +67,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
             animate={{ opacity: 1, rotate: 0, scale: 1 }}
             exit={{ opacity: 0, rotate: -45, scale: 0.8 }}
             transition={{ duration: 0.15 }}
-            className="flex items-center justify-center text-amber-500"
+            className="flex items-center justify-center text-primary"
           >
             <Sun className="h-4 w-4" />
           </motion.div>

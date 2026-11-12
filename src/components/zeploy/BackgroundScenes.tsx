@@ -73,7 +73,7 @@ function NodesCloud() {
       <Points ref={ref} positions={sphere} stride={3} frustumCulled={false}>
         <PointMaterial
           transparent
-          color="#3B82F6"
+          color="#2F66F0"
           size={0.02}
           sizeAttenuation={true}
           depthWrite={false}
@@ -92,13 +92,13 @@ const NetworkNodesBase = () => {
   if (isMobile) return null;
 
   return (
-    <div ref={containerRef} className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen">
+    <div ref={containerRef} className="hidden absolute inset-0 z-0 pointer-events-none">
       <Canvas
         camera={{ position: [0, 0, 2] }}
         gl={{ alpha: true, antialias: false }}
         dpr={[1, 1.5]}
         performance={{ min: 0.5 }}
-        frameloop={isVisible ? "always" : "never"}
+        frameloop="never"
       >
         <NodesCloud />
       </Canvas>
@@ -137,7 +137,7 @@ function FallingLines() {
             [line.x, line.length, line.z],
             [line.x, 0, line.z],
           ]}
-          color="#AFD2FA"
+          color="#8FB3FF"
           lineWidth={1}
           transparent
           opacity={0.3}
@@ -156,13 +156,13 @@ const DataStreamsBase = () => {
   if (isMobile) return null;
 
   return (
-    <div ref={containerRef} className="absolute inset-0 z-0 pointer-events-none opacity-30 mix-blend-screen">
+    <div ref={containerRef} className="hidden absolute inset-0 z-0 pointer-events-none">
       <Canvas
         camera={{ position: [0, 0, 5] }}
         gl={{ alpha: true, antialias: false }}
         dpr={[1, 1.5]}
         performance={{ min: 0.5 }}
-        frameloop={isVisible ? "always" : "never"}
+        frameloop="never"
       >
         <FallingLines />
       </Canvas>
@@ -178,13 +178,13 @@ const BlueprintGridBase = () => {
   if (isMobile) return null;
 
   return (
-    <div ref={containerRef} className="absolute inset-0 z-0 pointer-events-none opacity-20 mix-blend-screen overflow-hidden">
+    <div ref={containerRef} className="hidden absolute inset-0 z-0 pointer-events-none overflow-hidden">
       <Canvas
         camera={{ position: [0, 2, 5], fov: 45 }}
         gl={{ alpha: true, antialias: false }}
         dpr={[1, 1.5]}
         performance={{ min: 0.5 }}
-        frameloop={isVisible ? "always" : "never"}
+        frameloop="never"
       >
         <ambientLight intensity={0.5} />
         <Grid
@@ -192,10 +192,10 @@ const BlueprintGridBase = () => {
           args={[20, 20]}
           cellSize={0.5}
           cellThickness={1}
-          cellColor="#3B82F6"
+          cellColor="#1E2A40"
           sectionSize={2}
           sectionThickness={1.5}
-          sectionColor="#AFD2FA"
+          sectionColor="#2F66F0"
           fadeDistance={15}
           fadeStrength={1}
         />

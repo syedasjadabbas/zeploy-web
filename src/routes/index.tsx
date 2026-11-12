@@ -71,26 +71,23 @@ function AnimatedCounter({ from, to, duration, suffix = "" }: { from: number; to
 
   return (
     <div className="relative inline-block min-w-[2.5ch]">
-      <span ref={ref} className="relative z-10 font-display text-2xl font-semibold text-foreground sm:text-3xl md:text-4xl tabular-nums">
+      <span ref={ref} className="relative z-10 font-display text-2xl font-semibold text-text-heading sm:text-3xl md:text-4xl tabular-nums">
         {from}{suffix}
       </span>
-      {isFinished && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1.2 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="absolute left-1/2 top-1/2 -z-0 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-electric/20 blur-xl animate-pulse pointer-events-none"
-        />
-      )}
     </div>
   );
 }
 
 // Eagerly initiate HeroScene bundle download as soon as index.tsx script loads on the client
+let cachedHeroComponent: React.ComponentType<{ onReady?: () => void }> | null = null;
 let heroSceneModulePromise: Promise<{ default: React.ComponentType<{ onReady?: () => void }> }> | null = null;
+
 function getHeroScenePromise() {
   if (!heroSceneModulePromise && typeof window !== "undefined") {
-    heroSceneModulePromise = import("@/components/zeploy/HeroScene");
+    heroSceneModulePromise = import("@/components/zeploy/HeroScene").then((m) => {
+      cachedHeroComponent = m.default;
+      return m;
+    });
   }
   return heroSceneModulePromise;
 }
@@ -100,10 +97,12 @@ if (typeof window !== "undefined") {
 }
 
 function ClientHeroScene() {
-  const [HeroComponent, setHeroComponent] = useState<React.ComponentType<{ onReady?: () => void }> | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [HeroComponent, setHeroComponent] = useState<React.ComponentType<{ onReady?: () => void }> | null>(
+    () => cachedHeroComponent
+  );
 
   useEffect(() => {
+    if (HeroComponent) return;
     let isMounted = true;
     const promise = getHeroScenePromise();
     if (promise) {
@@ -119,25 +118,16 @@ function ClientHeroScene() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [HeroComponent]);
 
-  const webglFallback = (
-    <div className="h-full w-full rounded-3xl bg-surface border border-white/10 dark:border-white/10 relative overflow-hidden flex items-center justify-center">
-      <div className="absolute w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-600/15 via-surface/80 to-surface animate-[pulse_4s_ease-in-out_infinite]" />
-      <div className="absolute w-32 h-32 rounded-full bg-blue-500/10 blur-3xl animate-[pulse_3s_ease-in-out_infinite]" />
-      <div className="font-display text-5xl font-bold text-foreground z-10 opacity-80" style={{ textShadow: "0 0 20px rgba(59,130,246,0.5)" }}>Z</div>
-    </div>
-  );
+  if (!HeroComponent) {
+    return null;
+  }
 
   return (
-    <SafeComponentGuard name="HeroScene" fallback={webglFallback}>
+    <SafeComponentGuard name="HeroScene" fallback={null}>
       <div className="relative h-full w-full">
-        {!isLoaded && webglFallback}
-        {HeroComponent && (
-          <div className={`absolute inset-0 transition-opacity duration-500 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
-            <HeroComponent onReady={() => setIsLoaded(true)} />
-          </div>
-        )}
+        <HeroComponent />
       </div>
     </SafeComponentGuard>
   );
@@ -166,7 +156,7 @@ function BackToTop() {
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: visible ? 1 : 0, scale: visible ? 1 : 0.8, pointerEvents: visible ? "auto" : "none" }}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed bottom-6 right-4 sm:bottom-8 sm:right-8 z-50 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-surface/80 border border-electric/30 text-electric shadow-[0_0_20px_rgba(59,130,246,0.3)] backdrop-blur-md transition-all hover:bg-electric hover:text-white hover:scale-110 hover:shadow-[0_0_30px_rgba(59,130,246,0.6)]"
+      className="fixed bottom-6 right-4 sm:bottom-8 sm:right-8 z-50 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-surface border border-border-strong text-text shadow-[0_1px_2px_rgba(0,0,0,0.3)] transition-colors hover:bg-primary hover:border-primary hover:text-on-primary"
       aria-label="Back to top"
     >
       <ArrowUp className="h-5 w-5" />
@@ -183,7 +173,7 @@ function Index() {
   }, []);
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background text-foreground">
+    <main className="relative min-h-screen overflow-hidden bg-bg text-text">
       <Nav />
       <BackToTop />
       <div id="hero">
@@ -221,9 +211,6 @@ function Index() {
 function Hero() {
   return (
     <section className="relative min-h-screen overflow-hidden pt-20">
-      <div className="absolute inset-0 grid-bg" />
-      <div className="absolute left-1/2 top-1/3 -z-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-electric/20 blur-[160px]" />
-
       <div className="mx-auto grid max-w-7xl gap-12 sm:gap-16 px-4 sm:px-6 pb-32 pt-12 md:px-12 lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:pt-20">
         <div className="relative z-10 flex flex-col justify-center">
           <motion.div
@@ -232,8 +219,8 @@ function Hero() {
             transition={{ duration: 0.7 }}
             className="mb-4"
           >
-            <h2 className="font-display text-2xl font-bold uppercase tracking-[0.25em] text-foreground sm:text-3xl">
-              <span className="text-electric">ZEPLOY</span> TECH
+            <h2 className="font-display text-2xl font-semibold uppercase tracking-[0.25em] text-text-heading sm:text-3xl">
+              <span className="text-accent-text">ZEPLOY</span> TECH
             </h2>
           </motion.div>
 
@@ -241,19 +228,19 @@ function Hero() {
             initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.05 }}
-            className="mt-4 font-display text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[clamp(3.75rem,5vw,4.5rem)] font-semibold leading-[1.05] sm:leading-[1.02] tracking-tight break-words"
+            className="mt-4 font-display text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[clamp(3.75rem,5vw,4.5rem)] font-semibold leading-[1.05] sm:leading-[1.02] tracking-[-0.022em] text-text-heading break-words"
           >
-            <span className="text-gradient-soft">We build software</span>
+            <span>We build software</span>
             <br />
-            <span className="text-gradient-soft">that scales your</span>{" "}
-            <span className="text-electric">business.</span>
+            <span>that scales your</span>{" "}
+            <span className="text-accent-text">business.</span>
           </motion.h1>
 
           <motion.p
             initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="mt-6 sm:mt-8 max-w-xl text-base sm:text-xl md:text-2xl leading-relaxed text-muted-foreground"
+            className="mt-6 sm:mt-8 max-w-xl text-base sm:text-xl md:text-2xl leading-relaxed text-text-muted"
           >
             Zeploy Tech is a software engineering studio delivering custom web apps, mobile apps,
             AI systems, cloud infrastructure, and scalable digital products.
@@ -268,7 +255,7 @@ function Hero() {
             <a
               href="#work"
               onClick={() => trackGAEvent("portfolio_click", { button_text: "View our work" })}
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-electric px-6 py-3.5 sm:px-8 sm:py-4 text-sm sm:text-base font-medium text-primary-foreground shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)] transition-all hover:scale-105 hover:shadow-[0_0_60px_-10px_rgba(59,130,246,0.7)]"
+              className="group inline-flex items-center justify-center gap-2 rounded-[8px] bg-primary px-6 py-3.5 sm:px-8 sm:py-4 text-sm sm:text-base font-medium text-on-primary shadow-[0_1px_2px_rgba(0,0,0,0.3)] transition-colors hover:bg-primary-hover"
             >
               View our work
               <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -279,7 +266,7 @@ function Hero() {
                 trackGAEvent("email_click", { button_text: "Start a project" });
                 trackGAEvent("contact_click", { button_text: "Start a project" });
               }}
-              className="inline-flex items-center justify-center rounded-full border border-white/20 bg-surface/50 px-6 py-3.5 sm:px-8 sm:py-4 text-sm sm:text-base font-medium text-foreground backdrop-blur-md transition-colors hover:border-electric/50 hover:bg-surface hover:text-electric text-center"
+              className="inline-flex items-center justify-center rounded-[8px] border border-border-strong bg-transparent px-6 py-3.5 sm:px-8 sm:py-4 text-sm sm:text-base font-medium text-text transition-colors hover:bg-surface-hover text-center"
             >
               Start a project
             </a>
@@ -289,23 +276,23 @@ function Hero() {
             initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.35 }}
-            className="mt-12 sm:mt-16 grid max-w-lg grid-cols-3 gap-2 sm:gap-6 border-t border-white/5 pt-6 sm:pt-8"
+            className="mt-12 sm:mt-16 grid max-w-lg grid-cols-3 gap-2 sm:gap-6 border-t border-border pt-6 sm:pt-8"
           >
             <div>
               <AnimatedCounter from={0} to={50} duration={1.5} suffix="+" />
-              <p className="mt-2 font-mono text-[9px] sm:text-[11px] uppercase tracking-widest text-muted-foreground">
+              <p className="mt-2 font-mono text-[9px] sm:text-[11px] uppercase tracking-widest text-text-subtle">
                 Projects Shipped
               </p>
             </div>
             <div>
               <AnimatedCounter from={0} to={30} duration={1.5} suffix="+" />
-              <p className="mt-2 font-mono text-[9px] sm:text-[11px] uppercase tracking-widest text-muted-foreground">
+              <p className="mt-2 font-mono text-[9px] sm:text-[11px] uppercase tracking-widest text-text-subtle">
                 Clients
               </p>
             </div>
             <div>
               <AnimatedCounter from={0} to={6} duration={1.5} suffix="" />
-              <p className="mt-2 font-mono text-[9px] sm:text-[11px] uppercase tracking-widest text-muted-foreground">
+              <p className="mt-2 font-mono text-[9px] sm:text-[11px] uppercase tracking-widest text-text-subtle">
                 Countries Served
               </p>
             </div>
@@ -319,25 +306,7 @@ function Hero() {
           </div>
 
 
-          {/* Floating telemetry chips */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="absolute left-4 top-8 glass-card rounded-xl px-4 py-3 font-mono text-[11px] uppercase tracking-widest hidden sm:block"
-          >
-            <p className="text-electric font-semibold">ZEPLOY TECH</p>
-            <p className="mt-1 text-muted-foreground">AI · WEB · CLOUD</p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-            className="absolute bottom-10 right-2 glass-card rounded-xl px-4 py-3 font-mono text-[11px] uppercase tracking-widest hidden sm:block"
-          >
-            <p className="text-muted-foreground">CURRENT STATUS</p>
-            <p className="mt-1 text-emerald-400">✓ ACCEPTING PROJECTS</p>
-          </motion.div>
+
         </div>
       </div>
 

@@ -119,39 +119,36 @@ export function DetailPageLayout({
   };
 
   return (
-    <main className="relative min-h-screen bg-background text-foreground selection:bg-electric/30">
+    <main className="relative min-h-screen bg-bg text-text selection:bg-primary/30">
       <Nav />
 
       {/* --- HERO SECTION --- */}
       <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 px-4 sm:px-6 md:px-12 overflow-hidden">
-        {/* Subtle Background Glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-electric/10 blur-[120px] pointer-events-none rounded-full" />
-
         <div className="mx-auto max-w-6xl relative z-10">
           {/* Breadcrumbs */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="flex items-center gap-2 font-mono text-xs text-muted-foreground mb-8"
+            className="flex items-center gap-2 font-mono text-xs text-text-subtle mb-8"
           >
             <Link
               to="/"
-              className="hover:text-electric transition-colors flex items-center gap-1.5"
+              className="hover:text-[#B9D0FF] transition-colors flex items-center gap-1.5"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               Studio
             </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/40" />
+            <ChevronRight className="w-3.5 h-3.5 text-border-strong" />
             <Link
               to="/"
               hash={category === "Service" ? "services" : "industries"}
-              className="hover:text-electric transition-colors"
+              className="hover:text-[#B9D0FF] transition-colors"
             >
               {category === "Service" ? "Services" : "Industries"}
             </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/40" />
-            <span className="text-electric font-medium truncate max-w-[200px] sm:max-w-none">
+            <ChevronRight className="w-3.5 h-3.5 text-border-strong" />
+            <span className="text-accent-text font-medium truncate max-w-[200px] sm:max-w-none">
               {title}
             </span>
           </motion.div>
@@ -163,16 +160,16 @@ export function DetailPageLayout({
             transition={{ duration: 0.6, delay: 0.1 }}
             className="max-w-4xl"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-electric/30 bg-electric/10 text-electric font-mono text-xs uppercase tracking-widest mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-electric animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-highlight-border bg-highlight-bg text-accent-text text-[14px] font-medium tracking-normal mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
               {category === "Service" ? "Service Capability" : "Industry Practice"}
             </div>
 
-            <h1 className="font-display text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.05] text-gradient-soft">
+            <h1 className="font-display text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-semibold tracking-[-0.022em] leading-[1.05] text-text-heading">
               {title}
             </h1>
 
-            <p className="mt-6 text-lg sm:text-xl md:text-2xl font-normal leading-relaxed text-muted-foreground">
+            <p className="mt-6 text-lg sm:text-xl md:text-2xl font-normal leading-relaxed text-text-muted">
               {tagline}
             </p>
 
@@ -185,7 +182,7 @@ export function DetailPageLayout({
                     page: title,
                   })
                 }
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-electric px-6 py-3.5 sm:px-8 sm:py-4 text-sm sm:text-base font-semibold text-primary-foreground shadow-[0_0_30px_rgba(59,130,246,0.4)] transition-all hover:scale-105 hover:glow-electric"
+                className="inline-flex items-center justify-center gap-2 rounded-[8px] bg-primary px-6 py-3.5 sm:px-8 sm:py-4 text-sm sm:text-base font-semibold text-on-primary shadow-[0_1px_2px_rgba(0,0,0,0.3)] transition-colors hover:bg-primary-hover"
               >
                 Discuss Your Project
                 <ArrowUpRight className="h-4 w-4" />
@@ -201,9 +198,9 @@ export function DetailPageLayout({
                     page: title,
                   })
                 }
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 dark:border-white/10 bg-surface/60 px-6 py-3.5 sm:px-8 sm:py-4 text-sm sm:text-base font-medium text-foreground backdrop-blur-md transition-colors hover:border-electric/50 hover:text-electric"
+                className="inline-flex items-center justify-center gap-2 rounded-[8px] border border-border-strong bg-transparent px-6 py-3.5 sm:px-8 sm:py-4 text-sm sm:text-base font-medium text-text transition-colors hover:bg-surface-hover"
               >
-                <MessageCircle className="w-4 h-4 text-[#25D366]" />
+                <MessageCircle className="w-4 h-4 text-accent-text" />
                 Direct WhatsApp
               </a>
             </div>
@@ -216,28 +213,28 @@ export function DetailPageLayout({
             transition={{ duration: 0.7, delay: 0.25 }}
             className="mt-12 sm:mt-16 relative"
           >
-            <div className="glass-card overflow-hidden rounded-2xl sm:rounded-3xl border border-white/10 shadow-[0_20px_60px_rgba(11,21,53,0.3)]">
+            <div className="glass-card overflow-hidden rounded-2xl sm:rounded-3xl border border-border">
               {/* Browser Window Titlebar */}
-              <div className="flex items-center justify-between px-4 py-3 bg-surface/80 border-b border-white/10 backdrop-blur-md">
+              <div className="flex items-center justify-between px-4 py-3 bg-surface border-b border-border">
                 <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-red-500/80" />
-                  <span className="w-3 h-3 rounded-full bg-amber-500/80" />
-                  <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                  <span className="ml-3 font-mono text-[11px] text-muted-foreground">
+                  <span className="w-3 h-3 rounded-full bg-border-strong" />
+                  <span className="w-3 h-3 rounded-full bg-border-strong" />
+                  <span className="w-3 h-3 rounded-full bg-border-strong" />
+                  <span className="ml-3 font-mono text-[11px] text-text-subtle">
                     zeploy.tech/{category.toLowerCase()}s/
                     {title.toLowerCase().replace(/[^a-z0-9]/g, "-")}
                   </span>
                 </div>
                 <div className="hidden sm:flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-electric animate-pulse" />
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-electric">
+                  <span className="w-2 h-2 rounded-full bg-primary" />
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-accent-text">
                     Production Architecture
                   </span>
                 </div>
               </div>
 
               {/* Main Visual Image */}
-              <div className="relative aspect-[16/10] w-full bg-surface-2 overflow-hidden">
+              <div className="relative aspect-[16/10] w-full bg-bg overflow-hidden">
                 <img
                   src={image}
                   alt={imageAlt}
@@ -254,22 +251,22 @@ export function DetailPageLayout({
       </section>
 
       {/* --- OVERVIEW & PROBLEMS / CHALLENGES --- */}
-      <section className="relative border-t border-white/5 py-20 md:py-28 px-4 sm:px-6 md:px-12 bg-surface/20">
+      <section className="relative border-t border-border py-20 md:py-28 px-4 sm:px-6 md:px-12 bg-bg">
         <div className="mx-auto max-w-6xl">
           <motion.div {...fadeUp} className="max-w-3xl mb-16">
-            <span className="font-mono text-xs uppercase tracking-[0.25em] font-medium text-electric">
+            <span className="text-[14px] sm:text-[15px] font-medium tracking-normal text-accent-text">
               Strategic Overview
             </span>
-            <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gradient-soft">
+            <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-[-0.022em] text-text-heading">
               Engineering with purpose & precision.
             </h2>
-            <p className="mt-6 text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed">
+            <p className="mt-6 text-base sm:text-lg md:text-xl text-text-muted leading-relaxed">
               {overview}
             </p>
           </motion.div>
 
           <div className="mt-12">
-            <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-6">
+            <h3 className="text-[14px] sm:text-[15px] font-medium tracking-normal text-accent-text mb-6">
               {problemsOrChallengesTitle}
             </h3>
             <div className="grid gap-6 md:grid-cols-3">
@@ -281,13 +278,13 @@ export function DetailPageLayout({
                 >
                   <TiltCard3D className="glass-card glass-card-hover p-6 sm:p-8 rounded-2xl h-full flex flex-col justify-between">
                     <div>
-                      <div className="w-10 h-10 rounded-xl bg-electric/10 border border-electric/30 flex items-center justify-center text-electric mb-6 font-mono font-bold text-sm">
+                      <div className="w-10 h-10 rounded-[8px] bg-highlight-bg border border-highlight-border flex items-center justify-center text-accent-text mb-6 font-mono font-bold text-sm">
                         0{idx + 1}
                       </div>
-                      <h4 className="text-xl font-semibold text-foreground mb-3">
+                      <h4 className="text-xl font-semibold text-text-heading mb-3">
                         {item.heading}
                       </h4>
-                      <p className="text-sm leading-relaxed text-muted-foreground">
+                      <p className="text-sm leading-relaxed text-text-muted">
                         {item.body}
                       </p>
                     </div>
@@ -300,13 +297,13 @@ export function DetailPageLayout({
       </section>
 
       {/* --- WHAT WE DELIVER / SOLUTIONS --- */}
-      <section className="relative border-t border-white/5 py-20 md:py-28 px-4 sm:px-6 md:px-12 bg-background">
+      <section className="relative border-t border-border py-20 md:py-28 px-4 sm:px-6 md:px-12 bg-bg">
         <div className="mx-auto max-w-6xl">
           <motion.div {...fadeUp} className="max-w-3xl mb-12">
-            <span className="font-mono text-xs uppercase tracking-[0.25em] font-medium text-electric">
+            <span className="text-[14px] sm:text-[15px] font-medium tracking-normal text-accent-text">
               Capabilities & Deliverables
             </span>
-            <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gradient-soft">
+            <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-[-0.022em] text-text-heading">
               {deliverablesOrSolutionsTitle}
             </h2>
           </motion.div>
@@ -317,10 +314,10 @@ export function DetailPageLayout({
                 key={idx}
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: idx * 0.04 }}
-                className="flex items-start gap-3.5 p-5 rounded-xl border border-white/10 bg-surface/40"
+                className="flex items-start gap-3.5 p-5 rounded-xl border border-border bg-surface shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
               >
-                <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                <span className="text-sm sm:text-base font-medium text-foreground/90 leading-snug">
+                <CheckCircle2 className="w-5 h-5 text-accent-text shrink-0 mt-0.5" />
+                <span className="text-sm sm:text-base font-medium text-text leading-snug">
                   {item}
                 </span>
               </motion.div>
@@ -330,7 +327,7 @@ export function DetailPageLayout({
           {/* Use Cases (For Industries) */}
           {useCases && useCases.length > 0 && (
             <div className="mt-20">
-              <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-8">
+              <h3 className="text-[14px] sm:text-[15px] font-medium tracking-normal text-accent-text mb-8">
                 Target Architecture Use Cases
               </h3>
               <div className="grid gap-6 md:grid-cols-2">
@@ -339,16 +336,16 @@ export function DetailPageLayout({
                     key={uc.title}
                     {...fadeUp}
                     transition={{ ...fadeUp.transition, delay: i * 0.08 }}
-                    className="p-6 sm:p-8 rounded-2xl border border-white/10 bg-surface/30"
+                    className="p-6 sm:p-8 rounded-2xl border border-border bg-surface shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
                   >
-                    <div className="flex items-center gap-2 text-electric font-mono text-xs uppercase tracking-widest mb-3">
+                    <div className="flex items-center gap-2 text-accent-text font-mono text-xs uppercase tracking-widest mb-3">
                       <Sparkles className="w-4 h-4" />
                       Use Case 0{i + 1}
                     </div>
-                    <h4 className="text-xl font-semibold text-foreground mb-2">
+                    <h4 className="text-xl font-semibold text-text-heading mb-2">
                       {uc.title}
                     </h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <p className="text-sm text-text-muted leading-relaxed">
                       {uc.desc}
                     </p>
                   </motion.div>
@@ -360,7 +357,7 @@ export function DetailPageLayout({
           {/* Structured Capabilities Breakdown (For Services) */}
           {capabilities && Array.isArray(capabilities) && typeof capabilities[0] === "object" && (
             <div className="mt-20">
-              <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-8">
+              <h3 className="text-[14px] sm:text-[15px] font-medium tracking-normal text-accent-text mb-8">
                 Key Technical Disciplines
               </h3>
               <div className="grid gap-6 md:grid-cols-3">
@@ -369,18 +366,18 @@ export function DetailPageLayout({
                     key={cap.label}
                     {...fadeUp}
                     transition={{ ...fadeUp.transition, delay: i * 0.08 }}
-                    className="p-6 sm:p-8 rounded-2xl border border-white/10 bg-surface/30"
+                    className="p-6 sm:p-8 rounded-2xl border border-border bg-surface shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
                   >
-                    <h4 className="text-lg font-semibold text-foreground mb-4">
+                    <h4 className="text-lg font-semibold text-text-heading mb-4">
                       {cap.label}
                     </h4>
                     <ul className="space-y-2">
                       {cap.items.map((item) => (
                         <li
                           key={item}
-                          className="flex items-center gap-2 text-sm text-muted-foreground"
+                          className="flex items-center gap-2 text-sm text-text-muted"
                         >
-                          <span className="w-1.5 h-1.5 rounded-full bg-electric" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                           {item}
                         </li>
                       ))}
@@ -395,13 +392,13 @@ export function DetailPageLayout({
 
       {/* --- TECH STACK & CONSIDERATIONS --- */}
       {stackOrTechConsiderations && stackOrTechConsiderations.length > 0 && (
-        <section className="relative border-t border-white/5 py-20 md:py-28 px-4 sm:px-6 md:px-12 bg-surface/20">
+        <section className="relative border-t border-border py-20 md:py-28 px-4 sm:px-6 md:px-12 bg-bg">
           <div className="mx-auto max-w-6xl">
             <motion.div {...fadeUp} className="max-w-3xl mb-12">
-              <span className="font-mono text-xs uppercase tracking-[0.25em] font-medium text-electric">
+              <span className="text-[14px] sm:text-[15px] font-medium tracking-normal text-accent-text">
                 Engineering Foundation
               </span>
-              <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-gradient-soft">
+              <h2 className="mt-4 text-3xl sm:text-4xl font-semibold tracking-[-0.022em] text-text-heading">
                 {stackOrTechTitle}
               </h2>
             </motion.div>
@@ -411,7 +408,7 @@ export function DetailPageLayout({
                 {stackOrTechConsiderations.map((tech) => (
                   <span
                     key={tech}
-                    className="rounded-xl border border-white/10 bg-surface/60 px-5 py-3 font-mono text-sm sm:text-base font-medium text-foreground shadow-sm"
+                    className="rounded-[8px] border border-highlight-border bg-highlight-bg px-5 py-3 font-mono text-sm sm:text-base font-medium text-text"
                   >
                     {tech}
                   </span>
@@ -422,10 +419,10 @@ export function DetailPageLayout({
                 {stackOrTechConsiderations.map((c, idx) => (
                   <div
                     key={idx}
-                    className="p-5 sm:p-6 rounded-xl border border-white/10 bg-surface/40 flex items-start gap-4"
+                    className="p-5 sm:p-6 rounded-xl border border-border bg-surface shadow-[0_1px_2px_rgba(0,0,0,0.3)] flex items-start gap-4"
                   >
-                    <Zap className="w-5 h-5 text-electric shrink-0 mt-0.5" />
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    <Zap className="w-5 h-5 text-accent-text shrink-0 mt-0.5" />
+                    <p className="text-sm sm:text-base text-text-muted leading-relaxed">
                       {c}
                     </p>
                   </div>
@@ -438,16 +435,16 @@ export function DetailPageLayout({
 
       {/* --- CODE WINDOW PRODUCTION BLUEPRINT --- */}
       {codeSnippet && (
-        <section className="relative border-t border-white/5 py-20 md:py-28 px-4 sm:px-6 md:px-12 bg-background">
+        <section className="relative border-t border-border py-20 md:py-28 px-4 sm:px-6 md:px-12 bg-bg">
           <div className="mx-auto max-w-6xl">
             <motion.div {...fadeUp} className="max-w-3xl mb-10">
-              <span className="font-mono text-xs uppercase tracking-[0.25em] font-medium text-electric">
+              <span className="text-[14px] sm:text-[15px] font-medium tracking-normal text-accent-text">
                 Engineering Blueprint
               </span>
-              <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-gradient-soft">
+              <h2 className="mt-4 text-3xl sm:text-4xl font-semibold tracking-[-0.022em] text-text-heading">
                 Architecture in code.
               </h2>
-              <p className="mt-4 text-base sm:text-lg text-muted-foreground">
+              <p className="mt-4 text-base sm:text-lg text-text-muted">
                 Type-safe primitives and production patterns engineered specifically for {title.toLowerCase()}.
               </p>
             </motion.div>
@@ -467,13 +464,13 @@ export function DetailPageLayout({
 
       {/* --- DEVELOPMENT APPROACH (If present) --- */}
       {approach && approach.length > 0 && (
-        <section className="relative border-t border-white/5 py-20 md:py-28 px-4 sm:px-6 md:px-12 bg-background">
+        <section className="relative border-t border-border py-20 md:py-28 px-4 sm:px-6 md:px-12 bg-bg">
           <div className="mx-auto max-w-6xl">
             <motion.div {...fadeUp} className="max-w-3xl mb-16">
-              <span className="font-mono text-xs uppercase tracking-[0.25em] font-medium text-electric">
+              <span className="text-[14px] sm:text-[15px] font-medium tracking-normal text-accent-text">
                 The Methodology
               </span>
-              <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-gradient-soft">
+              <h2 className="mt-4 text-3xl sm:text-4xl font-semibold tracking-[-0.022em] text-text-heading">
                 How we take ideas from discovery to deployment.
               </h2>
             </motion.div>
@@ -484,16 +481,16 @@ export function DetailPageLayout({
                   key={step.step}
                   {...fadeUp}
                   transition={{ ...fadeUp.transition, delay: idx * 0.06 }}
-                  className="p-6 sm:p-8 rounded-2xl border border-white/10 bg-surface/30 flex flex-col justify-between"
+                  className="p-6 sm:p-8 rounded-2xl border border-border bg-surface shadow-[0_1px_2px_rgba(0,0,0,0.3)] flex flex-col justify-between"
                 >
                   <div>
-                    <div className="font-mono text-xs uppercase tracking-widest text-electric mb-3">
+                    <div className="font-mono text-xs uppercase tracking-widest text-accent-text mb-3">
                       Phase 0{idx + 1}
                     </div>
-                    <h4 className="text-xl font-semibold text-foreground mb-3">
+                    <h4 className="text-xl font-semibold text-text-heading mb-3">
                       {step.step}
                     </h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <p className="text-sm text-text-muted leading-relaxed">
                       {step.desc}
                     </p>
                   </div>
@@ -506,21 +503,21 @@ export function DetailPageLayout({
 
       {/* --- RELEVANT PROJECTS --- */}
       {relatedProjects && relatedProjects.length > 0 && (
-        <section className="relative border-t border-white/5 py-20 md:py-28 px-4 sm:px-6 md:px-12 bg-surface/20">
+        <section className="relative border-t border-border py-20 md:py-28 px-4 sm:px-6 md:px-12 bg-bg">
           <div className="mx-auto max-w-6xl">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
               <div>
-                <span className="font-mono text-xs uppercase tracking-[0.25em] font-medium text-electric">
+                <span className="text-[14px] sm:text-[15px] font-medium tracking-normal text-accent-text">
                   Proven Track Record
                 </span>
-                <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-gradient-soft">
+                <h2 className="mt-4 text-3xl sm:text-4xl font-semibold tracking-[-0.022em] text-text-heading">
                   Representative Work in this Space
                 </h2>
               </div>
               <Link
                 to="/"
                 hash="work"
-                className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-electric hover:text-electric-soft"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-accent-text hover:text-[#B9D0FF]"
               >
                 View all case studies <ArrowUpRight className="w-4 h-4" />
               </Link>
@@ -530,21 +527,21 @@ export function DetailPageLayout({
               {relatedProjects.map((p) => (
                 <div
                   key={p.name}
-                  className="p-6 rounded-2xl border border-white/10 bg-surface/50 flex flex-col justify-between"
+                  className="p-6 rounded-2xl border border-border bg-surface shadow-[0_1px_2px_rgba(0,0,0,0.3)] flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="w-2 h-2 rounded-full bg-electric" />
-                      <span className="font-mono text-xs uppercase tracking-widest text-electric">
+                      <span className="w-2 h-2 rounded-full bg-primary" />
+                      <span className="font-mono text-xs uppercase tracking-widest text-accent-text">
                         {p.kind}
                       </span>
                     </div>
-                    <h4 className="text-2xl font-semibold text-foreground">{p.name}</h4>
+                    <h4 className="text-2xl font-semibold text-text-heading">{p.name}</h4>
                   </div>
                   <Link
                     to="/"
                     hash="work"
-                    className="mt-6 inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-electric"
+                    className="mt-6 inline-flex items-center gap-1.5 text-xs font-mono text-accent-text hover:text-[#B9D0FF]"
                   >
                     View project details <ArrowUpRight className="w-3.5 h-3.5" />
                   </Link>
@@ -557,9 +554,9 @@ export function DetailPageLayout({
 
       {/* --- RELATED INTERNAL LINKS --- */}
       {relatedLinks && relatedLinks.length > 0 && (
-        <section className="relative border-t border-white/5 py-16 px-4 sm:px-6 md:px-12 bg-background">
+        <section className="relative border-t border-border py-16 px-4 sm:px-6 md:px-12 bg-bg">
           <div className="mx-auto max-w-6xl">
-            <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-6">
+            <h3 className="text-[14px] sm:text-[15px] font-medium tracking-normal text-accent-text mb-6">
               {relatedLinksTitle}
             </h3>
             <div className="flex flex-wrap gap-3">
@@ -569,22 +566,22 @@ export function DetailPageLayout({
                     key={link.slug}
                     to="/services/$slug"
                     params={{ slug: link.slug }}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/10 bg-surface/40 hover:border-electric/50 hover:text-electric text-sm font-medium transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[8px] border border-border-strong bg-surface hover:bg-surface-hover text-text text-sm font-medium transition-colors"
                   >
-                    <Layers className="w-4 h-4 text-electric" />
+                    <Layers className="w-4 h-4 text-accent-text" />
                     {link.label}
-                    <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground" />
+                    <ArrowUpRight className="w-3.5 h-3.5 text-text-subtle" />
                   </Link>
                 ) : (
                   <Link
                     key={link.slug}
                     to="/industries/$slug"
                     params={{ slug: link.slug }}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/10 bg-surface/40 hover:border-electric/50 hover:text-electric text-sm font-medium transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[8px] border border-border-strong bg-surface hover:bg-surface-hover text-text text-sm font-medium transition-colors"
                   >
-                    <Layers className="w-4 h-4 text-electric" />
+                    <Layers className="w-4 h-4 text-accent-text" />
                     {link.label}
-                    <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground" />
+                    <ArrowUpRight className="w-3.5 h-3.5 text-text-subtle" />
                   </Link>
                 )
               ))}
@@ -594,13 +591,13 @@ export function DetailPageLayout({
       )}
 
       {/* --- FAQ SECTION --- */}
-      <section className="relative border-t border-white/5 py-20 md:py-28 px-4 sm:px-6 md:px-12 bg-surface/20">
+      <section className="relative border-t border-border py-20 md:py-28 px-4 sm:px-6 md:px-12 bg-bg">
         <div className="mx-auto max-w-4xl">
           <motion.div {...fadeUp} className="text-center mb-12">
-            <span className="font-mono text-xs uppercase tracking-[0.25em] font-medium text-electric">
+            <span className="text-[14px] sm:text-[15px] font-medium tracking-normal text-accent-text">
               Common Inquiries
             </span>
-            <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gradient-soft">
+            <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-[-0.022em] text-text-heading">
               Frequently Asked Questions
             </h2>
           </motion.div>
@@ -609,17 +606,17 @@ export function DetailPageLayout({
             {faq.map((item, i) => (
               <div
                 key={i}
-                className="glass-card rounded-2xl overflow-hidden border border-white/10"
+                className="glass-card rounded-2xl overflow-hidden border border-border"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="w-full px-5 py-4 sm:px-6 sm:py-5 flex items-start sm:items-center justify-between text-left focus:outline-none gap-3"
                   aria-expanded={openFaq === i}
                 >
-                  <span className="text-base sm:text-lg font-medium text-foreground/90 leading-snug">
+                  <span className="text-base sm:text-lg font-medium text-text-heading leading-snug">
                     {item.q}
                   </span>
-                  <span className="mt-0.5 sm:mt-0 shrink-0 text-electric">
+                  <span className="mt-0.5 sm:mt-0 shrink-0 text-accent-text">
                     {openFaq === i ? (
                       <Minus className="w-4 h-4 sm:w-5 sm:h-5" />
                     ) : (
@@ -628,7 +625,7 @@ export function DetailPageLayout({
                   </span>
                 </button>
                 <div
-                  className="px-6 text-muted-foreground leading-relaxed transition-all duration-300 ease-in-out overflow-hidden"
+                  className="px-6 text-text-muted leading-relaxed transition-all duration-300 ease-in-out overflow-hidden"
                   style={{
                     maxHeight: openFaq === i ? "400px" : "0",
                     paddingBottom: openFaq === i ? "1.25rem" : "0",
@@ -646,32 +643,32 @@ export function DetailPageLayout({
       {/* --- INQUIRY FORM / BOTTOM CTA --- */}
       <section
         id="inquiry"
-        className="relative border-t border-white/5 py-24 md:py-32 px-4 sm:px-6 md:px-12 bg-background overflow-hidden"
+        className="relative border-t border-border py-24 md:py-32 px-4 sm:px-6 md:px-12 bg-bg overflow-hidden"
       >
         <div className="mx-auto max-w-6xl grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <motion.div {...fadeUp}>
-            <span className="font-mono text-xs uppercase tracking-[0.25em] font-medium text-electric">
+            <span className="text-[14px] sm:text-[15px] font-medium tracking-normal text-accent-text">
               Start an Engagement
             </span>
-            <h2 className="mt-4 text-3xl xs:text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] text-gradient-soft">
+            <h2 className="mt-4 text-3xl xs:text-4xl sm:text-5xl font-semibold tracking-[-0.022em] leading-[1.08] text-text-heading">
               Let's engineer your {title.toLowerCase()} system.
             </h2>
-            <p className="mt-6 text-base sm:text-lg text-muted-foreground leading-relaxed">
+            <p className="mt-6 text-base sm:text-lg text-text-muted leading-relaxed">
               Share your project scope, technical requirements, or business goals. We review all
               inquiries and respond within 24 hours with an architectural consultation.
             </p>
 
-            <div className="mt-8 space-y-4 font-mono text-xs text-muted-foreground">
+            <div className="mt-8 space-y-4 font-mono text-xs text-text-muted">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <CheckCircle2 className="w-4 h-4 text-accent-text" />
                 Response within 24 hours
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <CheckCircle2 className="w-4 h-4 text-accent-text" />
                 Complimentary technical discovery session
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <CheckCircle2 className="w-4 h-4 text-accent-text" />
                 Full repository and IP ownership
               </div>
             </div>
@@ -679,12 +676,12 @@ export function DetailPageLayout({
 
           <motion.div
             {...fadeUp}
-            className="glass-card rounded-2xl sm:rounded-3xl p-6 sm:p-10 border border-white/10"
+            className="glass-card rounded-2xl sm:rounded-3xl p-6 sm:p-10 border border-border"
           >
             <form onSubmit={handleSubmit} className="grid gap-4 sm:gap-5">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-1.5 block">
+                  <label className="text-xs font-mono uppercase tracking-widest text-text-subtle mb-1.5 block">
                     Full Name
                   </label>
                   <input
@@ -693,11 +690,11 @@ export function DetailPageLayout({
                     placeholder="Your Name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric"
+                    className="w-full rounded-[8px] border border-border-strong bg-surface px-4 py-3 text-sm text-text placeholder:text-text-subtle focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-1.5 block">
+                  <label className="text-xs font-mono uppercase tracking-widest text-text-subtle mb-1.5 block">
                     Email Address
                   </label>
                   <input
@@ -706,13 +703,13 @@ export function DetailPageLayout({
                     placeholder="you@company.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric"
+                    className="w-full rounded-[8px] border border-border-strong bg-surface px-4 py-3 text-sm text-text placeholder:text-text-subtle focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-1.5 block">
+                <label className="text-xs font-mono uppercase tracking-widest text-text-subtle mb-1.5 block">
                   Company / Organization
                 </label>
                 <input
@@ -720,12 +717,12 @@ export function DetailPageLayout({
                   placeholder="Company Name"
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric"
+                  className="w-full rounded-[8px] border border-border-strong bg-surface px-4 py-3 text-sm text-text placeholder:text-text-subtle focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-1.5 block">
+                <label className="text-xs font-mono uppercase tracking-widest text-text-subtle mb-1.5 block">
                   Project Description
                 </label>
                 <textarea
@@ -734,17 +731,17 @@ export function DetailPageLayout({
                   placeholder={`Tell us about your ${title} requirements, timeline, or scope...`}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full rounded-xl border border-white/10 bg-background/50 px-4 py-3 text-sm text-foreground focus:border-electric focus:outline-none focus:ring-1 focus:ring-electric resize-none"
+                  className="w-full rounded-[8px] border border-border-strong bg-surface px-4 py-3 text-sm text-text placeholder:text-text-subtle focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary resize-none"
                 />
               </div>
 
               {status === "success" && (
-                <div className="text-emerald-400 text-sm font-medium">
+                <div className="text-accent-text text-sm font-medium">
                   Your inquiry has been received! Our team will contact you within 24 hours.
                 </div>
               )}
               {status === "error" && (
-                <div className="text-red-400 text-sm font-medium">
+                <div className="text-destructive text-sm font-medium">
                   Failed to send inquiry. Please email us directly at zeploytech@gmail.com.
                 </div>
               )}
@@ -752,13 +749,13 @@ export function DetailPageLayout({
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="w-full rounded-xl bg-electric px-6 py-4 text-sm font-semibold text-primary-foreground transition-all hover:glow-electric hover:scale-[1.01] disabled:opacity-50"
+                className="w-full rounded-[8px] bg-primary px-6 py-4 text-sm font-semibold text-on-primary shadow-[0_1px_2px_rgba(0,0,0,0.3)] transition-colors hover:bg-primary-hover disabled:opacity-50"
               >
                 {status === "loading" ? "Submitting..." : "Submit Project Inquiry"}
               </button>
 
               <div className="flex items-center justify-center my-1">
-                <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-mono">
+                <span className="text-[10px] uppercase tracking-widest text-text-subtle font-mono">
                   Or message us directly
                 </span>
               </div>
@@ -773,9 +770,9 @@ export function DetailPageLayout({
                     page: title,
                   })
                 }
-                className="w-full rounded-xl border border-[#25D366]/20 bg-[#25D366]/10 px-6 py-3.5 text-sm font-semibold text-[#25D366] transition-all flex items-center justify-center gap-2 hover:bg-[#25D366]/20"
+                className="w-full rounded-[8px] border border-border-strong bg-transparent px-6 py-3.5 text-sm font-semibold text-text transition-colors flex items-center justify-center gap-2 hover:bg-surface-hover"
               >
-                <MessageCircle className="w-4 h-4" />
+                <MessageCircle className="w-4 h-4 text-accent-text" />
                 Chat on WhatsApp
               </a>
             </form>

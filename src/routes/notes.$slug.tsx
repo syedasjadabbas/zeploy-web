@@ -42,11 +42,11 @@ export const Route = createFileRoute('/notes/$slug')({
         { property: "og:title", content: `${post.title} | Zeploy Tech Engineering Notes` },
         { property: "og:description", content: post.description },
         { property: "og:url", content: `https://www.zeploy.tech/notes/${params.slug}` },
-        { property: "og:image", content: "https://www.zeploy.tech/logo.webp" },
+        { property: "og:image", content: "https://www.zeploy.tech/logo-full.webp" },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: `${post.title} | Zeploy Tech Engineering Notes` },
         { name: "twitter:description", content: post.description },
-        { name: "twitter:image", content: "https://www.zeploy.tech/logo.webp" },
+        { name: "twitter:image", content: "https://www.zeploy.tech/logo-full.webp" },
       ],
       links: [
         { rel: "canonical", href: `https://www.zeploy.tech/notes/${params.slug}` },
@@ -66,31 +66,31 @@ function NotePage() {
   const snippet = noteSnippets[post.slug];
 
   return (
-    <main className="relative min-h-screen bg-background text-foreground selection:bg-electric/30">
+    <main className="relative min-h-screen bg-bg text-text selection:bg-primary/30">
       <Nav />
       <article className="pt-40 pb-32 px-6 md:px-12 mx-auto max-w-4xl min-h-[80vh]">
-        <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-electric transition-colors mb-12 font-mono text-xs uppercase tracking-widest">
+        <Link to="/" className="inline-flex items-center gap-2 text-text-subtle hover:text-accent-text transition-colors mb-12 text-sm font-medium">
           <ArrowLeft className="w-4 h-4" />
           Back to Studio
         </Link>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <div className="flex items-center gap-3 text-electric-soft font-mono text-xs uppercase tracking-widest mb-6">
+          <div className="flex items-center gap-3 text-accent-text text-[14px] sm:text-[15px] font-medium tracking-normal mb-6">
             <span>{post.category}</span>
-            <span className="w-1 h-1 rounded-full bg-electric-soft/50" />
+            <span className="w-1 h-1 rounded-full bg-accent-text/50" />
             <span>{post.date}</span>
           </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-[1.1] tracking-tight text-gradient-soft mb-8">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold leading-[1.1] tracking-[-0.022em] text-text-heading mb-8">
             {post.title}
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-12">
+          <p className="text-xl md:text-2xl text-text-muted leading-relaxed mb-12">
             {post.description}
           </p>
           <div className="h-px w-full bg-border mb-12" />
 
           {snippet && (
             <div className="my-10">
-              <div className="flex items-center gap-2 text-electric font-mono text-xs uppercase tracking-widest mb-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-electric" />
+              <div className="flex items-center gap-2 text-accent-text text-[14px] sm:text-[15px] font-medium tracking-normal mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                 Production Implementation
               </div>
               <CodeWindow
@@ -103,7 +103,7 @@ function NotePage() {
             </div>
           )}
 
-          <div className="prose dark:prose-invert prose-lg md:prose-xl max-w-none text-muted-foreground mt-12">
+          <div className="prose dark:prose-invert prose-lg md:prose-xl max-w-none text-text-muted mt-12">
             <p>
               In production environments, architectural choices dictate system resilience and iteration velocity. By codifying our infrastructure, enforcing strict boundary isolation, and automating observability, we ensure high availability under real-world loads.
             </p>

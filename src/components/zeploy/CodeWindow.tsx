@@ -191,40 +191,39 @@ function tokenizeCodePart(code: string): Token[] {
 }
 
 function TokenSpan({ token }: { token: Token }) {
-  let className = "text-foreground/90";
+  let className = "text-text";
 
   switch (token.type) {
     case "comment":
-      className = "text-muted-foreground/70 italic dark:text-slate-500 text-slate-400";
+      className = "text-text-subtle italic";
       break;
     case "keyword":
-      className =
-        "text-blue-600 dark:text-blue-400 font-semibold";
+      className = "text-accent-text font-semibold";
       break;
     case "string":
-      className = "text-emerald-600 dark:text-emerald-400";
+      className = "text-text";
       break;
     case "function":
-      className = "text-sky-600 dark:text-sky-300 font-medium";
+      className = "text-text-heading font-medium";
       break;
     case "type":
-      className = "text-amber-600 dark:text-amber-300 font-medium";
+      className = "text-accent-text font-medium";
       break;
     case "number":
     case "boolean":
-      className = "text-amber-600 dark:text-amber-400";
+      className = "text-text-muted font-mono";
       break;
     case "variable":
-      className = "text-cyan-600 dark:text-cyan-300 font-medium";
+      className = "text-text-muted font-medium";
       break;
     case "operator":
-      className = "text-blue-500 dark:text-blue-400";
+      className = "text-accent-text";
       break;
     case "punctuation":
-      className = "text-foreground/60 dark:text-slate-400 text-slate-500";
+      className = "text-text-subtle";
       break;
     default:
-      className = "text-foreground/90 dark:text-slate-200 text-slate-800";
+      className = "text-text";
       break;
   }
 
@@ -295,24 +294,24 @@ export function CodeWindow({
   return (
     <div
       ref={containerRef}
-      className={`glass-card group relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/10 dark:border-white/10 shadow-[0_20px_50px_rgba(11,21,53,0.25)] transition-all duration-300 ${className}`}
+      className={`glass-card group relative overflow-hidden rounded-2xl sm:rounded-3xl border border-border bg-surface shadow-[0_1px_2px_rgba(0,0,0,0.3)] transition-all duration-300 ${className}`}
     >
       {/* Top Window Titlebar */}
-      <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 bg-surface/70 dark:bg-surface/50 border-b border-white/10 backdrop-blur-md">
+      <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 bg-surface border-b border-border">
         {/* macOS / Window Controls */}
         <div className="flex items-center gap-2">
-          <span className="h-3 w-3 rounded-full bg-[#FF5F56]/80 border border-[#E0443E]/30" />
-          <span className="h-3 w-3 rounded-full bg-[#FFBD2E]/80 border border-[#DEA123]/30" />
-          <span className="h-3 w-3 rounded-full bg-[#27C93F]/80 border border-[#1AAB29]/30" />
+          <span className="h-3 w-3 rounded-full bg-border-strong border border-border" />
+          <span className="h-3 w-3 rounded-full bg-border-strong border border-border" />
+          <span className="h-3 w-3 rounded-full bg-border-strong border border-border" />
         </div>
 
         {/* File & Status Indicator */}
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-background/50 border border-white/5 font-mono text-xs text-foreground/80">
-          <FileCode className="h-3.5 w-3.5 text-electric" />
-          <span className="font-medium text-foreground">{fileName}</span>
+        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-bg border border-border font-mono text-xs text-text-muted">
+          <FileCode className="h-3.5 w-3.5 text-accent-text" />
+          <span className="font-medium text-text">{fileName}</span>
           {status && (
-            <span className="hidden sm:inline-flex items-center gap-1.5 ml-1 text-[11px] text-emerald-500 font-normal">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="hidden sm:inline-flex items-center gap-1.5 ml-1 text-[11px] text-accent-text font-normal">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
               {status}
             </span>
           )}
@@ -321,7 +320,7 @@ export function CodeWindow({
         {/* Right Actions / Badge */}
         <div className="flex items-center gap-2.5">
           {badge && (
-            <span className="hidden md:inline-block font-mono text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-electric/10 text-electric border border-electric/20 font-medium">
+            <span className="hidden md:inline-block text-xs px-2.5 py-0.5 rounded-full bg-highlight-bg text-accent-text border border-highlight-border font-medium">
               {badge}
             </span>
           )}
@@ -329,10 +328,10 @@ export function CodeWindow({
             onClick={handleCopy}
             title="Copy code"
             aria-label="Copy code snippet to clipboard"
-            className="p-1.5 rounded-lg border border-white/5 bg-background/40 hover:bg-surface text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-1 focus:ring-electric"
+            className="p-1.5 rounded-[8px] border border-border-strong bg-surface hover:bg-surface-hover text-text-subtle hover:text-text transition-colors focus:outline-none focus:ring-1 focus:ring-primary"
           >
             {copied ? (
-              <Check className="h-3.5 w-3.5 text-emerald-400" />
+              <Check className="h-3.5 w-3.5 text-accent-text" />
             ) : (
               <Copy className="h-3.5 w-3.5" />
             )}
@@ -341,9 +340,9 @@ export function CodeWindow({
       </div>
 
       {/* Editor Body */}
-      <div className="p-4 sm:p-6 overflow-x-auto bg-background/40 dark:bg-surface/20">
+      <div className="p-4 sm:p-6 overflow-x-auto bg-bg">
         <pre
-          className="font-mono text-xs sm:text-sm leading-relaxed tracking-normal selection:bg-electric/30"
+          className="font-mono text-xs sm:text-sm leading-relaxed tracking-normal selection:bg-primary/30"
           tabIndex={0}
         >
           <code>
@@ -356,12 +355,12 @@ export function CodeWindow({
                   key={lineIdx}
                   className={`table-row ${
                     isHighlighted
-                      ? "bg-electric/10 -mx-4 px-4 rounded border-l-2 border-electric"
+                      ? "bg-highlight-bg -mx-4 px-4 rounded border-l-2 border-highlight-border"
                       : ""
                   }`}
                 >
                   {showLineNumbers && (
-                    <span className="table-cell pr-4 text-right select-none text-muted-foreground/30 dark:text-slate-600 w-8 text-xs align-top">
+                    <span className="table-cell pr-4 text-right select-none text-text-subtle w-8 text-xs align-top">
                       {lineNum}
                     </span>
                   )}
@@ -371,7 +370,7 @@ export function CodeWindow({
                     ))}
                     {/* Active Blinking Cursor on latest line */}
                     {!isCompleted && lineIdx === renderedLines.length - 1 && (
-                      <span className="inline-block w-2 h-4 bg-electric animate-pulse ml-0.5 align-middle" />
+                      <span className="inline-block w-2 h-4 bg-primary animate-pulse ml-0.5 align-middle" />
                     )}
                   </span>
                 </div>
@@ -380,9 +379,6 @@ export function CodeWindow({
           </code>
         </pre>
       </div>
-
-      {/* Subtle Bottom Accent Glow */}
-      <div className="h-1 w-full bg-gradient-to-r from-transparent via-electric/30 to-transparent" />
     </div>
   );
 }

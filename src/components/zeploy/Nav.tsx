@@ -112,15 +112,15 @@ export default function Nav() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled || mobileOpen ? "backdrop-blur-xl bg-background/80" : ""
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-200 ${
+        scrolled || mobileOpen ? "bg-bg border-b border-border" : ""
       }`}
     >
-      <div className={`mx-auto flex max-w-7xl items-center justify-between px-3 sm:px-6 py-3.5 md:py-4 md:px-12 ${scrolled || mobileOpen ? "border-b border-border" : ""}`}>
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-3 sm:px-6 py-3.5 md:py-4 md:px-12">
         <a
           href="/"
           onClick={handleBrandClick}
-          className="flex items-center gap-2 sm:gap-2.5 font-display text-sm sm:text-base font-semibold tracking-tight cursor-pointer shrink-0"
+          className="group flex items-center gap-2 sm:gap-2.5 font-display text-sm sm:text-base font-semibold tracking-tight cursor-pointer shrink-0"
           aria-label="Zeploy Tech Home"
         >
           <img
@@ -129,9 +129,9 @@ export default function Nav() {
             fetchPriority="high"
             width="28"
             height="28"
-            className="h-6 w-6 sm:h-7 sm:w-7 object-contain aspect-square shrink-0"
+            className="h-6 w-6 sm:h-7 sm:w-7 object-contain aspect-square shrink-0 transition-transform duration-200 group-hover:scale-105"
           />
-          <span><span className="text-electric">ZEPLOY</span> <span className="text-foreground">TECH</span></span>
+          <span><span className="text-accent-text">ZEPLOY</span> <span className="text-text-heading">TECH</span></span>
         </a>
 
         {/* Desktop Nav */}
@@ -146,13 +146,13 @@ export default function Nav() {
                 if (l.id === 'work') trackGAEvent('portfolio_click', { button_text: l.label });
                 if (l.id === 'contact') trackGAEvent('contact_click', { button_text: l.label });
               }}
-              className={`relative font-mono text-xs uppercase tracking-widest transition-colors ${
-                activeSection === l.id ? "text-electric" : "text-muted-foreground hover:text-foreground"
+              className={`relative text-sm font-medium transition-colors ${
+                activeSection === l.id ? "text-white" : "text-nav-link hover:text-white"
               }`}
             >
               {l.label}
               {activeSection === l.id && (
-                <span className="absolute -bottom-2 left-0 h-px w-full bg-electric shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
+                <span className="absolute -bottom-2 left-0 h-0.5 w-full bg-primary" />
               )}
             </a>
           ))}
@@ -160,9 +160,9 @@ export default function Nav() {
 
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <div className="hidden md:flex items-center gap-2 mr-1">
-            <a href="https://www.linkedin.com/company/zeploy-tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: 'LinkedIn Header' })} aria-label="LinkedIn" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Linkedin className="w-4 h-4" /></a>
-            <a href="https://www.instagram.com/zeploy.tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('instagram_click', { button_text: 'Instagram Header' })} aria-label="Instagram" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Instagram className="w-4 h-4" /></a>
-            <a href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('facebook_click', { button_text: 'Facebook Header' })} aria-label="Facebook" className="text-muted-foreground hover:text-electric transition-colors p-1.5 rounded-md hover:bg-surface"><Facebook className="w-4 h-4" /></a>
+            <a href="https://www.linkedin.com/company/zeploy-tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: 'LinkedIn Header' })} aria-label="LinkedIn" className="text-nav-link hover:text-white transition-colors p-1.5 rounded-[8px] hover:bg-surface-hover"><Linkedin className="w-4 h-4" /></a>
+            <a href="https://www.instagram.com/zeploy.tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('instagram_click', { button_text: 'Instagram Header' })} aria-label="Instagram" className="text-nav-link hover:text-white transition-colors p-1.5 rounded-[8px] hover:bg-surface-hover"><Instagram className="w-4 h-4" /></a>
+            <a href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('facebook_click', { button_text: 'Facebook Header' })} aria-label="Facebook" className="text-nav-link hover:text-white transition-colors p-1.5 rounded-[8px] hover:bg-surface-hover"><Facebook className="w-4 h-4" /></a>
           </div>
 
           <ThemeToggle />
@@ -173,7 +173,7 @@ export default function Nav() {
               trackGAEvent('email_click', { button_text: 'Start a project' });
               trackGAEvent('contact_click', { button_text: 'Start a project' });
             }}
-            className="rounded-full border border-white/10 dark:border-white/10 bg-surface/60 px-3 py-1.5 sm:px-4 sm:py-2 font-mono text-[10px] sm:text-xs uppercase tracking-widest text-foreground transition-colors hover:border-electric/50 hover:text-electric whitespace-nowrap"
+            className="rounded-[8px] bg-[#E8EDF5] px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium text-[#0A1220] transition-colors hover:bg-white whitespace-nowrap"
           >
             Start a project
           </a>
@@ -181,7 +181,7 @@ export default function Nav() {
           {/* Mobile Hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-xl border border-white/10 dark:border-white/10 bg-surface/60 text-foreground transition-colors hover:border-electric/50 hover:text-electric md:hidden shrink-0"
+            className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-[8px] border border-border-strong bg-surface text-text transition-colors hover:bg-surface-hover md:hidden shrink-0"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
           >
             {mobileOpen ? <X className="h-4 w-4 sm:h-5 sm:w-5" /> : <Menu className="h-4 w-4 sm:h-5 sm:w-5" />}
@@ -192,7 +192,7 @@ export default function Nav() {
       {/* Mobile Menu */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          mobileOpen ? "max-h-[min(500px,calc(100dvh-4.5rem))] opacity-100 bg-background/95 backdrop-blur-xl" : "max-h-0 opacity-0"
+          mobileOpen ? "max-h-[min(500px,calc(100dvh-4.5rem))] opacity-100 bg-surface" : "max-h-0 opacity-0"
         }`}
       >
         <nav className="mx-auto max-w-7xl border-t border-border px-6 py-4 overflow-y-auto max-h-[calc(100dvh-4.5rem)] overscroll-contain">
@@ -207,23 +207,23 @@ export default function Nav() {
                   if (l.id === 'work') trackGAEvent('portfolio_click', { button_text: l.label });
                   if (l.id === 'contact') trackGAEvent('contact_click', { button_text: l.label });
                 }}
-                className={`flex items-center gap-3 rounded-xl px-4 py-3.5 font-mono text-sm uppercase tracking-widest transition-colors ${
+                className={`flex items-center gap-3 rounded-[8px] px-4 py-3.5 text-sm font-medium transition-colors ${
                   activeSection === l.id
-                    ? "bg-electric/10 text-electric"
-                    : "text-muted-foreground hover:bg-surface/60 hover:text-foreground"
+                    ? "bg-highlight-bg border border-highlight-border text-white"
+                    : "text-nav-link hover:bg-surface-hover hover:text-white"
                 }`}
               >
                 {activeSection === l.id && (
-                  <span className="h-1.5 w-1.5 rounded-full bg-electric" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                 )}
                 {l.label}
               </a>
             ))}
           </div>
           <div className="mt-4 pt-4 border-t border-border flex items-center justify-center gap-4">
-            <a href="https://www.linkedin.com/company/zeploy-tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: 'LinkedIn Mobile Header' })} aria-label="LinkedIn" className="text-muted-foreground hover:text-electric transition-colors p-3 rounded-xl border border-border bg-surface/50 flex items-center justify-center"><Linkedin className="w-5 h-5" /></a>
-            <a href="https://www.instagram.com/zeploy.tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('instagram_click', { button_text: 'Instagram Mobile Header' })} aria-label="Instagram" className="text-muted-foreground hover:text-electric transition-colors p-3 rounded-xl border border-border bg-surface/50 flex items-center justify-center"><Instagram className="w-5 h-5" /></a>
-            <a href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('facebook_click', { button_text: 'Facebook Mobile Header' })} aria-label="Facebook" className="text-muted-foreground hover:text-electric transition-colors p-3 rounded-xl border border-border bg-surface/50 flex items-center justify-center"><Facebook className="w-5 h-5" /></a>
+            <a href="https://www.linkedin.com/company/zeploy-tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('linkedin_click', { button_text: 'LinkedIn Mobile Header' })} aria-label="LinkedIn" className="text-nav-link hover:text-white transition-colors p-3 rounded-[8px] border border-border-strong bg-bg hover:bg-surface-hover flex items-center justify-center"><Linkedin className="w-5 h-5" /></a>
+            <a href="https://www.instagram.com/zeploy.tech/" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('instagram_click', { button_text: 'Instagram Mobile Header' })} aria-label="Instagram" className="text-nav-link hover:text-white transition-colors p-3 rounded-[8px] border border-border-strong bg-bg hover:bg-surface-hover flex items-center justify-center"><Instagram className="w-5 h-5" /></a>
+            <a href="https://www.facebook.com/zeploytech" target="_blank" rel="noopener noreferrer" onClick={() => trackGAEvent('facebook_click', { button_text: 'Facebook Mobile Header' })} aria-label="Facebook" className="text-nav-link hover:text-white transition-colors p-3 rounded-[8px] border border-border-strong bg-bg hover:bg-surface-hover flex items-center justify-center"><Facebook className="w-5 h-5" /></a>
           </div>
         </nav>
       </div>

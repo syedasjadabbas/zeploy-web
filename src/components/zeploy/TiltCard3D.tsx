@@ -46,8 +46,7 @@ export function TiltCard3D({
         `perspective(${perspective}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scaleOnHover})`
       );
       setGlareStyle({
-        opacity: glareOpacity,
-        background: `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.22) 0%, rgba(59, 130, 246, 0.12) 35%, transparent 70%)`,
+        opacity: 0,
       });
     },
     [maxTilt, scaleOnHover, glareOpacity, perspective, translateZ]
