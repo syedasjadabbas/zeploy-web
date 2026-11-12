@@ -46,63 +46,7 @@ import {
   ArrowLeft,
   ArrowRight
 } from "lucide-react";
-import { SafeComponentGuard } from "./SafeComponentGuard";
 import { TiltCard3D } from "./TiltCard3D";
-
-function DesktopOnly3D({ load }: { load: () => Promise<{ default: React.ComponentType }> }) {
-  const [Comp, setComp] = useState<React.ComponentType | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const loadRef = useRef(load);
-  loadRef.current = load;
-
-  useEffect(() => {
-    const width = typeof window !== "undefined" ? window.innerWidth : 0;
-    if (typeof window === "undefined" || width < 768) {
-      return;
-    }
-    const el = containerRef.current;
-    if (!el || !("IntersectionObserver" in window)) {
-      loadRef.current()
-        .then((m) => {
-          setComp(() => m.default);
-        })
-        .catch((err) => console.error("Desktop3D load error:", err?.message, err));
-      return;
-    }
-
-    let isMounted = true;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          loadRef.current()
-            .then((m) => {
-              if (isMounted) setComp(() => m.default);
-            })
-            .catch((err) => console.error("Desktop3D load error:", err?.message, err));
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "300px 0px" }
-    );
-
-    observer.observe(el);
-    return () => {
-      isMounted = false;
-      observer.disconnect();
-    };
-  }, []);
-
-  return (
-    <div ref={containerRef} className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-      {Comp && (
-        <SafeComponentGuard name="Desktop3D">
-          <Comp />
-        </SafeComponentGuard>
-      )}
-    </div>
-  );
-}
-
 import imgAsjad from "@/assets/images/asjad.webp";
 import imgAsad from "@/assets/images/asad.webp";
 import imgAhsan from "@/assets/images/ahsan.webp";
@@ -175,7 +119,6 @@ const services = [
 export function Services() {
   return (
     <section id="services" className="relative border-t border-border px-4 sm:px-6 py-24 md:py-32 md:px-12">
-      <DesktopOnly3D load={() => import("./BackgroundScenes").then(m => ({ default: m.DataStreams }))} />
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Services</SectionLabel>
@@ -725,7 +668,6 @@ const reasons = [
 export function WhyChoose() {
   return (
     <section className="relative border-t border-border px-4 sm:px-6 py-24 md:py-32 md:px-12">
-      <DesktopOnly3D load={() => import("./BackgroundScenes").then(m => ({ default: m.NetworkNodes }))} />
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Why Zeploy</SectionLabel>
@@ -887,7 +829,6 @@ const process = [
 export function Process() {
   return (
     <section id="process" className="relative border-t border-border px-4 sm:px-6 py-24 md:py-32 md:px-12 overflow-hidden">
-      <DesktopOnly3D load={() => import("./BackgroundScenes").then(m => ({ default: m.BlueprintGrid }))} />
       <div className="mx-auto max-w-7xl relative z-10">
         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
           <SectionLabel>Process</SectionLabel>

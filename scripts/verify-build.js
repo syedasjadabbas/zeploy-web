@@ -21,7 +21,6 @@ console.log(`Found ${staticAssets.length} static assets in .vercel/output/static
 // Required chunk patterns to verify
 const requiredChunks = [
   'HeroScene',
-  'BackgroundScenes',
   'vendor-three',
   'Sections',
   'index',
